@@ -1,0 +1,16 @@
+control_links: []
+kit_version: 1
+links:
+- receiver: bbbbbbbb000000000000000000000002
+  source: aaaaaaaa000000000000000000000001
+- receiver: cccccccc000000000000000000000003
+  source: bbbbbbbb000000000000000000000002
+scenario:
+  description: Offline example, no live endpoint.
+  guid: '00000000000000000000000000000001'
+  icon: sun-o
+  name: Synthetic weather digest
+  schema_version: 1
+  source_url: false
+  tag_bg_color: '#5bc0de'
+  tag_fg_color: '#ffffff'

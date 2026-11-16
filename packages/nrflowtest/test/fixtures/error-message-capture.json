@@ -1,0 +1,7 @@
+[
+  {"id":"tab","type":"tab","label":"Synthetic error string boundaries"},
+  {"id":"function","type":"function","z":"tab","name":"Error string source","x":100,"y":80,"outputs":1,"wires":[["sink"]],"func":"if (!msg.payload.messages) return {payload: 'healthy'};\nfor (const spec of msg.payload.messages) {\n  const text = spec.unit.repeat(spec.repeat) + (spec.suffix || '');\n  for (let i = 0; i < (spec.copies || 1); i++) {\n    node.error(spec.kind === 'object' ? {message: text} : spec.kind === 'error' ? new Error(text) : text, msg);\n    node.send({payload: text.length});\n  }\n}\nreturn null;"},
+  {"id":"caught","type":"catch","z":"tab","scope":["function"],"uncaught":false,"x":100,"y":160,"wires":[["caughtSink"]]},
+  {"id":"sink","type":"debug","z":"tab","x":300,"y":80,"wires":[]},
+  {"id":"caughtSink","type":"debug","z":"tab","x":300,"y":160,"wires":[]}
+]

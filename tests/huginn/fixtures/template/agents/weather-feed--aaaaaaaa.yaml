@@ -1,0 +1,19 @@
+disabled: false
+guid: aaaaaaaa000000000000000000000001
+keep_events_for: 86400
+name: Weather feed
+options:
+  expected_update_period_in_days: ${HSK:RETRIES}
+  extract:
+    location:
+      path: $.location
+    temperature:
+      path: $.temperature
+  headers:
+    X-API-Key: '{% credential weather_key %}'
+    X-Location: ${HSK:LOCATION}
+  mode: on_change
+  type: json
+  url: ${HSK:FEED_URL}
+schedule: ${HSK:SCHEDULE}
+type: Agents::WebsiteAgent

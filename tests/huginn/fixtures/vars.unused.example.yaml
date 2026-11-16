@@ -1,0 +1,6 @@
+LOCATION: Berlin
+FEED_URL: https://weather.example.invalid/berlin.json
+RETRIES: 3
+SCHEDULE: every_2h
+# Intentional misspelling for the opt-in unused-binding regression.
+LOCATON: UNUSED_SENSITIVE_SENTINEL

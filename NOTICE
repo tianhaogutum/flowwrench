@@ -1,0 +1,44 @@
+flowwrench
+Copyright 2026 tianhaogutum and flowwrench contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+It merges tools previously developed as separate projects (n8n-exec-diet,
+n8n-refcheck, ap-flow-promote, huginn-scenario-kit, cronherd and nrflowtest).
+flowwrench is an independent interoperability project and is not affiliated
+with or endorsed by n8n GmbH, the OpenJS Foundation or Node-RED, Activepieces
+Inc., Windmill Labs or the Huginn project. Product names only identify
+interoperable file formats. See THIRD_PARTY.md for per-command attribution.
+
+-------------------------------------------------------------------------------
+flowwrench ap-promote (formerly ap-flow-promote)
+
+Reads the Activepieces flow export format. Activepieces is
+Copyright (c) 2020-2024 Activepieces Inc.; the consulted core/web files are
+MIT-licensed. No Activepieces implementation code is included. The upstream
+license notice is reproduced in THIRD_PARTY.md.
+
+-------------------------------------------------------------------------------
+flowwrench huginn (formerly huginn-scenario-kit)
+
+Reads the Huginn scenario export format. Huginn is Copyright (c) 2013 Andrew
+Cantino (Iteration Labs, LLC), MIT-licensed. No Huginn implementation code is
+included. Uses PyYAML (MIT; Copyright (c) 2017-2021 Ingy döt Net,
+(c) 2006-2016 Kirill Simonov) as a separately installed dependency.
+
+-------------------------------------------------------------------------------
+flowwrench nodered-test (Node.js companion nrflowtest, packages/nrflowtest/)
+
+The original notice follows:
+
+nrflowtest
+Copyright 2026 nrflowtest contributors.
+
+This independent project uses Node-RED and node-red-node-test-helper via npm.
+Node-RED: Copyright OpenJS Foundation and other contributors,
+https://openjsf.org/ — Apache License 2.0.
+node-red-node-test-helper: Copyright JS Foundation and other contributors,
+http://js.foundation — Apache License 2.0.
+
+No upstream source files have been copied or modified in this repository.
+Node-RED is a trademark of the OpenJS Foundation. This project is not an
+OpenJS Foundation or Node-RED project and is not endorsed by them.

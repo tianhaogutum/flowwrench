@@ -1,0 +1,8 @@
+{
+  "data": [
+    {"externalId": "slack-prod", "pieceName": "@activepieces/piece-slack", "status": "ACTIVE"},
+    {"externalId": "gmail-prod", "pieceName": "@activepieces/piece-gmail", "status": "ACTIVE"}
+  ],
+  "next": null,
+  "previous": null
+}

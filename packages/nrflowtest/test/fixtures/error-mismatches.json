@@ -1,0 +1,8 @@
+[
+  {"id":"tab","type":"tab","label":"Synthetic caught errors"},
+  {"id":"sf","type":"subflow","name":"Error source","in":[{"wires":[{"id":"inner"}]}],"out":[{"wires":[{"id":"caught","port":0}]}]},
+  {"id":"inner","type":"function","z":"sf","name":"Raise error","func":"node.error(msg.payload, msg); return null;","outputs":1,"x":100,"y":80,"wires":[[]]},
+  {"id":"caught","type":"catch","z":"sf","name":"Catch inside subflow","scope":["inner"],"uncaught":false,"x":200,"y":120,"wires":[[]]},
+  {"id":"instance","type":"subflow:sf","z":"tab","name":"Error instance","x":100,"y":80,"wires":[["sink"]]},
+  {"id":"sink","type":"debug","z":"tab","name":"Caught sink","x":300,"y":80,"wires":[]}
+]

@@ -1,0 +1,8 @@
+{
+  "schema_version":1,"name":"Synthetic Huginn scenario","description":"Redistributable format fixture, no external endpoints",
+  "agents":[
+    {"type":"Agents::WebsiteAgent","name":"Hourly A","guid":"synthetic-a","schedule":"every_1h","disabled":false,"options":{}},
+    {"type":"Agents::WebsiteAgent","name":"Hourly B","guid":"synthetic-b","schedule":"every_1h","disabled":false,"options":{}},
+    {"type":"Agents::ManualEventAgent","name":"Manual only","guid":"synthetic-c","schedule":"never","disabled":false,"options":{}}
+  ],"links":[],"control_links":[]
+}

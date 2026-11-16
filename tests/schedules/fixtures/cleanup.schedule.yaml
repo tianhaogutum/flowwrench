@@ -1,0 +1,9 @@
+# Synthetic Windmill CLI schedule export. No script is ever executed.
+schedule: "0 0 * * * *"
+timezone: UTC
+enabled: true
+script_path: f/synthetic/cleanup
+is_flow: false
+args:
+  dry_run: true
+on_failure: ''

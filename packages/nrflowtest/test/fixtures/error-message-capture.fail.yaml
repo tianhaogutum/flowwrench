@@ -1,0 +1,39 @@
+version: 1
+cases:
+  - name: undeclared boundary errors suppress consequent message failure
+    timeout: 80
+    inject:
+      node: function
+      msg:
+        payload:
+          messages:
+            - {unit: x, repeat: 7999}
+            - {unit: x, repeat: 8000}
+            - {unit: x, repeat: 8001}
+            - {unit: é, repeat: 8001}
+            - {unit: '😀', repeat: 4000}
+            - {unit: '😀', repeat: 4000, suffix: z}
+            - {unit: x, repeat: 7999, suffix: '😀'}
+            - {unit: 'short <&', repeat: 1}
+            - {unit: '', repeat: 0, kind: object}
+    expect: [{node: sink, count: 999}]
+  - name: discarded suffix cannot satisfy a declaration
+    timeout: 80
+    inject: {node: function, msg: {payload: {messages: [{unit: x, repeat: 8000, suffix: TAIL}]}}}
+    expectError: [{node: function, message: TAIL}]
+    expect: [{node: sink, count: 999}]
+  - name: declarations consume truncated matches in order
+    timeout: 80
+    inject: {node: function, msg: {payload: {messages: [{unit: x, repeat: 8001}]}}}
+    expectError:
+      - {node: function, message: x}
+      - {node: function, message: x}
+    expect: [{node: sink, count: 2}]
+  - name: entry loss stays distinct from string truncation
+    timeout: 80
+    inject: {node: function, msg: {payload: {messages: [{unit: é, repeat: 8001, copies: 101}]}}}
+    expectError: [{node: function, message: é, count: 100}]
+  - name: later healthy case after negative boundaries
+    timeout: 80
+    inject: {node: function, msg: {payload: {}}}
+    expect: [{node: sink, msg: {payload: healthy}}]

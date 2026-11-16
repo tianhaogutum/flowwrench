@@ -1,0 +1,187 @@
+{
+  "name": "Synthetic Support Promotion",
+  "description": "Redistributable offline fixture; no real accounts or tokens.",
+  "flows": [
+    {
+      "displayName": "Synthetic support flow",
+      "valid": true,
+      "schemaVersion": "28",
+      "trigger": {
+        "name": "trigger",
+        "type": "PIECE_TRIGGER",
+        "valid": true,
+        "displayName": "Trigger",
+        "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+        "settings": {
+          "pieceName": "@activepieces/piece-gmail",
+          "pieceVersion": "0.9.0",
+          "triggerName": "gmail_new_email_received",
+          "input": {
+            "auth": "{{connections['gmail-dev']}}"
+          },
+          "propertySettings": {},
+          "sampleData": {
+            "sampleDataFileId": "synthetic-trigger-sample"
+          }
+        },
+        "nextAction": {
+          "name": "route_support",
+          "type": "ROUTER",
+          "valid": true,
+          "displayName": "Route Support",
+          "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+          "settings": {
+            "executionType": "EXECUTE_FIRST_MATCH",
+            "branches": [
+              {
+                "branchName": "Urgent",
+                "branchType": "CONDITION",
+                "conditions": [
+                  [
+                    {
+                      "firstValue": "{{trigger.subject}}",
+                      "secondValue": "urgent",
+                      "operator": "TEXT_CONTAINS"
+                    }
+                  ]
+                ]
+              },
+              {
+                "branchName": "Other",
+                "branchType": "FALLBACK"
+              }
+            ]
+          },
+          "children": [
+            {
+              "name": "each_ticket",
+              "type": "LOOP_ON_ITEMS",
+              "valid": true,
+              "displayName": "Each Ticket",
+              "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+              "settings": {
+                "items": "{{trigger.items}}"
+              },
+              "firstLoopAction": {
+                "name": "notify_slack",
+                "type": "PIECE",
+                "valid": true,
+                "displayName": "Notify Slack",
+                "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+                "settings": {
+                  "pieceName": "@activepieces/piece-slack",
+                  "pieceVersion": "0.10.0",
+                  "actionName": "send_channel_message",
+                  "input": {
+                    "auth": "{{connections['slack-dev']}}",
+                    "body": "Synthetic support event",
+                    "sampleData": {
+                      "keep": "business field"
+                    },
+                    "dynamicProperties": {
+                      "channel": "demo"
+                    }
+                  },
+                  "propertySettings": {},
+                  "sampleData": {
+                    "sampleDataFileId": "synthetic-output",
+                    "sampleDataInputFileId": "synthetic-input",
+                    "lastTestDate": "2026-11-11T00:00:00.000Z"
+                  }
+                }
+              }
+            },
+            {
+              "name": "email_summary",
+              "type": "PIECE",
+              "valid": true,
+              "displayName": "Email Summary",
+              "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+              "settings": {
+                "pieceName": "@activepieces/piece-gmail",
+                "pieceVersion": "0.9.0",
+                "actionName": "send_email",
+                "input": {
+                  "auth": "{{connections['gmail-dev']}}",
+                  "body": "Synthetic support event",
+                  "sampleData": {
+                    "keep": "business field"
+                  },
+                  "dynamicProperties": {
+                    "channel": "demo"
+                  }
+                },
+                "propertySettings": {},
+                "sampleData": {
+                  "sampleDataFileId": "synthetic-output",
+                  "sampleDataInputFileId": "synthetic-input",
+                  "lastTestDate": "2026-11-11T00:00:00.000Z"
+                }
+              }
+            }
+          ],
+          "nextAction": {
+            "name": "triage_agent",
+            "type": "PIECE",
+            "valid": true,
+            "displayName": "Triage Agent",
+            "lastUpdatedDate": "2026-11-11T00:00:00.000Z",
+            "settings": {
+              "pieceName": "@activepieces/piece-ai",
+              "pieceVersion": "0.5.0",
+              "actionName": "run_agent",
+              "input": {
+                "prompt": "Classify this synthetic support request",
+                "agentTools": [
+                  {
+                    "type": "PIECE",
+                    "toolName": "notify_support",
+                    "pieceMetadata": {
+                      "pieceName": "@activepieces/piece-slack",
+                      "pieceVersion": "0.10.0",
+                      "actionName": "send_channel_message",
+                      "predefinedInput": {
+                        "auth": "{{connections['slack-dev']}}",
+                        "fields": {
+                          "text": {
+                            "mode": "choose-yourself",
+                            "value": "Synthetic notification"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "PIECE",
+                    "toolName": "email_reply",
+                    "pieceMetadata": {
+                      "pieceName": "@activepieces/piece-gmail",
+                      "pieceVersion": "0.9.0",
+                      "actionName": "send_email",
+                      "predefinedInput": {
+                        "auth": "{{connections['gmail-dev']}}",
+                        "fields": {
+                          "subject": {
+                            "mode": "choose-yourself",
+                            "value": "Synthetic reply"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "propertySettings": {},
+              "sampleData": {
+                "sampleDataFileId": "synthetic-output",
+                "sampleDataInputFileId": "synthetic-input",
+                "lastTestDate": "2026-11-11T00:00:00.000Z"
+              }
+            }
+          }
+        }
+      },
+      "notes": []
+    }
+  ]
+}

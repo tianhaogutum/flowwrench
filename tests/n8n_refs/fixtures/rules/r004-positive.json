@@ -1,0 +1,73 @@
+{
+  "name": "Synthetic redistributable test",
+  "nodes": [
+    {
+      "id": "synthetic-A",
+      "name": "A",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-Merge",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-B",
+      "name": "B",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "synthetic-offline-channel",
+        "text": "={{ $('A').item }}",
+        "otherOptions": {}
+      }
+    }
+  ],
+  "connections": {
+    "A": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

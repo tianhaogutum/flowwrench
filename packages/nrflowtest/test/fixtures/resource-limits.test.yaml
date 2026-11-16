@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "exact observation cap",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "observations",
+            "count": 10000
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 10000
+        }
+      ]
+    },
+    {
+      "name": "exact UTF-8 byte cap",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "bytes",
+            "count": 8388608
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "exact error cap",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "errors",
+            "count": 100
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    }
+  ]
+}

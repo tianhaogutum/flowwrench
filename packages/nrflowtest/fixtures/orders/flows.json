@@ -1,0 +1,110 @@
+[
+  {
+    "id": "orders",
+    "type": "tab",
+    "label": "Offline orders"
+  },
+  {
+    "id": "incoming",
+    "type": "inject",
+    "z": "orders",
+    "name": "New order",
+    "once": true,
+    "repeat": "1",
+    "wires": [
+      [
+        "validate"
+      ]
+    ],
+    "x": 140,
+    "y": 100
+  },
+  {
+    "id": "validate",
+    "type": "switch",
+    "z": "orders",
+    "name": "Positive amount",
+    "property": "payload.amount",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "gt",
+        "v": "0",
+        "vt": "num"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "outputs": 2,
+    "wires": [
+      [
+        "prepare"
+      ],
+      [
+        "rejected"
+      ]
+    ],
+    "x": 180,
+    "y": 100
+  },
+  {
+    "id": "prepare",
+    "type": "change",
+    "z": "orders",
+    "name": "Prepare request",
+    "rules": [
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "orders/create",
+        "tot": "str"
+      }
+    ],
+    "wires": [
+      [
+        "api"
+      ]
+    ],
+    "x": 220,
+    "y": 100
+  },
+  {
+    "id": "api",
+    "type": "http request",
+    "z": "orders",
+    "name": "Orders API",
+    "method": "POST",
+    "ret": "obj",
+    "url": "https://invalid.example/orders",
+    "wires": [
+      [
+        "accepted"
+      ]
+    ],
+    "x": 260,
+    "y": 100
+  },
+  {
+    "id": "accepted",
+    "type": "debug",
+    "z": "orders",
+    "name": "Accepted",
+    "active": true,
+    "wires": [],
+    "x": 300,
+    "y": 100
+  },
+  {
+    "id": "rejected",
+    "type": "debug",
+    "z": "orders",
+    "name": "Rejected",
+    "active": true,
+    "wires": [],
+    "x": 340,
+    "y": 100
+  }
+]

@@ -1,0 +1,69 @@
+version: 1
+cases:
+  - name: direct matches are consumed even on count failure
+    timeout: 80
+    inject: {node: plain, msg: {payload: {specs: [{unit: x, repeat: 8001}]}}}
+    expectError:
+      - {node: plain, message: x, count: 2}
+      - {node: plain, message: x}
+    expect: [{node: sink, count: 2}]
+  - name: suffix misses remain candidates until a prefix consumes them
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: x, repeat: 8000, suffix: TAIL}]}}}
+    expectError:
+      - {node: a, message: TAIL}
+      - {node: a, message: OTHER}
+      - {node: a, message: x}
+      - {node: a, message: TAIL}
+  - name: unrelated truncated instance leaves short selector faithful
+    timeout: 80
+    inject:
+      - {node: a, msg: {payload: {specs: [{unit: 'short <&', repeat: 1}]}}}
+      - {node: b, msg: {payload: {specs: [{unit: x, repeat: 8001}]}}}
+      - {node: plain, msg: {payload: {specs: [{unit: z, repeat: 8001}]}}}
+    expectError:
+      - {node: a, message: 'short <&', count: 2}
+      - {node: b, message: x}
+      - {node: plain, message: z}
+    expect: [{node: sink, count: 3}]
+  - name: consumed instance match leaves an untruncated nonmatch
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: x, repeat: 8001}, {unit: short, repeat: 1}]}}}
+    expectError:
+      - {node: a, message: x, count: 2}
+      - {node: a, message: x}
+      - {node: a, message: short}
+  - name: short substring miss preserves unexpected error priority
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: 'short <&', repeat: 1}]}}}
+    expectError: [{node: a, message: absent}]
+    expect: [{node: sink, count: 999}]
+  - name: discarded entries do not taint retained short string fidelity
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: short, repeat: 1, copies: 101}]}}}
+    expectError:
+      - {node: a, message: short, count: 101}
+      - {node: a, message: absent}
+      - {node: b, message: absent}
+  - name: entry loss and retained truncation are independent
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: x, repeat: 8001, copies: 101}]}}}
+    expectError:
+      - {node: a, message: x, count: 101}
+      - {node: a, message: x}
+      - {node: b, message: absent}
+  - name: successful and failed consumers retain their original declaration indexes
+    timeout: 80
+    inject: {node: a, msg: {payload: {specs: [{unit: 'alpha shared', repeat: 1}, {unit: 'beta shared', repeat: 1}, {unit: short, repeat: 1}]}}}
+    expectError:
+      - {node: a, message: alpha}
+      - {node: a, message: beta, count: 2}
+      - {node: a, message: shared}
+      - {node: a, message: short, count: 2}
+      - {node: a, message: short}
+      - {node: a, message: absent}
+    expect: [{node: sink, count: 3}]
+  - name: healthy case after all negative boundaries
+    timeout: 80
+    inject: {node: a, msg: {payload: {}}}
+    expect: [{node: sink, msg: {payload: healthy}}]

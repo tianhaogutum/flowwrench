@@ -1,0 +1,17 @@
+version: 1
+cases:
+  - name: exact declared caught errors pass
+    timeout: 80
+    inject:
+      - node: instance
+        msg: {payload: 'problem <order> & service'}
+      - node: instance
+        msg: {payload: 'problem <order> & service'}
+    expectError:
+      - node: Error instance
+        message: 'problem <order> & service'
+        count: 2
+    expect:
+      - node: sink
+        count: 2
+        fields: {'/error/message': 'problem <order> & service'}

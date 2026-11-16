@@ -1,0 +1,91 @@
+{
+  "id": "refcheckdollar",
+  "name": "refcheck runtime dollar",
+  "active": false,
+  "versionId": "bc6de677-d18d-5718-b011-f7f0ea47ce62",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "nodes": [
+    {
+      "id": "76d6df1f-2fc3-5778-86b5-ac1211a4cecd",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "b2bdfe06-ff17-5d00-9e93-e8a0eb5a0d74",
+      "name": "A",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "value",
+              "value": "fixed / 雪"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "ca21e0d1-a5aa-5e35-b5a9-458101e683fb",
+      "name": "Result",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "result",
+              "value": "={{ $('A').first().json.value }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "A",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "A": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}

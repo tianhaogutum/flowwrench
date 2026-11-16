@@ -1,0 +1,15 @@
+relocation_version: 2
+guids:
+  left: {}
+  right:
+    feed: '${HSK:PREFIX}_feed'
+    sink: '${HSK:PREFIX}_sink'
+scenario:
+  guid: 'combined_${HSK:ENV}'
+  name: 'Combined ${HSK:ENV}'
+links:
+- source: {input: left, guid: sink}
+  receiver: {input: right, guid: feed}
+control_links:
+- controller: {input: right, guid: control}
+  control_target: {input: left, guid: feed}

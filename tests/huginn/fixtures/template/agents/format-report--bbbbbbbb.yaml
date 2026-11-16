@@ -1,0 +1,11 @@
+disabled: false
+guid: bbbbbbbb000000000000000000000002
+keep_events_for: 0
+name: Format report
+options:
+  instructions:
+    message: '{{ location }}: {{ temperature }} C'
+  matchers: []
+  mode: clean
+propagate_immediately: true
+type: Agents::EventFormattingAgent

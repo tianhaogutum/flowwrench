@@ -1,0 +1,6 @@
+[
+  {"id":"ops","type":"tab","label":"Synthetic Node-RED ops","disabled":false},
+  {"id":"nr-backup","type":"inject","z":"ops","name":"Backup","repeat":"","crontab":"0 * * * *","once":false,"props":[{"p":"payload"}],"payloadType":"date","wires":[[]]},
+  {"id":"nr-poll","type":"inject","z":"ops","name":"Poll","repeat":"","crontab":"0 * * * *","once":false,"wires":[[]]},
+  {"id":"nr-clean","type":"inject","z":"ops","name":"Clean","repeat":"","crontab":"17 3 * * *","once":false,"wires":[[]]}
+]

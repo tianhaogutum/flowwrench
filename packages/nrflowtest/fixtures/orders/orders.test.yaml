@@ -1,0 +1,48 @@
+version: 1
+cases:
+  - name: positive order reaches the stubbed HTTP service
+    timeout: 80
+    stubs:
+      - node: Orders API
+        outputs:
+          - payload: {orderId: sample-001, status: accepted}
+            statusCode: 201
+    inject:
+      node: {id: incoming}
+      msg: {payload: {amount: 42, currency: EUR}}
+    expect:
+      - node: api
+        msg: {topic: orders/create, payload: {amount: 42}}
+      - node: {name: Accepted}
+        msg: {payload: {orderId: sample-001}, statusCode: 201}
+    expectNoMessage:
+      - node: Rejected
+
+  - name: invalid order never calls HTTP
+    timeout: 80
+    stubs:
+      - node: api
+        error: HTTP should not be called
+    inject:
+      node: incoming
+      msg: {payload: {amount: 0}}
+    expect:
+      - node: Rejected
+        msg: {payload: {amount: 0}}
+    expectNoMessage:
+      - node: api
+      - node: Accepted
+
+  - name: service error is asserted with its real message
+    timeout: 80
+    stubs:
+      - node: api
+        error: synthetic service unavailable
+    inject:
+      node: incoming
+      msg: {payload: {amount: 7}}
+    expectError:
+      - node: api
+        message: synthetic service unavailable
+    expectNoMessage:
+      - node: Accepted

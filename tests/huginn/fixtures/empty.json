@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "name": "Empty scenario",
+  "guid": "00000000000000000000000000000004",
+  "agents": [],
+  "links": []
+}

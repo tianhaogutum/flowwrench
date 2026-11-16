@@ -1,0 +1,128 @@
+[
+  {
+    "id": "tab",
+    "type": "tab",
+    "label": "Selector fidelity"
+  },
+  {
+    "id": "sf",
+    "type": "subflow",
+    "name": "Error generator",
+    "in": [
+      {
+        "wires": [
+          {
+            "id": "inner"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "wires": [
+          {
+            "id": "inner",
+            "port": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "inner",
+    "type": "function",
+    "z": "sf",
+    "name": "Inner source",
+    "func": "if (!msg.payload.specs) return {payload: 'healthy'};\nfor (const spec of msg.payload.specs) {\n const text = spec.unit.repeat(spec.repeat) + (spec.suffix || '');\n for (let i = 0; i < (spec.copies || 1); i++) { node.error(text, msg); node.send({payload: text.length}); }\n}\nreturn null;",
+    "outputs": 1,
+    "x": 100,
+    "y": 80,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "caught",
+    "type": "catch",
+    "z": "sf",
+    "scope": [
+      "inner"
+    ],
+    "uncaught": false,
+    "x": 200,
+    "y": 120,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "plain",
+    "type": "function",
+    "z": "tab",
+    "name": "Plain source",
+    "func": "if (!msg.payload.specs) return {payload: 'healthy'};\nfor (const spec of msg.payload.specs) {\n const text = spec.unit.repeat(spec.repeat) + (spec.suffix || '');\n for (let i = 0; i < (spec.copies || 1); i++) { node.error(text, msg); node.send({payload: text.length}); }\n}\nreturn null;",
+    "outputs": 1,
+    "x": 100,
+    "y": 200,
+    "wires": [
+      [
+        "sink"
+      ]
+    ]
+  },
+  {
+    "id": "sink",
+    "type": "debug",
+    "z": "tab",
+    "x": 300,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "wrapper",
+    "type": "subflow",
+    "name": "Nested errors",
+    "in": [
+      {
+        "wires": [
+          {
+            "id": "middle"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "wires": [
+          {
+            "id": "middle",
+            "port": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "middle",
+    "type": "subflow:sf",
+    "z": "wrapper",
+    "x": 100,
+    "y": 80,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "outer",
+    "type": "subflow:wrapper",
+    "z": "tab",
+    "name": "Nested instance",
+    "x": 100,
+    "y": 320,
+    "wires": [
+      [
+        "sink"
+      ]
+    ]
+  }
+]

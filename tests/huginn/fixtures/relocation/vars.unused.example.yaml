@@ -1,0 +1,4 @@
+PREFIX: copy
+ENV: demo
+# Intentional misspelling: combine --reject-unused-vars rejects this binding.
+PREFX: SYNTHETIC_UNUSED_VALUE

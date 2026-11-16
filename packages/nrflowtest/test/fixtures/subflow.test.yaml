@@ -1,0 +1,17 @@
+version: 1
+cases:
+  - name: subflow input and output preserve the envelope
+    timeout: 100
+    inject:
+      node: instance
+      msg: {payload: {order: 1}}
+    expect:
+      - node: instance
+        event: input
+        msg: {payload: {order: 1}}
+      - node: instance
+        event: output
+        output: 0
+        msg: {source: fixture, payload: {order: 1}}
+      - node: sink
+        msg: {source: fixture}

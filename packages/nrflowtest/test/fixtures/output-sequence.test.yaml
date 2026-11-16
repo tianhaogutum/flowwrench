@@ -1,0 +1,35 @@
+version: 1
+cases:
+  - name: ordered records across two real switch ports
+    timeout: 80
+    inject:
+      - node: router
+        msg: {payload: {id: A, accepted: true}}
+      - node: router
+        msg: {payload: {id: B, accepted: true, 'a/b': {'~key': 0}}}
+      - node: router
+        msg: {payload: {id: C, accepted: false}}
+    expect:
+      - node: router
+        event: output
+        sequence:
+          - output: 0
+            fields: {'/payload/id': A}
+          - output: 0
+            fields: {'/payload/id': B, '/payload/a~1b/~0key': 0}
+          - output: 1
+            fields: {'/payload/id': C, '/payload/accepted': false}
+      - node: router
+        event: output
+        output: 0
+        count: 2
+        fields: {'/payload/accepted': true}
+      - node: router
+        event: output
+        output: 1
+        count: 1
+        fields: {'/payload/id': C}
+      - node: accepted
+        sequence:
+          - msg: {payload: {id: A}}
+          - msg: {payload: {id: B}}

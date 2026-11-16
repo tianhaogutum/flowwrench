@@ -1,0 +1,84 @@
+[
+  {
+    "id": "tab",
+    "type": "tab",
+    "label": "Subflow fixture"
+  },
+  {
+    "id": "sf",
+    "type": "subflow",
+    "name": "Envelope",
+    "in": [
+      {
+        "x": 40,
+        "y": 40,
+        "wires": [
+          {
+            "id": "inner"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "x": 200,
+        "y": 40,
+        "wires": [
+          {
+            "id": "inner",
+            "port": 0
+          }
+        ]
+      }
+    ],
+    "env": [
+      {
+        "name": "PREFIX",
+        "type": "str",
+        "value": "fixture"
+      }
+    ]
+  },
+  {
+    "id": "inner",
+    "type": "change",
+    "z": "sf",
+    "name": "Tag",
+    "rules": [
+      {
+        "t": "set",
+        "p": "source",
+        "pt": "msg",
+        "to": "PREFIX",
+        "tot": "env"
+      }
+    ],
+    "wires": [
+      []
+    ],
+    "x": 180,
+    "y": 100
+  },
+  {
+    "id": "instance",
+    "type": "subflow:sf",
+    "z": "tab",
+    "name": "Envelope instance",
+    "wires": [
+      [
+        "sink"
+      ]
+    ],
+    "x": 220,
+    "y": 100
+  },
+  {
+    "id": "sink",
+    "type": "debug",
+    "z": "tab",
+    "name": "Sink",
+    "wires": [],
+    "x": 260,
+    "y": 100
+  }
+]

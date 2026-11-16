@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "name": "Right feed",
+  "guid": "scenario_right",
+  "exported_at": "2026-01-01T00:00:00Z",
+  "right_extension": ["right", {"count": 2}],
+  "agents": [
+    {"guid": "control", "name": "Controller", "type": "Agents::AgentControllerAgent", "disabled": false, "schedule": "midnight", "options": {"action": "disable"}},
+    {"guid": "feed", "name": "Right source", "type": "Agents::WebsiteAgent", "disabled": false, "keep_events_for": 3600, "options": {"url": "https://right.example.invalid", "literal_guid": "feed"}},
+    {"guid": "sink", "name": "Right sink", "type": "Agents::EventFormattingAgent", "disabled": false, "propagate_immediately": true, "options": {"message": "{% credential demo_key %} {{ value }}"}, "extension": "preserved"}
+  ],
+  "links": [{"source": 1, "receiver": 2}],
+  "control_links": [{"controller": 0, "control_target": 2}, {"controller": 0, "control_target": 1}]
+}

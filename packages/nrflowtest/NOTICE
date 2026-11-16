@@ -1,0 +1,13 @@
+nrflowtest
+Copyright 2026 nrflowtest contributors.
+
+This independent project uses Node-RED and node-red-node-test-helper via npm.
+Node-RED: Copyright OpenJS Foundation and other contributors,
+https://openjsf.org/ — Apache License 2.0.
+node-red-node-test-helper: Copyright JS Foundation and other contributors,
+http://js.foundation — Apache License 2.0.
+
+No upstream source files have been copied or modified in this repository.
+Node-RED is a trademark of the OpenJS Foundation. This project is not an
+OpenJS Foundation or Node-RED project and is not endorsed by them.
+See THIRD_PARTY.md for dependency sources and research provenance.

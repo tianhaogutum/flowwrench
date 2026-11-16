@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "name": "Synthetic weather digest",
+  "description": "Offline example, no live endpoint.",
+  "guid": "00000000000000000000000000000001",
+  "source_url": false,
+  "tag_fg_color": "#ffffff",
+  "tag_bg_color": "#5bc0de",
+  "icon": "sun-o",
+  "exported_at": "2026-01-01T00:00:00Z",
+  "agents": [
+    {
+      "guid": "cccccccc000000000000000000000003",
+      "name": "Morning digest",
+      "type": "Agents::EmailDigestAgent",
+      "options": {
+        "subject": "Weather for {{ location }}",
+        "expected_receive_period_in_days": "2"
+      },
+      "disabled": false,
+      "propagate_immediately": false,
+      "schedule": "8am"
+    },
+    {
+      "guid": "aaaaaaaa000000000000000000000001",
+      "name": "Weather feed",
+      "type": "Agents::WebsiteAgent",
+      "options": {
+        "url": "https://weather.example.invalid/report.json",
+        "type": "json",
+        "mode": "on_change",
+        "expected_update_period_in_days": "2",
+        "extract": {
+          "temperature": {
+            "path": "$.temperature"
+          },
+          "location": {
+            "path": "$.location"
+          }
+        },
+        "headers": {
+          "X-API-Key": "{% credential weather_key %}"
+        }
+      },
+      "disabled": false,
+      "keep_events_for": 86400,
+      "schedule": "every_1h"
+    },
+    {
+      "guid": "bbbbbbbb000000000000000000000002",
+      "name": "Format report",
+      "type": "Agents::EventFormattingAgent",
+      "options": {
+        "instructions": {
+          "message": "{{ location }}: {{ temperature }} C"
+        },
+        "mode": "clean",
+        "matchers": []
+      },
+      "disabled": false,
+      "keep_events_for": 0,
+      "propagate_immediately": true
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "receiver": 2
+    },
+    {
+      "source": 2,
+      "receiver": 0
+    }
+  ],
+  "control_links": []
+}

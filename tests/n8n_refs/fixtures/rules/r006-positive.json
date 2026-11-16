@@ -1,0 +1,67 @@
+{
+  "name": "Synthetic redistributable test",
+  "nodes": [
+    {
+      "id": "synthetic-A",
+      "name": "A",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-A",
+      "name": "A",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-B",
+      "name": "B",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "A": {
+      "main": [
+        [
+          {
+            "node": "Missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MissingSource": {
+      "main": [
+        [
+          {
+            "node": "B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

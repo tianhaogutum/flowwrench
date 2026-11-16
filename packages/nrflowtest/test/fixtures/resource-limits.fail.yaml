@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "excess observations",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "observations",
+            "count": 10005
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 10000
+        }
+      ]
+    },
+    {
+      "name": "excess UTF-8 bytes",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "bytes",
+            "count": 8388609
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "excess errors",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "errors",
+            "count": 103
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "name": "independent observation and error limits",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "multi",
+            "count": 10005
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 10000
+        }
+      ],
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "name": "setup error cap",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [],
+      "inject": [],
+      "expectError": [
+        {
+          "node": "setup",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "name": "cleanup error cap",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "cleanup",
+            "count": 103
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "name": "healthy after resource failures",
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "observations",
+            "count": 1
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

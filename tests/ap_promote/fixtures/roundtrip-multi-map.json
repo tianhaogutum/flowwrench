@@ -1,0 +1,6 @@
+{
+  "alpha-dev": "alpha-prod",
+  "alpha-tool-dev": "alpha-tool-prod",
+  "beta-dev": "beta-prod",
+  "beta-tool-dev": "beta-tool-prod"
+}

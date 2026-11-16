@@ -1,0 +1,133 @@
+{
+  "name": "Synthetic redistributable test",
+  "nodes": [
+    {
+      "id": "synthetic-Start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-Fetch / A",
+      "name": "Fetch / A",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-JS",
+      "name": "JS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// $(\"Fetch / A\") is a comment\nconst note = \"$('Fetch / A')\";\nreturn {json: $(\"Fetch / A\").first().json};"
+      }
+    },
+    {
+      "id": "synthetic-Python",
+      "name": "Python",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "python",
+        "pythonCode": "# _(\"Fetch / A\") is a comment\nreturn {\"json\": _(\"Fetch / A\").first().json}"
+      }
+    },
+    {
+      "id": "synthetic-Notify",
+      "name": "Notify",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "synthetic-offline-channel",
+        "text": "=Hi {{ $('Fetch / A').first().json.name }} {{ $node['Fetch / A'].json }} {{ $items('Fetch / A', 0, 0) }}",
+        "otherOptions": {}
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Fetch / A",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch / A": {
+      "main": [
+        [
+          {
+            "node": "JS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JS": {
+      "main": [
+        [
+          {
+            "node": "Python",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Python": {
+      "main": [
+        [
+          {
+            "node": "Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {
+    "Fetch / A": [
+      {
+        "json": {
+          "name": "Ada",
+          "literal": "$('Fetch / A')"
+        }
+      }
+    ]
+  }
+}

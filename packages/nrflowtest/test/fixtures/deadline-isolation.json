@@ -1,0 +1,9 @@
+[
+  {"id":"tab","type":"tab","label":"Synthetic deadline isolation"},
+  {
+    "id":"function","type":"function","z":"tab","name":"Synthetic hanging node",
+    "x":100,"y":80,"outputs":1,"wires":[["sink"]],
+    "func":"setInterval(() => node.send({payload: 'late timer'}), 30000);\nif (msg.payload === 'hang') {\n    setTimeout(() => { while (true) {} }, 0);\n    return null;\n}\nif (msg.payload === 'hang cleanup') {\n    node.on('close', function(done) { /* deliberately never complete */ });\n}\nconst count = (context.get('count') || 0) + 1;\ncontext.set('count', count);\nmsg.payload = count;\nreturn msg;"
+  },
+  {"id":"sink","type":"debug","z":"tab","name":"Sink","x":300,"y":80,"wires":[]}
+]

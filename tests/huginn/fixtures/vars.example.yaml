@@ -1,0 +1,4 @@
+LOCATION: Berlin
+FEED_URL: https://weather.example.invalid/berlin.json
+RETRIES: 3
+SCHEDULE: every_2h

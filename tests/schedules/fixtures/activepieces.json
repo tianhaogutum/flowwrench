@@ -1,0 +1,7 @@
+{
+  "name":"Synthetic schedule templates",
+  "flows":[
+    {"status":"ENABLED","version":{"displayName":"AP hourly housekeeping","trigger":{"name":"trigger","type":"PIECE_TRIGGER","valid":true,"settings":{"pieceName":"@activepieces/piece-schedule","pieceVersion":"~0.1.0","triggerName":"every_hour","input":{"run_on_weekends":true}}}}},
+    {"status":"ENABLED","version":{"displayName":"AP New York daily","trigger":{"name":"trigger","type":"PIECE_TRIGGER","valid":true,"settings":{"pieceName":"@activepieces/piece-schedule","pieceVersion":"~0.1.0","triggerName":"cron_expression","input":{"cronExpression":"30 1 * * *","timezone":"America/New_York"}}}}}
+  ]
+}

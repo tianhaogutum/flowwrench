@@ -1,0 +1,9 @@
+disabled: false
+guid: cccccccc000000000000000000000003
+name: Morning digest
+options:
+  expected_receive_period_in_days: '2'
+  subject: Weather for {{ location }}
+propagate_immediately: false
+schedule: 8am
+type: Agents::EmailDigestAgent

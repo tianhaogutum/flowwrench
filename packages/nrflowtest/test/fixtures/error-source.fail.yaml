@@ -1,0 +1,27 @@
+version: 1
+cases:
+  - name: failed zero consumes only its source and exposes prior consumers
+    timeout: 80
+    inject: {node: outer, msg: {payload: {left: [{text: 'shared <&', copies: 2}], right: [{text: 'shared <&'}]}}}
+    expectError:
+      - {node: outer, source: outer-middle-left, message: shared, count: 0}
+      - {node: outer, source: outer-middle-left, message: shared, count: 0}
+      - {node: outer, source: outer-middle-right, message: shared}
+      - {node: outer, source: outer-middle-left, message: shared}
+      - {node: outer, message: shared}
+  - name: a nonmatching source does not hide unexpected errors
+    timeout: 80
+    inject: {node: outer, msg: {payload: {left: [{text: 'shared <&'}], right: [{text: 'shared <&'}]}}}
+    expectError:
+      - {node: outer, source: outer-middle-right, message: absent, count: 0}
+      - {node: outer, source: outer-middle-left, message: shared}
+    expect: [{node: sink, count: 999}]
+  - name: definition id is not a concrete source
+    timeout: 80
+    inject: {node: outer, msg: {payload: {left: [{text: 'shared <&'}], right: [{text: 'shared <&'}]}}}
+    expectError:
+      - {node: outer, source: left, message: shared}
+      - {node: outer, message: shared, count: 2}
+  - name: later healthy case still runs
+    timeout: 20
+    expectError: [{node: outer, source: outer-middle-left, message: shared, count: 0}]

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "tab",
+    "type": "tab"
+  },
+  {
+    "id": "sf",
+    "type": "subflow",
+    "name": "Two sources",
+    "in": [
+      {
+        "wires": [
+          {
+            "id": "left"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "wires": [
+          {
+            "id": "right",
+            "port": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "left",
+    "type": "function",
+    "z": "sf",
+    "name": "Left source",
+    "func": "for (const spec of msg.payload.left || []) { for (let i = 0; i < (spec.copies || 1); i++) node.error(spec.text || 'x'.repeat(8000) + 'TAIL', msg); } return msg;",
+    "outputs": 1,
+    "x": 100,
+    "y": 80,
+    "wires": [
+      [
+        "right"
+      ]
+    ]
+  },
+  {
+    "id": "right",
+    "type": "function",
+    "z": "sf",
+    "func": "for (const spec of msg.payload.right || []) { for (let i = 0; i < (spec.copies || 1); i++) node.error(spec.text || 'x'.repeat(8000) + 'TAIL', msg); } return msg;",
+    "outputs": 1,
+    "x": 200,
+    "y": 80,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "caught",
+    "type": "catch",
+    "z": "sf",
+    "scope": [
+      "left",
+      "right"
+    ],
+    "uncaught": false,
+    "x": 200,
+    "y": 160,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "wrapper",
+    "type": "subflow",
+    "in": [
+      {
+        "wires": [
+          {
+            "id": "middle"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "wires": [
+          {
+            "id": "middle",
+            "port": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "middle",
+    "type": "subflow:sf",
+    "z": "wrapper",
+    "x": 100,
+    "y": 80,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "outer",
+    "type": "subflow:wrapper",
+    "z": "tab",
+    "name": "Nested instance",
+    "x": 100,
+    "y": 80,
+    "wires": [
+      [
+        "sink"
+      ]
+    ]
+  },
+  {
+    "id": "other",
+    "type": "subflow:wrapper",
+    "z": "tab",
+    "x": 100,
+    "y": 160,
+    "wires": [
+      [
+        "sink"
+      ]
+    ]
+  },
+  {
+    "id": "plain",
+    "type": "function",
+    "z": "tab",
+    "func": "for (const spec of msg.payload.left || []) { for (let i = 0; i < (spec.copies || 1); i++) node.error(spec.text || 'x'.repeat(8000) + 'TAIL', msg); } return msg;",
+    "outputs": 1,
+    "x": 100,
+    "y": 240,
+    "wires": [
+      [
+        "sink"
+      ]
+    ]
+  },
+  {
+    "id": "sink",
+    "type": "debug",
+    "z": "tab",
+    "x": 300,
+    "y": 80,
+    "wires": []
+  }
+]

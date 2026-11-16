@@ -1,0 +1,11 @@
+[
+  { "id": "tab", "type": "tab", "label": "Synthetic multi-port assertions" },
+  {
+    "id": "router", "type": "switch", "z": "tab", "name": "Route records",
+    "x": 100, "y": 100, "property": "payload.accepted", "propertyType": "msg",
+    "rules": [{ "t": "true" }, { "t": "else" }], "checkall": "true",
+    "outputs": 2, "wires": [["accepted"], ["rejected"]]
+  },
+  { "id": "accepted", "type": "debug", "z": "tab", "name": "Accepted", "x": 300, "y": 80, "wires": [] },
+  { "id": "rejected", "type": "debug", "z": "tab", "name": "Rejected", "x": 300, "y": 160, "wires": [] }
+]

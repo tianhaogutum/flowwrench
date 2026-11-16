@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "name": "Controlled synthetic feed",
+  "description": "A controller targets two agents.",
+  "guid": "00000000000000000000000000000002",
+  "source_url": null,
+  "exported_at": "2026-01-02T00:00:00Z",
+  "agents": [
+    {
+      "guid": "ffffffff000000000000000000000001",
+      "name": "Pause feeds",
+      "type": "Agents::AgentControllerAgent",
+      "options": {
+        "action": "disable"
+      },
+      "disabled": false,
+      "schedule": "midnight"
+    },
+    {
+      "guid": "dddddddd000000000000000000000002",
+      "name": "Example feed",
+      "type": "Agents::WebsiteAgent",
+      "options": {
+        "url": "https://feeds.example.invalid/data",
+        "mode": "on_change",
+        "type": "json",
+        "extract": {
+          "value": {
+            "path": "$.value"
+          }
+        }
+      },
+      "disabled": false,
+      "keep_events_for": 3600,
+      "schedule": "every_5m"
+    },
+    {
+      "guid": "eeeeeeee000000000000000000000003",
+      "name": "Event log",
+      "type": "Agents::EventFormattingAgent",
+      "options": {
+        "instructions": {
+          "value": "{{ value }}"
+        },
+        "mode": "clean",
+        "matchers": []
+      },
+      "disabled": false,
+      "keep_events_for": 0,
+      "propagate_immediately": false
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "receiver": 2
+    }
+  ],
+  "control_links": [
+    {
+      "controller": 0,
+      "control_target": 2
+    },
+    {
+      "controller": 0,
+      "control_target": 1
+    }
+  ]
+}

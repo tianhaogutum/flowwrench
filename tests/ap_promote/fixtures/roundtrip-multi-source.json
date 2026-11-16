@@ -1,0 +1,80 @@
+{
+  "flows": [
+    {
+      "id": "alpha-source",
+      "displayName": "Alpha",
+      "trigger": {
+        "name": "trigger",
+        "type": "PIECE_TRIGGER",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "1.2.3",
+          "input": {
+            "auth": "alpha-dev",
+            "a~/b": "{{connections['alpha-dev']}} {{connections['alpha-dev']}}"
+          }
+        },
+        "nextAction": {
+          "name": "agent",
+          "type": "PIECE",
+          "settings": {
+            "pieceName": "@activepieces/piece-ai",
+            "pieceVersion": "0.4.0",
+            "input": {
+              "agentTools": [
+                {
+                  "type": "PIECE",
+                  "pieceMetadata": {
+                    "pieceName": "@activepieces/piece-slack",
+                    "pieceVersion": "1.2.3",
+                    "predefinedInput": {
+                      "auth": "alpha-tool-dev"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "beta-source",
+      "displayName": "Beta",
+      "trigger": {
+        "name": "trigger",
+        "type": "PIECE_TRIGGER",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "1.2.3",
+          "input": {
+            "auth": "beta-dev",
+            "a~/b": "{{connections['beta-dev']}} {{connections['beta-dev']}}"
+          }
+        },
+        "nextAction": {
+          "name": "agent",
+          "type": "PIECE",
+          "settings": {
+            "pieceName": "@activepieces/piece-ai",
+            "pieceVersion": "0.4.0",
+            "input": {
+              "agentTools": [
+                {
+                  "type": "PIECE",
+                  "pieceMetadata": {
+                    "pieceName": "@activepieces/piece-slack",
+                    "pieceVersion": "1.2.3",
+                    "predefinedInput": {
+                      "auth": "beta-tool-dev"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

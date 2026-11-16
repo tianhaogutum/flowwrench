@@ -1,0 +1,96 @@
+{
+  "flows": [
+    {
+      "id": "destination-0",
+      "displayName": "Re-exported",
+      "trigger": {
+        "name": "trigger",
+        "type": "PIECE_TRIGGER",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "1.2.3",
+          "input": {
+            "auth": "beta-prod",
+            "a~/b": "{{connections['beta-prod']}} {{connections['beta-prod']}}"
+          }
+        },
+        "nextAction": {
+          "name": "route",
+          "type": "ROUTER",
+          "settings": {},
+          "children": [
+            null,
+            {
+              "name": "agent",
+              "type": "PIECE",
+              "settings": {
+                "pieceName": "@activepieces/piece-ai",
+                "pieceVersion": "0.4.0",
+                "input": {
+                  "agentTools": [
+                    {
+                      "type": "PIECE",
+                      "pieceMetadata": {
+                        "pieceName": "@activepieces/piece-slack",
+                        "pieceVersion": "1.2.3",
+                        "predefinedInput": {
+                          "auth": "beta-tool-prod"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "destination-1",
+      "displayName": "Re-exported",
+      "trigger": {
+        "name": "trigger",
+        "type": "PIECE_TRIGGER",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "1.2.3",
+          "input": {
+            "auth": "alpha-prod",
+            "a~/b": "{{connections['alpha-prod']}} {{connections['alpha-prod']}}"
+          }
+        },
+        "nextAction": {
+          "name": "route",
+          "type": "ROUTER",
+          "settings": {},
+          "children": [
+            null,
+            {
+              "name": "agent",
+              "type": "PIECE",
+              "settings": {
+                "pieceName": "@activepieces/piece-ai",
+                "pieceVersion": "0.4.0",
+                "input": {
+                  "agentTools": [
+                    {
+                      "type": "PIECE",
+                      "pieceMetadata": {
+                        "pieceName": "@activepieces/piece-slack",
+                        "pieceVersion": "1.2.3",
+                        "predefinedInput": {
+                          "auth": "alpha-tool-prod"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

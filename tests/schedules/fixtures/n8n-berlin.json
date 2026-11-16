@@ -1,0 +1,1 @@
+{"id":"berlin","name":"Berlin daily report","active":true,"settings":{"timezone":"Europe/Berlin"},"nodes":[{"id":"report","name":"Daily 02:30","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.2,"parameters":{"rule":{"interval":[{"field":"days","daysInterval":1,"triggerAtHour":2,"triggerAtMinute":30}]}}}],"connections":{}}

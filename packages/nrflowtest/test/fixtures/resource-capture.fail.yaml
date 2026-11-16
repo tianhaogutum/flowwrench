@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "name": "101 errors with first 100 declared",
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "errors",
+            "count": 101
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known <limit> & error",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "name": "captured counts retain declaration-order consumption",
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "errors",
+            "count": 101
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectError": [
+        {
+          "node": "function",
+          "message": "known",
+          "count": 101
+        },
+        {
+          "node": "function",
+          "message": "known",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "timeout": 250,
+      "hardTimeout": 5000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "name": "byte overflow after retained prefix",
+      "inject": [
+        {
+          "node": "function",
+          "msg": {
+            "payload": {
+              "mode": "bytes",
+              "count": 100
+            },
+            "_msgid": "fixed"
+          }
+        },
+        {
+          "node": "function",
+          "msg": {
+            "payload": {
+              "mode": "bytes",
+              "count": 8388600
+            },
+            "_msgid": "fixed"
+          }
+        }
+      ],
+      "expect": [
+        {
+          "node": "function",
+          "event": "output",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

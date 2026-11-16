@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Environments and tool caches
+.venv/
+.venv*/
+venv/
+.tmp/
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Lock files are not committed for this library; CI resolves fresh dependencies.
+uv.lock
+
+# Node (packages/nrflowtest keeps its committed npm-shrinkwrap.json)
+node_modules/
+*.tgz
+.nrflowtest-*/
+.nrflowtest-report-*
+/packages/nrflowtest/local-install/
+/packages/nrflowtest/out/
+/packages/nrflowtest/coverage/
+
+# Local Huginn kit artifacts (see docs/huginn.md)
+vars.local.yaml
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

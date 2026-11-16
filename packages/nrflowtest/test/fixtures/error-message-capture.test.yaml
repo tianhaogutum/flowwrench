@@ -1,0 +1,38 @@
+version: 1
+cases:
+  - name: declared code-unit boundaries preserve original flow messages
+    timeout: 80
+    inject:
+      node: function
+      msg:
+        payload:
+          messages:
+            - {unit: x, repeat: 7999}
+            - {unit: x, repeat: 8000, kind: object}
+            - {unit: x, repeat: 8001, kind: error}
+            - {unit: é, repeat: 8001}
+            - {unit: '😀', repeat: 4000}
+            - {unit: '😀', repeat: 4000, suffix: z}
+            - {unit: x, repeat: 7999, suffix: '😀'}
+            - {unit: 'short <&', repeat: 1}
+    expectError:
+      - {node: function, message: x, count: 4}
+      - {node: function, message: é}
+      - {node: function, message: '😀', count: 2}
+      - {node: function, message: 'short <&'}
+    expect:
+      - node: sink
+        sequence:
+          - {fields: {'/payload': 7999}}
+          - {fields: {'/payload': 8000}}
+          - {fields: {'/payload': 8001}}
+          - {fields: {'/payload': 8001}}
+          - {fields: {'/payload': 8000}}
+          - {fields: {'/payload': 8001}}
+          - {fields: {'/payload': 8001}}
+          - {fields: {'/payload': 8}}
+      - {node: caughtSink, count: 8}
+  - name: ordinary later healthy case
+    timeout: 80
+    inject: {node: function, msg: {payload: {}}}
+    expect: [{node: sink, msg: {payload: healthy}}]

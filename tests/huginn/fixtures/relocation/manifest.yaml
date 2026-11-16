@@ -1,0 +1,9 @@
+relocation_version: 1
+guids:
+  left: {}
+  right:
+    feed: '${HSK:PREFIX}_feed'
+    sink: '${HSK:PREFIX}_sink'
+scenario:
+  guid: 'combined_${HSK:ENV}'
+  name: 'Combined ${HSK:ENV}'

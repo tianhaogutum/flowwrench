@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "name": "城市 — synthetic",
+  "description": "Unicode, punctuation and nested JSON values.",
+  "guid": "00000000000000000000000000000003",
+  "source_url": false,
+  "agents": [
+    {
+      "guid": "11111111000000000000000000000001",
+      "name": "../../城市 / 東京",
+      "type": "Agents::EventFormattingAgent",
+      "options": {
+        "instructions": {
+          "location": "東京",
+          "message": "{{ value | default: \"yes\" }}"
+        },
+        "mode": "clean",
+        "matchers": [],
+        "nested": {
+          "yes": "yes",
+          "on": "on",
+          "date": "2026-01-01",
+          "bool": true,
+          "null": null,
+          "number": 2.5,
+          "list": [
+            0,
+            false,
+            "012"
+          ]
+        }
+      },
+      "disabled": false,
+      "keep_events_for": 0,
+      "propagate_immediately": false
+    }
+  ],
+  "links": [],
+  "control_links": [],
+  "x_metadata": {
+    "preserved": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "excess deliveries",
+      "timeout": 2500,
+      "hardTimeout": 10000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "deliveries",
+            "count": 100005
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectNoMessage": [
+        {
+          "node": "silent"
+        }
+      ]
+    }
+  ]
+}

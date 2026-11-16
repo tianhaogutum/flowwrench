@@ -1,0 +1,48 @@
+[
+  {
+    "id": "tab",
+    "type": "tab",
+    "label": "Synthetic resource boundaries"
+  },
+  {
+    "id": "function",
+    "type": "function",
+    "z": "tab",
+    "x": 100,
+    "y": 80,
+    "wires": [
+      [
+        "sink"
+      ]
+    ],
+    "outputs": 1,
+    "func": "const {mode, count} = msg.payload;\nif (mode === 'errors') { for (let i=0; i<count; i++) node.error('known <limit> & error', msg); return null; }\nif (mode === 'cleanup') { node.on('close', function(done) {\n    for (let i=0; i<count; i++) node.error('known <limit> & error');\n    done();\n  }); return null; }\nif (mode === 'bytes') {\n  const out = {payload: '', _msgid: msg._msgid};\n  const remaining = count - Buffer.byteLength(JSON.stringify(out));\n  out.payload = 'é'.repeat(Math.floor(remaining / 2)) + 'x'.repeat(remaining % 2);\n  return out;\n}\nif (mode === 'deliveries') {\n  let sent = 0;\n  const emit = () => {\n    const size = Math.min(500, count - sent);\n    node.send([Array.from({length: size}, () => ({payload: 1}))]);\n    sent += size;\n    if (sent < count) setTimeout(emit, 2);\n  };\n  emit(); return null;\n}\nif (mode === 'multi') {\n  node.send([Array.from({length: count}, () => ({payload: 1}))]);\n  for (let i=0; i<103; i++) node.error('known <limit> & error', msg);\n  return null;\n}\nreturn [Array.from({length: count}, () => ({payload: 1}))];"
+  },
+  {
+    "id": "setup",
+    "type": "function",
+    "z": "tab",
+    "x": 100,
+    "y": 160,
+    "wires": [],
+    "outputs": 1,
+    "func": "return null;",
+    "initialize": "for (let i=0; i<103; i++) node.error('known <limit> & error');"
+  },
+  {
+    "id": "sink",
+    "type": "debug",
+    "z": "tab",
+    "x": 300,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "silent",
+    "type": "debug",
+    "z": "tab",
+    "x": 300,
+    "y": 160,
+    "wires": []
+  }
+]

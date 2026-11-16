@@ -1,0 +1,12 @@
+{
+  "id": "synthetic-hourlies",
+  "name": "Synthetic n8n hourly maintenance",
+  "active": true,
+  "settings": {"timezone": "UTC"},
+  "nodes": [
+    {"id":"backup","name":"Backup index","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.2,"parameters":{"rule":{"interval":[{"field":"cronExpression","expression":"0 0 * * * *"}]}}},
+    {"id":"cache","name":"Cache refresh","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.2,"parameters":{"rule":{"interval":[{"field":"hours","hoursInterval":1,"triggerAtMinute":0}]}}},
+    {"id":"audit","name":"Legacy audit","type":"n8n-nodes-base.cron","typeVersion":1,"parameters":{"triggerTimes":{"item":[{"mode":"everyHour","minute":0}]}}}
+  ],
+  "connections": {}
+}

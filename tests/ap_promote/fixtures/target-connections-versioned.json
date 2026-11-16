@@ -1,0 +1,7 @@
+{
+  "data": [
+    {"externalId": "slack-prod", "pieceName": "@activepieces/piece-slack", "pieceVersion": "0.10.0", "status": "ACTIVE"},
+    {"externalId": "gmail-prod", "pieceName": "@activepieces/piece-gmail", "pieceVersion": "0.9.0", "status": "ACTIVE"}
+  ],
+  "next": null
+}

@@ -1,0 +1,80 @@
+{
+  "name": "Synthetic redistributable test",
+  "nodes": [
+    {
+      "id": "synthetic-Fetch",
+      "name": "Fetch",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-Code",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// $node.Fetch is an inert example\nconst note = \"$node.Fetch\";\nreturn {json: $node /* lookup */ . /* name */ Fetch.json};"
+      }
+    },
+    {
+      "id": "synthetic-Use",
+      "name": "Use",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "text": "=outside $node.Fetch {{ $node.Fetch.json }}"
+      }
+    }
+  ],
+  "connections": {
+    "Fetch": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Use",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {
+    "Fetch": [
+      {
+        "json": {
+          "text": "$node.Fetch stays data"
+        }
+      }
+    ]
+  }
+}

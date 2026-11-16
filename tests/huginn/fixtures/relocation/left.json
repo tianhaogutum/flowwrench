@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "name": "Left feed",
+  "guid": "scenario_left",
+  "exported_at": "2026-01-01T00:00:00Z",
+  "left_extension": {"enabled": true, "tags": ["left", null]},
+  "agents": [
+    {"guid": "feed", "name": "Left source", "type": "Agents::WebsiteAgent", "disabled": false, "schedule": "every_1h", "options": {"url": "https://left.example.invalid", "literal_guid": "feed"}},
+    {"guid": "sink", "name": "Left sink", "type": "Agents::EventFormattingAgent", "disabled": false, "options": {"message": "{{ value }}"}, "extension": {"keep": [true, 1, null]}}
+  ],
+  "links": [{"source": 0, "receiver": 1}],
+  "control_links": []
+}

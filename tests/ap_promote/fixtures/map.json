@@ -1,0 +1,4 @@
+{
+  "slack-dev": {"externalId": "slack-prod", "pieceName": "@activepieces/piece-slack"},
+  "gmail-dev": {"externalId": "gmail-prod", "pieceName": "@activepieces/piece-gmail"}
+}

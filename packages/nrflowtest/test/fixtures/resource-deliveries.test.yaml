@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "exact delivery cap",
+      "timeout": 2500,
+      "hardTimeout": 10000,
+      "stubs": [
+        {
+          "node": "setup"
+        }
+      ],
+      "inject": {
+        "node": "function",
+        "msg": {
+          "payload": {
+            "mode": "deliveries",
+            "count": 99999
+          },
+          "_msgid": "fixed"
+        }
+      },
+      "expectNoMessage": [
+        {
+          "node": "silent"
+        }
+      ]
+    }
+  ]
+}

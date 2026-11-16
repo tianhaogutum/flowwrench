@@ -1,0 +1,17 @@
+version: 1
+cases:
+  - name: selected truncated and short errors still pass
+    timeout: 80
+    inject:
+      - {node: a, msg: {payload: {specs: [{unit: x, repeat: 8001}]}}}
+      - {node: b, msg: {payload: {specs: [{unit: 'short <&', repeat: 1}]}}}
+      - {node: plain, msg: {payload: {specs: [{unit: z, repeat: 8001}]}}}
+    expectError:
+      - {node: a, message: x}
+      - {node: b, message: 'short <&'}
+      - {node: plain, message: z}
+    expect: [{node: sink, count: 3}]
+  - name: healthy positive
+    timeout: 80
+    inject: {node: a, msg: {payload: {}}}
+    expect: [{node: sink, msg: {payload: healthy}}]

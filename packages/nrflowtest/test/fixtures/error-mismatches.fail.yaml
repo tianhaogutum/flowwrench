@@ -1,0 +1,52 @@
+version: 1
+cases:
+  - name: missing error is count zero
+    timeout: 80
+    inject: []
+    expectError:
+      - node: instance
+        message: problem
+  - name: extra declared errors precede message counts
+    timeout: 80
+    inject:
+      - node: instance
+        msg: {payload: 'problem <order> & service'}
+      - node: instance
+        msg: {payload: 'problem <order> & service'}
+    expectError:
+      - node: instance
+        message: problem
+    expect:
+      - node: sink
+        count: 1
+  - name: substring mismatch leaves error unexpected
+    timeout: 80
+    inject:
+      node: instance
+      msg: {payload: 'problem <order> & service'}
+    expectError:
+      - node: instance
+        message: PROBLEM
+    expect:
+      - node: sink
+        count: 4
+  - name: declarations consume errors in order
+    timeout: 80
+    inject:
+      node: instance
+      msg: {payload: 'problem <order> & service'}
+    expectError:
+      - node: instance
+        message: problem
+      - node: instance
+        message: problem
+    expect:
+      - node: sink
+  - name: undeclared caught error suppresses message mismatch
+    timeout: 80
+    inject:
+      node: instance
+      msg: {payload: 'problem <order> & service'}
+    expect:
+      - node: sink
+        count: 4

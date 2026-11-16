@@ -1,0 +1,17 @@
+version: 1
+cases:
+  - name: hanging input is terminated
+    timeout: 60
+    hardTimeout: 1500
+    inject: {node: function, msg: {payload: hang}}
+    expect: [{node: sink, msg: {payload: 1}}]
+  - name: hanging cleanup is terminated
+    timeout: 60
+    hardTimeout: 1500
+    inject: {node: function, msg: {payload: hang cleanup}}
+    expect: [{node: sink, msg: {payload: 1}}]
+  - name: later case has fresh context and no leaked timers
+    timeout: 60
+    hardTimeout: 3000
+    inject: {node: function, msg: {payload: healthy}}
+    expect: [{node: sink, msg: {payload: 1}}]

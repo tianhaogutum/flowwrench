@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "name": "Combined demo",
+  "guid": "combined_demo",
+  "exported_at": "2026-01-01T00:00:00Z",
+  "left_extension": {
+    "enabled": true,
+    "tags": [
+      "left",
+      null
+    ]
+  },
+  "right_extension": [
+    "right",
+    {
+      "count": 2
+    }
+  ],
+  "agents": [
+    {
+      "guid": "control",
+      "name": "Controller",
+      "type": "Agents::AgentControllerAgent",
+      "disabled": false,
+      "schedule": "midnight",
+      "options": {
+        "action": "disable"
+      }
+    },
+    {
+      "guid": "copy_feed",
+      "name": "Right source",
+      "type": "Agents::WebsiteAgent",
+      "disabled": false,
+      "keep_events_for": 3600,
+      "options": {
+        "url": "https://right.example.invalid",
+        "literal_guid": "feed"
+      }
+    },
+    {
+      "guid": "copy_sink",
+      "name": "Right sink",
+      "type": "Agents::EventFormattingAgent",
+      "disabled": false,
+      "propagate_immediately": true,
+      "options": {
+        "message": "{% credential demo_key %} {{ value }}"
+      },
+      "extension": "preserved"
+    },
+    {
+      "guid": "feed",
+      "name": "Left source",
+      "type": "Agents::WebsiteAgent",
+      "disabled": false,
+      "schedule": "every_1h",
+      "options": {
+        "url": "https://left.example.invalid",
+        "literal_guid": "feed"
+      }
+    },
+    {
+      "guid": "sink",
+      "name": "Left sink",
+      "type": "Agents::EventFormattingAgent",
+      "disabled": false,
+      "options": {
+        "message": "{{ value }}"
+      },
+      "extension": {
+        "keep": [
+          true,
+          1,
+          null
+        ]
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "receiver": 2
+    },
+    {
+      "source": 3,
+      "receiver": 4
+    },
+    {
+      "source": 4,
+      "receiver": 1
+    }
+  ],
+  "control_links": [
+    {
+      "controller": 0,
+      "control_target": 1
+    },
+    {
+      "controller": 0,
+      "control_target": 2
+    },
+    {
+      "controller": 0,
+      "control_target": 3
+    }
+  ]
+}

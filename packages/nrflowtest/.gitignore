@@ -1,0 +1,16 @@
+research/raw/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.DS_Store
+.nrflowtest-*/
+.nrflowtest-report-*
+coverage/
+out/
+*.tgz
+/local-install/

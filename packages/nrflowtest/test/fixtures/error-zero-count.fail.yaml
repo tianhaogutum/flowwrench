@@ -1,0 +1,34 @@
+version: 1
+cases:
+  - name: failed zero consumes every retained match
+    timeout: 80
+    inject: {node: plain, msg: {payload: {specs: [{unit: 'short <&', repeat: 1, copies: 2}]}}}
+    expectError:
+      - {node: plain, message: 'short <&', count: 0}
+      - {node: plain, message: 'short <&', count: 0}
+      - {node: plain, message: 'short <&'}
+    expect: [{node: sink, count: 3}]
+  - name: zero after a failed positive consumer
+    timeout: 80
+    inject: {node: outer, msg: {payload: {specs: [{unit: 'alpha shared', repeat: 1}]}}}
+    expectError:
+      - {node: outer, message: alpha, count: 2}
+      - {node: outer, message: shared, count: 0}
+    expect: [{node: sink}]
+  - name: passing zero leaves nonmatching error unexpected
+    timeout: 80
+    inject: {node: plain, msg: {payload: {specs: [{unit: 'short <&', repeat: 1}]}}}
+    expectError: [{node: plain, message: SHORT, count: 0}]
+    expect: [{node: sink, count: 999}]
+  - name: retained zero does not assert absence in discarded suffixes or entries
+    timeout: 80
+    inject: {node: outer, msg: {payload: {specs: [{unit: x, repeat: 8000, suffix: TAIL, copies: 101}]}}}
+    expectError:
+      - {node: outer, message: TAIL, count: 0}
+      - {node: outer, message: x, count: 100}
+      - {node: outer, message: x, count: 0}
+  - name: healthy case still runs after zero failures
+    timeout: 80
+    inject: {node: plain, msg: {payload: {}}}
+    expectError: [{node: plain, message: absent, count: 0}]
+    expect: [{node: sink, msg: {payload: healthy}}]

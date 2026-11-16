@@ -1,0 +1,3 @@
+# Synthetic user crontab. Commands are opaque and never retained or executed.
+CRON_TZ=UTC
+37 3 * * * /usr/bin/true
