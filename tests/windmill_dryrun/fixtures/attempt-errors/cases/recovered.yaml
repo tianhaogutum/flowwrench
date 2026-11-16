@@ -1,0 +1,22 @@
+name: Assert the complete recovered attempt error
+flow: ../flow.yaml
+mocks:
+  send:
+    sequence:
+      - error: {name: Temporary, message: retry A}
+      - result: recovered
+expect:
+  result: recovered
+  simulated_delay_seconds: 0
+  retry_delays:
+    - {module_id: send, attempt: 1, retry_delay_seconds: 0}
+  mock_errors: []
+  mock_calls:
+    - {module_id: send, source: sequence, call: 1}
+    - {module_id: send, source: sequence, call: 2}
+  mock_usage:
+    send: {expected: 2, calls: 2, consumed: 2, remaining: 0, extra: 0}
+  attempt_errors:
+    - module_id: send
+      attempt: 1
+      error: {name: Temporary, message: retry A, step_id: send}

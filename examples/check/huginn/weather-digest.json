@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "name": "Weather digest",
+  "description": "Synthetic example; no live endpoint.",
+  "guid": "synthetic-weather-digest",
+  "source_url": false,
+  "exported_at": "2026-11-01T00:00:00Z",
+  "agents": [
+    {
+      "guid": "synthetic-weather-feed",
+      "name": "Weather feed",
+      "type": "Agents::WebsiteAgent",
+      "options": {"url": "https://weather.example.invalid/today.json", "type": "json", "mode": "on_change",
+                  "extract": {"temperature": {"path": "$.temperature"}}},
+      "disabled": false,
+      "propagate_immediately": false,
+      "schedule": "midnight"
+    },
+    {
+      "guid": "synthetic-morning-email",
+      "name": "Morning email",
+      "type": "Agents::EmailDigestAgent",
+      "options": {"subject": "Weather today", "expected_receive_period_in_days": "2"},
+      "disabled": false,
+      "propagate_immediately": false,
+      "schedule": "8am"
+    },
+    {
+      "guid": "synthetic-unused-formatter",
+      "name": "Unused formatter",
+      "type": "Agents::EventFormattingAgent",
+      "options": {"instructions": {"message": "{{ temperature }} C"}, "mode": "clean"},
+      "disabled": false,
+      "propagate_immediately": false,
+      "schedule": null
+    }
+  ],
+  "links": [{"source": 0, "receiver": 1}],
+  "control_links": []
+}

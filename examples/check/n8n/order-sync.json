@@ -1,0 +1,55 @@
+{
+  "name": "Order sync",
+  "nodes": [
+    {
+      "id": "synthetic-every-night",
+      "name": "Every night",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0],
+      "parameters": {
+        "rule": {"interval": [{"field": "cronExpression", "expression": "0 1 * * *"}]}
+      }
+    },
+    {
+      "id": "synthetic-fetch-orders",
+      "name": "Fetch orders",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0],
+      "parameters": {"method": "GET", "url": "https://shop.example.invalid/api/orders", "options": {}}
+    },
+    {
+      "id": "synthetic-enrich-customer",
+      "name": "Enrich customer",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [440, 0],
+      "parameters": {
+        "assignments": {"assignments": [{"id": "synthetic-total", "name": "total", "value": "={{ $json.total }}", "type": "number"}]},
+        "options": {}
+      }
+    },
+    {
+      "id": "synthetic-post-summary",
+      "name": "Post summary",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [660, 0],
+      "parameters": {
+        "select": "channel",
+        "channelId": {"__rl": true, "value": "C0SYNTHETIC", "mode": "id"},
+        "text": "=Synced {{ $('Enrich').item.json.total }} orders",
+        "otherOptions": {}
+      }
+    }
+  ],
+  "connections": {
+    "Every night": {"main": [[{"node": "Fetch orders", "type": "main", "index": 0}]]},
+    "Fetch orders": {"main": [[{"node": "Enrich customer", "type": "main", "index": 0}]]},
+    "Enrich customer": {"main": [[{"node": "Post summary", "type": "main", "index": 0}]]}
+  },
+  "active": true,
+  "settings": {"executionOrder": "v1", "timezone": "Europe/Berlin"},
+  "pinData": {}
+}

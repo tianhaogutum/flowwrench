@@ -1,0 +1,11 @@
+name: cancelled order takes second branch
+flow: ../flow.yaml
+input: {order_id: cancelled-1}
+mocks:
+  fetch_order: {result: {status: cancelled, items: []}}
+  cancel: {result: {cancelled: true}}
+  audit: {echo_args: true}
+expect:
+  path: [fetch_order, route, cancel, audit]
+  args: {cancel: [{order_id: cancelled-1}], notify: []}
+  result: {outcome: {cancelled: true}}

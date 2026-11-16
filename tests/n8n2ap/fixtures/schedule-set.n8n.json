@@ -1,0 +1,11 @@
+{
+  "name":"Daily digest preparation",
+  "nodes":[
+    {"id":"clock","name":"Daily","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.2,"position":[0,0],"parameters":{"rule":{"interval":[{"field":"cronExpression","expression":"0 30 8 * * 1-5"}]}}},
+    {"id":"set","name":"Prepare","type":"n8n-nodes-base.set","typeVersion":2,"position":[250,0],"parameters":{"keepOnlySet":true,"values":{"string":[{"name":"message","value":"Daily digest"}],"number":[{"name":"limit","value":10}],"boolean":[{"name":"preview","value":true}]},"options":{}}},
+    {"id":"noop","name":"Ready","type":"n8n-nodes-base.noOp","typeVersion":1,"position":[500,0],"parameters":{}},
+    {"id":"note","name":"Documentation","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[0,-200],"parameters":{"content":"Synthetic fixture: no service calls.","width":400,"height":150}}
+  ],
+  "connections":{"Daily":{"main":[[{"node":"Prepare","type":"main","index":0}]]},"Prepare":{"main":[[{"node":"Ready","type":"main","index":0}]]}},
+  "settings":{"timezone":"Europe/Berlin","executionOrder":"v1"}
+}

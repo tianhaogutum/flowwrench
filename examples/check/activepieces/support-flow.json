@@ -1,0 +1,40 @@
+{
+  "id": "synthetic-support-flow",
+  "status": "ENABLED",
+  "version": {
+    "displayName": "Support triage",
+    "valid": true,
+    "schemaVersion": "28",
+    "trigger": {
+      "name": "trigger",
+      "type": "PIECE_TRIGGER",
+      "valid": true,
+      "displayName": "New support email",
+      "settings": {
+        "pieceName": "@activepieces/piece-gmail",
+        "pieceVersion": "~0.9.0",
+        "triggerName": "gmail_new_email_received",
+        "input": {"auth": "{{connections['gmail-dev']}}"},
+        "propertySettings": {},
+        "sampleData": {"sampleDataFileId": "synthetic-trigger-sample"}
+      },
+      "nextAction": {
+        "name": "notify_slack",
+        "type": "PIECE",
+        "valid": true,
+        "displayName": "Notify Slack",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "0.10.0",
+          "actionName": "send_channel_message",
+          "input": {
+            "auth": "{{connections['slack-dev']}}",
+            "channel": "synthetic-support",
+            "text": "New ticket: {{trigger.subject}}"
+          },
+          "propertySettings": {}
+        }
+      }
+    }
+  }
+}

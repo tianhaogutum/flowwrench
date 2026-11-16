@@ -1,0 +1,72 @@
+{
+  "name": "Lead router",
+  "nodes": [
+    {
+      "id": "synthetic-new-lead",
+      "name": "New lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "parameters": {"httpMethod": "POST", "path": "synthetic-leads", "responseMode": "onReceived", "options": {}}
+    },
+    {
+      "id": "synthetic-is-enterprise",
+      "name": "Is enterprise?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [220, 0],
+      "parameters": {"conditions": {"boolean": [{"value1": "={{ $json.body.enterprise }}", "value2": true}]}}
+    },
+    {
+      "id": "synthetic-enrich-lead",
+      "name": "Enrich lead",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [440, -100],
+      "parameters": {"values": {"string": [{"name": "company", "value": "Synthetic Ltd"}]}, "options": {}}
+    },
+    {
+      "id": "synthetic-skip",
+      "name": "Skip",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [440, 100],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-join",
+      "name": "Join",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [660, 0],
+      "parameters": {}
+    },
+    {
+      "id": "synthetic-notify-sales",
+      "name": "Notify sales",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [880, 0],
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "synthetic-sales",
+        "text": "=New lead from {{ $('Enrich lead').item.json.company }}",
+        "otherOptions": {}
+      }
+    }
+  ],
+  "connections": {
+    "New lead": {"main": [[{"node": "Is enterprise?", "type": "main", "index": 0}]]},
+    "Is enterprise?": {"main": [
+      [{"node": "Enrich lead", "type": "main", "index": 0}],
+      [{"node": "Skip", "type": "main", "index": 0}]
+    ]},
+    "Enrich lead": {"main": [[{"node": "Join", "type": "main", "index": 0}]]},
+    "Skip": {"main": [[{"node": "Join", "type": "main", "index": 0}]]},
+    "Join": {"main": [[{"node": "Notify sales", "type": "main", "index": 0}]]}
+  },
+  "active": true,
+  "settings": {"executionOrder": "v1"},
+  "pinData": {}
+}

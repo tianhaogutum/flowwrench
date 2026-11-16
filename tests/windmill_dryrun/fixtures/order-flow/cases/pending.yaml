@@ -1,0 +1,9 @@
+name: pending order takes default identity branch
+flow: ../flow.yaml
+input: {order_id: pending-1}
+mocks:
+  fetch_order: {result: {status: pending, items: []}}
+  audit: {echo_args: true}
+expect:
+  path: [fetch_order, route, pending, audit]
+  result: {outcome: {status: pending, items: []}}

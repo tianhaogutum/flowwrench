@@ -1,0 +1,13 @@
+{
+  "name": "Broken reference",
+  "nodes": [
+    {"id": "fixture-start", "name": "Start", "type": "n8n-nodes-base.manualTrigger", "typeVersion": 1,
+     "position": [0, 0], "parameters": {}},
+    {"id": "fixture-set", "name": "Format", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [200, 0],
+     "parameters": {"values": {"string": [{"name": "who", "value": "={{ $('Lookup').item.json.name }}"}]},
+                    "options": {}}}
+  ],
+  "connections": {"Start": {"main": [[{"node": "Format", "type": "main", "index": 0}]]}},
+  "active": false,
+  "settings": {"executionOrder": "v1"}
+}

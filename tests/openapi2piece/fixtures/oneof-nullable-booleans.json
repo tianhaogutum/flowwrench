@@ -1,0 +1,493 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nullable boolean intersections",
+    "version": "1"
+  },
+  "paths": {
+    "/send31": {
+      "post": {
+        "operationId": "send31",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "enum": [
+                  true,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/send30": {
+      "post": {
+        "operationId": "send30",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean",
+                "nullable": true,
+                "enum": [
+                  true,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": "boolean",
+                    "nullable": true,
+                    "enum": [
+                      true,
+                      null
+                    ]
+                  },
+                  {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/falseAllowed": {
+      "post": {
+        "operationId": "falseAllowed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "boolean"
+                ],
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/zero": {
+      "post": {
+        "operationId": "zero",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "enum": [
+                  true,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": "boolean",
+                    "nullable": true,
+                    "enum": [
+                      true
+                    ]
+                  },
+                  {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "enum": [
+                  true,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "enum": [
+                      true,
+                      null
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/enumExcludes": {
+      "post": {
+        "operationId": "enumExcludes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "enum": [
+                  true
+                ],
+                "oneOf": [
+                  {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "enum": [
+                      true,
+                      null
+                    ],
+                    "oneOf": [
+                      {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "null",
+                        "boolean"
+                      ],
+                      "oneOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "boolean",
+                      "nullable": true,
+                      "enum": [
+                        true,
+                        null
+                      ],
+                      "oneOf": [
+                        {
+                          "type": "boolean",
+                          "nullable": true,
+                          "enum": [
+                            true,
+                            null
+                          ]
+                        },
+                        {
+                          "type": "boolean",
+                          "enum": [
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "enum": [
+                      true,
+                      null
+                    ],
+                    "oneOf": [
+                      {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ],
+                        "enum": [
+                          true,
+                          null
+                        ],
+                        "oneOf": [
+                          {
+                            "type": "boolean",
+                            "nullable": true,
+                            "enum": [
+                              true
+                            ]
+                          },
+                          {
+                            "type": "boolean",
+                            "enum": [
+                              false
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/composed": {
+      "post": {
+        "operationId": "composed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "enum": [
+                  true,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "enum": [
+                      true,
+                      null
+                    ],
+                    "oneOf": [
+                      {
+                        "type": "boolean",
+                        "nullable": true,
+                        "enum": [
+                          true
+                        ]
+                      },
+                      {
+                        "type": "boolean",
+                        "enum": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "nullable": true,
+                "minLength": 1,
+                "oneOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/invalidTypes": {
+      "post": {
+        "operationId": "invalidTypes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "oneOf": [
+                  {
+                    "type": [
+                      "boolean",
+                      "null",
+                      "null"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

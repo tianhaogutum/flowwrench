@@ -1,0 +1,601 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nullable string wrappers",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/send31": {
+      "post": {
+        "operationId": "send31",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ab",
+                  "abc",
+                  null
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/send30": {
+      "post": {
+        "operationId": "send30",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "ab",
+                  "abc",
+                  null
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/empty": {
+      "post": {
+        "operationId": "empty",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "enum": [
+                  "",
+                  null
+                ],
+                "minLength": 0,
+                "maxLength": 0,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      ""
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/zero": {
+      "post": {
+        "operationId": "zero",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ab",
+                  "abc",
+                  null
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "nullable": true,
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ab",
+                  "abc",
+                  null
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/enumExcludes": {
+      "post": {
+        "operationId": "enumExcludes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ab",
+                  "abc"
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unicode": {
+      "post": {
+        "operationId": "unicode",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "minLength": 2,
+                "maxLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/independent": {
+      "post": {
+        "operationId": "independent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "minLength": 1,
+                "maxLength": 4,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "a",
+                      "bb"
+                    ],
+                    "minLength": 2
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ccc",
+                      "dddd"
+                    ],
+                    "maxLength": 3
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/composed": {
+      "post": {
+        "operationId": "composed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "enum": [
+                  "abc",
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "ab",
+                      "abc",
+                      null
+                    ],
+                    "minLength": 3,
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "nullable": true,
+                        "enum": [
+                          "abc"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "ab",
+                      "abc",
+                      null
+                    ],
+                    "minLength": 3,
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "ab",
+                          "abc"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "ab",
+                        "abc",
+                        null
+                      ],
+                      "minLength": 3,
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "ab",
+                            "abc"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "ab",
+                        "abc",
+                        null
+                      ],
+                      "minLength": 3,
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "ab",
+                            "abc"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "enum": [
+                      "abc",
+                      null
+                    ],
+                    "oneOf": [
+                      {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "enum": [
+                          "ab",
+                          "abc",
+                          null
+                        ],
+                        "minLength": 3,
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "nullable": true,
+                            "enum": [
+                              "abc"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "nullable": true,
+                "minLength": 1,
+                "oneOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/invalidTypes": {
+      "post": {
+        "operationId": "invalidTypes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ab",
+                  "abc",
+                  null
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": [
+                      "string",
+                      "null",
+                      "null"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

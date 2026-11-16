@@ -1,0 +1,240 @@
+{
+  "pinnedCommit": "f4a49c42770086b4c5c791714aba9a999e01732b",
+  "sources": [
+    {
+      "path": "packages/workflow/src/cron.ts",
+      "sha256": "eea9063fe23af95584188c4d55ed066db13537d22ad5452da216885450c333f3"
+    },
+    {
+      "path": "packages/nodes-base/nodes/Cron/Cron.node.ts",
+      "sha256": "de4bfd27b3f40456d7c25afcfc9b69ba512c0f65e297084b857ba42ad1fcf6b1"
+    }
+  ],
+  "method": "Unchanged pure helper with controlled randomInt(60); Cron v1 wiring inspected, no scheduler or workflow execution.",
+  "cases": [
+    {
+      "rule": {
+        "mode": "everyMinute"
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "0 * * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyMinute"
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "3 * * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyMinute"
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "37 * * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyMinute"
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "59 * * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyHour",
+        "minute": 17
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "0 17 * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyHour",
+        "minute": 17
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "3 17 * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyHour",
+        "minute": 17
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "37 17 * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyHour",
+        "minute": 17
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "59 17 * * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyDay",
+        "hour": 8,
+        "minute": 17
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyDay",
+        "hour": 8,
+        "minute": 17
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "3 17 8 * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyDay",
+        "hour": 8,
+        "minute": 17
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "37 17 8 * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyDay",
+        "hour": 8,
+        "minute": 17
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "59 17 8 * * *"
+    },
+    {
+      "rule": {
+        "mode": "everyWeek",
+        "hour": 8,
+        "minute": 17,
+        "weekday": 2
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * 2"
+    },
+    {
+      "rule": {
+        "mode": "everyWeek",
+        "hour": 8,
+        "minute": 17,
+        "weekday": 2
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "3 17 8 * * 2"
+    },
+    {
+      "rule": {
+        "mode": "everyWeek",
+        "hour": 8,
+        "minute": 17,
+        "weekday": 2
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "37 17 8 * * 2"
+    },
+    {
+      "rule": {
+        "mode": "everyWeek",
+        "hour": 8,
+        "minute": 17,
+        "weekday": 2
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "59 17 8 * * 2"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "0 17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 0,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "0 17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 3,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "0 17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 37,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * 1-5"
+    },
+    {
+      "rule": {
+        "mode": "custom",
+        "cronExpression": "0 17 8 * * 1-5"
+      },
+      "controlledRandomSecond": 59,
+      "randomCalls": 1,
+      "sourceCron": "0 17 8 * * 1-5"
+    }
+  ]
+}

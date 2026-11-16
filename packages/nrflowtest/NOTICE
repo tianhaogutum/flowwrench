@@ -10,4 +10,4 @@ http://js.foundation — Apache License 2.0.
 No upstream source files have been copied or modified in this repository.
 Node-RED is a trademark of the OpenJS Foundation. This project is not an
 OpenJS Foundation or Node-RED project and is not endorsed by them.
-See THIRD_PARTY.md for dependency sources and research provenance.
+See THIRD_PARTY.md for dependency sources.

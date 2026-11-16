@@ -1,0 +1,10 @@
+fetch_order:
+  result:
+    status: paid
+    items:
+      - {sku: ABC, quantity: 2}
+      - {sku: XYZ, quantity: 1}
+reserve: {echo_args: true}
+notify: {result: {sent: true}}
+cancel: {result: {cancelled: true}}
+audit: {echo_args: true}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "name": "Fixture scenario",
+  "guid": "fixture-scenario",
+  "agents": [
+    {"guid": "fixture-feed", "name": "Feed", "type": "Agents::WebsiteAgent", "options": {"url": "https://example.invalid"},
+     "disabled": false, "schedule": "every_1h"},
+    {"guid": "fixture-mail", "name": "Mail", "type": "Agents::EmailAgent", "options": {}, "disabled": false,
+     "schedule": null},
+    {"guid": "fixture-lonely", "name": "Lonely", "type": "Agents::EventFormattingAgent", "options": {},
+     "disabled": false, "schedule": null}
+  ],
+  "links": [{"source": 0, "receiver": 1}],
+  "control_links": []
+}

@@ -1,0 +1,17 @@
+# Synthetic offline fixture: empty branch bodies have identical results.
+summary: Ordered branch selections hidden by equal results
+value:
+  modules:
+    - id: each
+      value:
+        type: forloopflow
+        iterator: {type: static, value: [left, right]}
+        skip_failures: false
+        modules:
+          - id: choose
+            value:
+              type: branchone
+              branches:
+                - expr: 'flow_input.iter.value === "left"'
+                  modules: []
+              default: []

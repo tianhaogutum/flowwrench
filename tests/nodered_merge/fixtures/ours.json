@@ -1,0 +1,78 @@
+[
+  {
+    "id": "tab-home",
+    "type": "tab",
+    "label": "Synthetic demo"
+  },
+  {
+    "id": "broker-local",
+    "type": "mqtt-broker",
+    "name": "Local demo broker",
+    "broker": "localhost",
+    "port": "1883",
+    "tls": ""
+  },
+  {
+    "id": "trigger",
+    "type": "inject",
+    "z": "tab-home",
+    "name": "Every minute",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "60",
+    "once": false,
+    "x": 140,
+    "y": 130,
+    "wires": [
+      [
+        "function-a"
+      ]
+    ]
+  },
+  {
+    "id": "function-a",
+    "type": "function",
+    "z": "tab-home",
+    "name": "A: prepare",
+    "func": "msg.payload = Number(msg.payload) || 0;\nreturn msg;",
+    "outputs": 1,
+    "x": 320,
+    "y": 130,
+    "wires": [
+      [
+        "function-b"
+      ]
+    ]
+  },
+  {
+    "id": "function-b",
+    "type": "function",
+    "z": "tab-home",
+    "name": "B: scale",
+    "func": "msg.payload *= 2;\nreturn msg;",
+    "outputs": 1,
+    "x": 520,
+    "y": 130,
+    "wires": [
+      [
+        "publish"
+      ]
+    ]
+  },
+  {
+    "id": "publish",
+    "type": "mqtt out",
+    "z": "tab-home",
+    "name": "Publish demo",
+    "broker": "broker-local",
+    "topic": "demo/value",
+    "qos": "0",
+    "retain": "false",
+    "x": 720,
+    "y": 130,
+    "wires": []
+  }
+]

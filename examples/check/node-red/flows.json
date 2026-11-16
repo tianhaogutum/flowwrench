@@ -1,0 +1,19 @@
+[
+  {"id": "tab-sensors", "type": "tab", "label": "Sensors", "disabled": false, "info": ""},
+  {
+    "id": "inject-poll", "type": "inject", "z": "tab-sensors", "name": "Poll sensors",
+    "props": [{"p": "payload"}], "repeat": "", "crontab": "00 00 * * *", "once": false, "onceDelay": 0.1,
+    "topic": "", "payload": "", "payloadType": "date", "x": 120, "y": 80,
+    "wires": [["function-parse"]]
+  },
+  {
+    "id": "function-parse", "type": "function", "z": "tab-sensors", "name": "Parse reading",
+    "func": "return msg;", "outputs": 1, "x": 320, "y": 80,
+    "wires": [["mqtt-publish", "debug-old"]]
+  },
+  {
+    "id": "mqtt-publish", "type": "mqtt out", "z": "tab-sensors", "name": "Publish",
+    "topic": "home/sensors", "qos": "", "retain": "", "broker": "broker-home", "x": 520, "y": 80,
+    "wires": []
+  }
+]

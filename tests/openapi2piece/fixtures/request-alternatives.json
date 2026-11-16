@@ -1,0 +1,45 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Synthetic notification alternatives", "version": "1" },
+  "servers": [{ "url": "./v2" }],
+  "paths": {
+    "/notify": {
+      "post": {
+        "operationId": "notify",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/Email" },
+              { "$ref": "#/components/schemas/Sms" },
+              { "type": "null" }
+            ]
+          } } }
+        },
+        "responses": { "200": { "description": "Accepted" } }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": { "content": { "application/json": { "schema": {
+          "oneOf": [{ "type": "object" }, { "type": "string" }]
+        } } } },
+        "responses": { "200": { "description": "Accepted" } }
+      }
+    }
+  },
+  "components": { "schemas": {
+    "Email": {
+      "type": "object", "required": ["email"], "additionalProperties": false,
+      "properties": {
+        "email": { "type": "string", "minLength": 1 },
+        "reference": { "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": ["string", "null"], "minLength": 1 }] }
+      }
+    },
+    "Sms": {
+      "type": "object", "required": ["sms"], "additionalProperties": false,
+      "properties": { "sms": { "type": "string", "minLength": 1 } }
+    }
+  } }
+}

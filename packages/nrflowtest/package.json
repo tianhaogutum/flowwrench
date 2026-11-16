@@ -23,11 +23,6 @@
     "LICENSE",
     "THIRD_PARTY.md",
     "NOTICE",
-    "STATUS.json",
-    "RESEARCH.md",
-    "specs.json",
-    "research/evidence-index.md",
-    "research/dependency-audit.json",
     "npm-shrinkwrap.json",
     "test/",
     "scripts/"

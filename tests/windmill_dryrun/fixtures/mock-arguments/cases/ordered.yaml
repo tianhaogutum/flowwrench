@@ -1,0 +1,8 @@
+name: ordered recipient arguments pass
+flow: ../flow.yaml
+input: ../input.json
+mocks: ../mocks.yaml
+options: {requireAllMocksUsed: true}
+expect:
+  status: ok
+  result: [{sent: alice}, {sent: bob}]

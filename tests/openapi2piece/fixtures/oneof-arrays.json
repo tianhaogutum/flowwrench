@@ -1,0 +1,364 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Array oneOf intersections",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/array": {
+      "post": {
+        "operationId": "sendArray",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        2
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/independent": {
+      "post": {
+        "operationId": "independent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 3,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "maximum": 0
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 1,
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        -1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        }
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "enum": [
+                            2
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "minItems": 2,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "oneOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "enum": [
+                              0,
+                              1
+                            ]
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "enum": [
+                              2
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "minItems": 2,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "oneOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "enum": [
+                              0,
+                              1
+                            ]
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "integer",
+                            "enum": [
+                              2
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "minItems": 2,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "oneOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "enum": [
+                                0,
+                                1
+                              ]
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "enum": [
+                                2
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "enum": [
+                            4
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "nullable": true,
+                "minLength": 1,
+                "oneOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

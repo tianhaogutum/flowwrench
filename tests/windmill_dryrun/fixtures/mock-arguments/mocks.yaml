@@ -1,0 +1,6 @@
+send:
+  sequence:
+    - expect_args: {recipient: alice}
+      result: {sent: alice}
+    - expect_args: {recipient: bob}
+      result: {sent: bob}

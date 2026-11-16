@@ -1,0 +1,11 @@
+name: missing call fails the optional consumption gate
+flow: ../flow.yaml
+input: ../input-one.json
+mocks: ../mocks.yaml
+options: {requireAllMocksUsed: true}
+expect:
+  status: error
+  error:
+    name: MockUnused
+    step_id: send
+    message: "Mock sequence for 'send' has 1 unused response(s): consumed 1 of 2"

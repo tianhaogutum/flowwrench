@@ -1,0 +1,41 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Synthetic constrained alternatives", "version": "1" },
+  "servers": [{ "url": "./v2" }],
+  "paths": {
+    "/notify": {
+      "post": {
+        "operationId": "notify",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": {
+            "type": "object",
+            "required": ["requestId"],
+            "properties": {
+              "requestId": { "type": "string", "minLength": 1 },
+              "email": { "type": "string", "minLength": 1 },
+              "sms": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false,
+            "oneOf": [
+              { "type": "object", "required": ["email"] },
+              { "type": "object", "required": ["sms"] },
+              { "type": "null" }
+            ]
+          } } }
+        },
+        "responses": { "200": { "description": "Accepted" } }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": { "content": { "application/json": { "schema": {
+          "type": "object", "minProperties": 1,
+          "oneOf": [{ "type": "object" }]
+        } } } },
+        "responses": { "200": { "description": "Accepted" } }
+      }
+    }
+  }
+}

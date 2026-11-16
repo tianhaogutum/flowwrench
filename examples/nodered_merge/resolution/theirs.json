@@ -1,0 +1,3 @@
+[
+  { "id": "a", "type": "function", "func": "msg.payload = 1; return msg;", "x": 100, "y": 200, "wires": [] }
+]

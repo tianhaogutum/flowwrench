@@ -1,0 +1,34 @@
+{
+  "id": "fixture-flow",
+  "status": "ENABLED",
+  "version": {
+    "displayName": "Fixture flow",
+    "trigger": {
+      "name": "trigger",
+      "type": "PIECE_TRIGGER",
+      "valid": true,
+      "displayName": "New email",
+      "settings": {
+        "pieceName": "@activepieces/piece-gmail",
+        "pieceVersion": "~0.9.0",
+        "triggerName": "gmail_new_email_received",
+        "input": {"auth": "{{connections['gmail-dev']}}"},
+        "propertySettings": {},
+        "sampleData": {"sampleDataFileId": "fixture-sample"}
+      },
+      "nextAction": {
+        "name": "notify",
+        "type": "PIECE",
+        "valid": true,
+        "displayName": "Notify",
+        "settings": {
+          "pieceName": "@activepieces/piece-slack",
+          "pieceVersion": "0.10.0",
+          "actionName": "send_channel_message",
+          "input": {"auth": "{{connections['slack-dev']}}", "text": "hello"},
+          "propertySettings": {}
+        }
+      }
+    }
+  }
+}

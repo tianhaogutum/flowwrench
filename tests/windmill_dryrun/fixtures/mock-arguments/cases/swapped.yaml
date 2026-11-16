@@ -1,0 +1,11 @@
+name: swapped recipient arguments fail despite exact response count
+flow: ../flow.yaml
+input: ../input-swapped.json
+mocks: ../mocks.yaml
+options: {requireAllMocksUsed: true}
+expect:
+  status: error
+  error:
+    name: MockArgsMismatch
+    step_id: send
+    message: 'Mock arguments mismatch for ''send'' at call 1: expected {"recipient":"alice"}, got {"recipient":"bob"}'

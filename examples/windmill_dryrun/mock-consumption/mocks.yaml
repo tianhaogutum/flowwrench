@@ -1,0 +1,4 @@
+send:
+  sequence:
+    - result: {sent: alice}
+    - result: {sent: bob}

@@ -1,0 +1,594 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://n8n2ap.local/schema/activepieces-template.schema.json",
+  "title": "n8n2ap Activepieces schema-28 output subset",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "const": "CUSTOM"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "blogUrl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metadata": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "author": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pieces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "const": "PUBLISHED"
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/flow"
+      },
+      "minItems": 1,
+      "maxItems": 1
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "summary",
+    "description",
+    "tags",
+    "blogUrl",
+    "metadata",
+    "author",
+    "categories",
+    "pieces",
+    "status",
+    "flows"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "condition": {
+      "type": "object",
+      "properties": {
+        "firstValue": {
+          "type": "string"
+        },
+        "secondValue": {
+          "type": "string"
+        },
+        "caseSensitive": {
+          "type": "boolean"
+        },
+        "operator": {
+          "enum": [
+            "TEXT_CONTAINS",
+            "TEXT_DOES_NOT_CONTAIN",
+            "TEXT_EXACTLY_MATCHES",
+            "TEXT_DOES_NOT_EXACTLY_MATCH",
+            "TEXT_START_WITH",
+            "TEXT_ENDS_WITH",
+            "NUMBER_IS_GREATER_THAN",
+            "NUMBER_IS_LESS_THAN",
+            "NUMBER_IS_EQUAL_TO",
+            "BOOLEAN_IS_TRUE",
+            "BOOLEAN_IS_FALSE",
+            "EXISTS"
+          ]
+        }
+      },
+      "required": [
+        "firstValue",
+        "operator"
+      ],
+      "additionalProperties": false
+    },
+    "code": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "lastUpdatedDate": {
+          "type": "string"
+        },
+        "type": {
+          "const": "CODE"
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "object"
+            },
+            "sourceCode": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "packageJson": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "packageJson"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "input",
+            "sourceCode"
+          ],
+          "additionalProperties": false
+        },
+        "nextAction": {
+          "$ref": "#/$defs/action"
+        }
+      },
+      "required": [
+        "name",
+        "displayName",
+        "valid",
+        "lastUpdatedDate",
+        "type",
+        "settings"
+      ],
+      "additionalProperties": false
+    },
+    "piece": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "lastUpdatedDate": {
+          "type": "string"
+        },
+        "type": {
+          "const": "PIECE"
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "pieceName": {
+              "type": "string",
+              "pattern": "^@activepieces/piece-"
+            },
+            "pieceVersion": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "actionName": {
+              "type": "string"
+            },
+            "input": {
+              "type": "object"
+            },
+            "propertySettings": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "pieceName",
+            "pieceVersion",
+            "actionName",
+            "input",
+            "propertySettings"
+          ],
+          "additionalProperties": false
+        },
+        "nextAction": {
+          "$ref": "#/$defs/action"
+        }
+      },
+      "required": [
+        "name",
+        "displayName",
+        "valid",
+        "lastUpdatedDate",
+        "type",
+        "settings"
+      ],
+      "additionalProperties": false
+    },
+    "router": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "lastUpdatedDate": {
+          "type": "string"
+        },
+        "type": {
+          "const": "ROUTER"
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "executionType": {
+              "const": "EXECUTE_FIRST_MATCH"
+            },
+            "branches": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "branchName": {
+                        "type": "string"
+                      },
+                      "branchType": {
+                        "const": "CONDITION"
+                      },
+                      "conditions": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/condition"
+                          },
+                          "minItems": 1
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "branchName",
+                      "branchType",
+                      "conditions"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "branchName": {
+                        "type": "string"
+                      },
+                      "branchType": {
+                        "const": "FALLBACK"
+                      }
+                    },
+                    "required": [
+                      "branchName",
+                      "branchType"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "executionType",
+            "branches"
+          ],
+          "additionalProperties": false
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/action"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "nextAction": {
+          "$ref": "#/$defs/action"
+        }
+      },
+      "required": [
+        "name",
+        "displayName",
+        "valid",
+        "lastUpdatedDate",
+        "type",
+        "settings",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/code"
+        },
+        {
+          "$ref": "#/$defs/piece"
+        },
+        {
+          "$ref": "#/$defs/router"
+        }
+      ]
+    },
+    "trigger": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "lastUpdatedDate": {
+              "type": "string"
+            },
+            "type": {
+              "const": "PIECE_TRIGGER"
+            },
+            "settings": {
+              "type": "object",
+              "properties": {
+                "pieceName": {
+                  "type": "string",
+                  "pattern": "^@activepieces/piece-"
+                },
+                "pieceVersion": {
+                  "type": "string",
+                  "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                },
+                "triggerName": {
+                  "type": "string"
+                },
+                "input": {
+                  "type": "object"
+                },
+                "propertySettings": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "pieceName",
+                "pieceVersion",
+                "triggerName",
+                "input",
+                "propertySettings"
+              ],
+              "additionalProperties": false
+            },
+            "nextAction": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "required": [
+            "name",
+            "displayName",
+            "valid",
+            "lastUpdatedDate",
+            "type",
+            "settings"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "lastUpdatedDate": {
+              "type": "string"
+            },
+            "type": {
+              "const": "EMPTY"
+            },
+            "settings": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "nextAction": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "required": [
+            "name",
+            "displayName",
+            "valid",
+            "lastUpdatedDate",
+            "type",
+            "settings"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "ownerId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "color": {
+          "enum": [
+            "yellow",
+            "orange",
+            "red",
+            "green",
+            "blue",
+            "purple"
+          ]
+        },
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "content",
+        "ownerId",
+        "color",
+        "position",
+        "size",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "schemaVersion": {
+          "const": "28"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/note"
+          }
+        }
+      },
+      "required": [
+        "displayName",
+        "valid",
+        "schemaVersion",
+        "trigger",
+        "notes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

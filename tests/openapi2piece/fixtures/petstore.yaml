@@ -1,0 +1,93 @@
+# Synthetic, redistributable fixture, authored for openapi2piece (MIT).
+openapi: 3.0.3
+info:
+  title: Synthetic Pet Store
+  version: 1.0.0
+servers:
+  - url: https://pets.example.test/v1
+security:
+  - petKey: []
+paths:
+  /pets/{petId}:
+    parameters:
+      - $ref: '#/components/parameters/PetId'
+    get:
+      operationId: getPet
+      summary: Get a pet
+      tags: [pets]
+      parameters:
+        - name: verbose
+          in: query
+          schema: { type: boolean }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 0, maximum: 100 }
+        - name: X-Trace
+          in: header
+          schema: { type: string }
+      responses:
+        '200': { description: Pet found }
+    patch:
+      operationId: updatePet
+      tags: [pets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetInput'
+      responses:
+        '200': { description: Pet updated }
+  /status:
+    get:
+      operationId: getPet
+      tags: [system]
+      security: []
+      responses:
+        '200': { description: Service status }
+  /upload:
+    post:
+      operationId: upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema: { type: object }
+      responses:
+        '200': { description: Uploaded }
+  /cookies:
+    get:
+      operationId: cookies
+      parameters:
+        - name: session
+          in: cookie
+          schema: { type: string }
+      responses:
+        '200': { description: Unsupported example }
+components:
+  securitySchemes:
+    petKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  parameters:
+    PetId:
+      name: petId
+      in: path
+      required: true
+      schema: { type: string, minLength: 1 }
+  schemas:
+    PetInput:
+      type: object
+      required: [name, active]
+      additionalProperties: false
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80 }
+        active: { type: boolean }
+        age: { type: integer, minimum: 0 }
+        kind: { type: string, enum: [cat, dog] }
+        labels:
+          type: array
+          items: { type: string }
+        metadata:
+          type: object
+          additionalProperties: { type: string }

@@ -1,4 +1,5 @@
 """Top-level `flowwrench` dispatcher: overview, version, routing and error paths."""
+import re
 import subprocess
 import sys
 
@@ -8,15 +9,30 @@ import flowwrench
 from flowwrench import cli
 
 # Commands whose Python subpackage ships in this repository.
-TOOLS = ["n8n-diet", "n8n-refs", "ap-promote", "huginn", "schedules"]
-# Registered commands whose modules may arrive later (or are a Node companion).
-REGISTERED = ["check", "n8n2ap", "nodered-merge", "nodered-test", "openapi2piece", "windmill-dryrun"]
+TOOLS = ["check", "n8n2ap", "n8n-diet", "n8n-refs", "nodered-merge", "openapi2piece", "ap-promote",
+         "windmill-dryrun", "huginn", "schedules"]
+# Registered commands that are not a Python module (the Node.js companion).
+REGISTERED = ["nodered-test"]
+# Tools built on argparse: `--help` prints a "usage: flowwrench <tool>" line and every
+# subcommand accepts its own `--help`.
+ARGPARSE_TOOLS = ["n8n-diet", "n8n-refs", "ap-promote", "huginn", "schedules"]
+# Ports of the Node tools keep the original hand-written help text: one screen that lists
+# every subcommand, without a per-subcommand `--help`.
+PORTS = ["n8n2ap", "nodered-merge", "openapi2piece", "windmill-dryrun"]
+# `check` has no subcommands (`flowwrench check [PATH...]`); openapi2piece, like the
+# original Node tool, has no `--version` flag.
+VERSIONED = [tool for tool in TOOLS if tool not in ("check", "openapi2piece")]
 SUBCOMMANDS = {
     "n8n-diet": ["analyze", "plan", "compare", "reclaim", "reclaim-plan", "verify-copy", "fixture"],
     "n8n-refs": ["check", "compare", "rename"],
     "ap-promote": ["inventory", "verify-roundtrip"],
     "huginn": ["split", "join", "render", "extract-vars", "diff"],
     "schedules": ["extract", "analyze", "dst", "suggest", "overlap", "compare"],
+    "n8n2ap": ["convert"],
+    "nodered-merge": ["diff", "merge", "resolve", "git-manifest", "normalize", "install", "textconv",
+                      "git-driver"],
+    "openapi2piece": ["generate"],
+    "windmill-dryrun": ["run", "test", "replay"],
 }
 
 
@@ -83,21 +99,27 @@ def test_version(flag, capsys):
     assert capsys.readouterr().out == f"flowwrench {flowwrench.__version__}\n"
 
 
+def _assert_tool_help(tool, out):
+    assert f"flowwrench {tool}" in out
+    if tool in ARGPARSE_TOOLS:
+        assert f"usage: flowwrench {tool}" in out
+
+
 @pytest.mark.parametrize("tool", TOOLS)
 def test_tool_help_uses_new_program_name(tool):
     result = run(tool, "--help")
     assert result.returncode == 0, result.stderr
-    assert f"usage: flowwrench {tool}" in result.stdout
+    _assert_tool_help(tool, result.stdout)
 
 
 @pytest.mark.parametrize("tool", TOOLS)
 def test_help_subcommand_routes_to_tool_help(tool, capsys):
     code, out, _ = _main(["help", tool], capsys)
     assert code == 0
-    assert f"usage: flowwrench {tool}" in out
+    _assert_tool_help(tool, out)
 
 
-@pytest.mark.parametrize("tool", TOOLS)
+@pytest.mark.parametrize("tool", VERSIONED)
 def test_tool_version_is_package_version(tool, capsys):
     code, out, _ = _main([tool, "--version"], capsys)
     assert code == 0
@@ -106,6 +128,12 @@ def test_tool_version_is_package_version(tool, capsys):
 
 @pytest.mark.parametrize("command,sub", [(c, s) for c, subs in SUBCOMMANDS.items() for s in subs])
 def test_subcommand_help_uses_new_program_name(command, sub, capsys):
+    if command in PORTS:
+        code, out, err = _main([command, "--help"], capsys)
+        assert code == 0, err
+        assert f"flowwrench {command}" in out
+        assert re.search(rf"(?m)\s{re.escape(sub)}\s", out), f"{sub} missing from {command} --help"
+        return
     code, out, err = _main([command, sub, "--help"], capsys)
     assert code == 0, err
     assert f"usage: flowwrench {command} {sub}" in out
@@ -122,9 +150,32 @@ def test_subpackage_main_routes_through_dispatcher(tool, package):
     assert f"usage: flowwrench {tool}" in result.stdout
 
 
+@pytest.mark.parametrize("tool,package", [
+    ("n8n2ap", "flowwrench.n8n2ap"), ("nodered-merge", "flowwrench.nodered_merge"),
+    ("openapi2piece", "flowwrench.openapi2piece"), ("windmill-dryrun", "flowwrench.windmill_dryrun"),
+])
+def test_port_module_entry_point_prints_tool_help(tool, package):
+    result = run("--help", module=("-m", package))
+    assert result.returncode == 0, result.stderr
+    assert f"flowwrench {tool}" in result.stdout
+
+
 def test_tool_exit_codes_pass_through():
     bad = run("ap-promote", "no-such-subcommand")
     assert bad.returncode == 2 and "usage: flowwrench ap-promote" in bad.stderr
+
+
+# The ports keep the original tools' exit codes for a bad command line.
+@pytest.mark.parametrize("tool,code,message", [
+    ("n8n2ap", 1, "flowwrench n8n2ap: Expected: convert INPUT"),
+    ("nodered-merge", 2, "flowwrench nodered-merge: unknown command no-such-subcommand"),
+    ("openapi2piece", 1, "flowwrench openapi2piece: Expected generate command"),
+    ("windmill-dryrun", 2, "Invalid input: Unknown command 'no-such-subcommand'"),
+])
+def test_port_exit_codes_pass_through(tool, code, message, capsys):
+    result, _, err = _main([tool, "no-such-subcommand"], capsys)
+    assert result == code
+    assert message in err and "Traceback" not in err
 
 
 def test_unknown_command_suggests_close_match(capsys):
@@ -136,6 +187,7 @@ def test_unknown_command_suggests_close_match(capsys):
 @pytest.mark.parametrize("legacy,new", [
     ("n8n-exec-diet", "n8n-diet"), ("n8n-refcheck", "n8n-refs"), ("ap-flow-promote", "ap-promote"),
     ("huginn-scenario-kit", "huginn"), ("cronherd", "schedules"), ("nrflowtest", "nodered-test"),
+    ("nrflow-merge", "nodered-merge"), ("openflow-dryrun", "windmill-dryrun"),
 ])
 def test_unknown_legacy_name_points_to_new_command(legacy, new, capsys):
     assert cli.main([legacy]) == 2
@@ -174,7 +226,8 @@ def test_nodered_test_explains_node_companion(argv, capsys):
     assert "Traceback" not in err
 
 
-def test_nodered_test_is_listed_without_coming_soon(capsys):
+@pytest.mark.parametrize("name", [*TOOLS, *REGISTERED])
+def test_shipped_command_is_listed_without_coming_soon(name, capsys):
     assert cli.main([]) == 0
-    line = next(line for line in capsys.readouterr().out.splitlines() if line.startswith("  nodered-test "))
+    line = next(line for line in capsys.readouterr().out.splitlines() if line.startswith(f"  {name} "))
     assert "(coming soon)" not in line

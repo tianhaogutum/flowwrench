@@ -1,0 +1,30 @@
+name: Assert intermediate results hidden by later loop steps
+flow: ../flow.yaml
+mocks:
+  send:
+    sequence:
+      - {result: first}
+      - {result: last}
+  mask: {result: same}
+expect:
+  result: [same, same]
+  results: {each: [same, same], send: last, mask: same}
+  args: {send: [{}, {}], mask: [{}, {}]}
+  path: [each, send, mask, send, mask]
+  mock_errors: []
+  attempt_errors: []
+  simulated_delay_seconds: 0
+  retry_delays: []
+  mock_calls:
+    - {module_id: send, source: sequence, call: 1}
+    - {module_id: mask, source: external, call: 1}
+    - {module_id: send, source: sequence, call: 2}
+    - {module_id: mask, source: external, call: 2}
+  mock_usage:
+    send: {expected: 2, calls: 2, consumed: 2, remaining: 0, extra: 0}
+  attempt_results:
+    - {module_id: each, attempt: 1, result: [same, same]}
+    - {module_id: send, attempt: 1, result: first}
+    - {module_id: mask, attempt: 1, result: same}
+    - {module_id: send, attempt: 1, result: last}
+    - {module_id: mask, attempt: 1, result: same}

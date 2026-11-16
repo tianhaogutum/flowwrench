@@ -1,0 +1,5 @@
+[
+  {"id":"flow","type":"tab","label":"Shared flow"},
+  {"id":"shared","type":"function","z":"flow","x":100,"y":100,"func":"return null;","wires":[]},
+  {"id":"ours-only","type":"debug","z":"flow","x":300,"y":100,"wires":[]}
+]

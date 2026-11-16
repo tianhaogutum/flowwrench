@@ -1,0 +1,35 @@
+summary: Route paid orders (synthetic, no external services)
+description: Offline example for flowwrench check.
+value:
+  modules:
+    - id: fetch_order
+      value:
+        type: script
+        path: f/orders/fetch
+        input_transforms:
+          order_id: {type: javascript, expr: flow_input.order_id}
+    - id: route
+      value:
+        type: branchone
+        branches:
+          - summary: paid
+            expr: results.fetch_order.status === 'paid'
+            modules:
+              - id: ship
+                value:
+                  type: script
+                  path: f/orders/ship
+                  input_transforms:
+                    order: {type: javascript, expr: results.fetch_order}
+        default:
+          - id: hold
+            value:
+              type: script
+              path: f/orders/hold
+              input_transforms:
+                order_id: {type: javascript, expr: flow_input.order_id}
+schema:
+  type: object
+  properties:
+    order_id: {type: string}
+  required: [order_id]

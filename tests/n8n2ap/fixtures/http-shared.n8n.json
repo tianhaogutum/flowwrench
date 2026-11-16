@@ -1,0 +1,10 @@
+{
+  "name": "Synthetic shared credential placeholder",
+  "nodes": [
+    {"id":"hook","name":"Webhook","type":"n8n-nodes-base.webhook","typeVersion":2,"parameters":{"httpMethod":"POST","path":"synthetic-shared"}},
+    {"id":"fetch","name":"Fetch","type":"n8n-nodes-base.httpRequest","typeVersion":4.2,"parameters":{"url":"https://api.example.test/account","authentication":"genericCredentialType","genericAuthType":"httpBasicAuth"},"credentials":{"httpBasicAuth":{"id":"SYNTHETIC_SHARED_CREDENTIAL_ID","name":"Example CRM"}}},
+    {"id":"fetch-again","name":"Fetch again","type":"n8n-nodes-base.httpRequest","typeVersion":4.2,"parameters":{"url":"https://api.example.test/contacts","authentication":"genericCredentialType","genericAuthType":"httpBasicAuth"},"credentials":{"httpBasicAuth":{"id":"SYNTHETIC_SHARED_CREDENTIAL_ID","name":"Example CRM"}}}
+  ],
+  "connections":{"Webhook":{"main":[[{"node":"Fetch","type":"main","index":0}]]},"Fetch":{"main":[[{"node":"Fetch again","type":"main","index":0}]]}},
+  "settings":{}
+}

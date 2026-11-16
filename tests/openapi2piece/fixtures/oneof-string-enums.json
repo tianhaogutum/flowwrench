@@ -1,0 +1,337 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "String enum intersections",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/string": {
+      "post": {
+        "operationId": "sendString",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "ab",
+                  "abc",
+                  "xyz",
+                  "none"
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "xyz",
+                      "other"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "ab",
+                  "abc",
+                  "xyz",
+                  "none"
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "abc"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unicode": {
+      "post": {
+        "operationId": "unicode",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "😀",
+                  "😀😀",
+                  "é",
+                  "😀😀😀",
+                  "😀😀😀😀",
+                  "ok"
+                ],
+                "minLength": 2,
+                "maxLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "😀",
+                      "😀😀",
+                      "é",
+                      "😀😀😀",
+                      "😀😀😀😀"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ok",
+                      "no"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc",
+                      "xyz",
+                      "none"
+                    ],
+                    "minLength": 3,
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "ab",
+                          "abc"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "xyz",
+                          "other"
+                        ]
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "ab",
+                        "abc",
+                        "xyz",
+                        "none"
+                      ],
+                      "minLength": 3,
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "ab",
+                            "abc"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "xyz",
+                            "other"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "enum": [
+                        "ab",
+                        "abc",
+                        "xyz",
+                        "none"
+                      ],
+                      "minLength": 3,
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "ab",
+                            "abc"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "xyz",
+                            "other"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "ab",
+                          "abc",
+                          "xyz",
+                          "none"
+                        ],
+                        "minLength": 3,
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "ab",
+                              "abc"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "xyz",
+                              "other"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "ab",
+                  "abc",
+                  "xyz",
+                  "none"
+                ],
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "xyz",
+                      "other"
+                    ]
+                  }
+                ],
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

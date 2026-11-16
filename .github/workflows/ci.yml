@@ -34,6 +34,15 @@ jobs:
         with:
           node-version: "22"
       - uses: astral-sh/setup-uv@v6
+      # openapi2piece type-checks generated pieces; without these pinned packages those tests skip.
+      - name: Install pinned TypeScript toolchain for openapi2piece
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
+        run: |
+          mkdir -p "$RUNNER_TEMP/ts" && cd "$RUNNER_TEMP/ts"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund typescript@5.9.3 @activepieces/pieces-framework@0.32.0 \
+            @activepieces/pieces-common@0.12.5 axios@1.20.0 @types/node@22.19.0
+          echo "OPENAPI2PIECE_NODE_MODULES=$RUNNER_TEMP/ts/node_modules" >> "$GITHUB_ENV"
       - name: Run tests
         run: uv run --extra test pytest -q
       - name: Build wheel and sdist

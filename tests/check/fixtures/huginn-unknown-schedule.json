@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "name": "Unknown schedule",
+  "guid": "fixture-unknown",
+  "agents": [
+    {"guid": "fixture-a", "name": "A", "type": "Agents::WebsiteAgent", "options": {}, "disabled": false,
+     "schedule": "every_3h"},
+    {"guid": "fixture-b", "name": "B", "type": "Agents::EmailAgent", "options": {}, "disabled": false,
+     "schedule": null}
+  ],
+  "links": [{"source": 0, "receiver": 1}],
+  "control_links": []
+}

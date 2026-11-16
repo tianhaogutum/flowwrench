@@ -39,7 +39,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest>=8.4"]
+test = ["pytest>=8.4", "jsonschema>=4.23"]
 
 [project.urls]
 Homepage = "https://github.com/tianhaogutum/flowwrench"
@@ -81,10 +81,9 @@ pattern = '\]\(#([^)\s]+)\)'
 replacement = '](https://github.com/tianhaogutum/flowwrench#\1)'
 
 [tool.hatch.build.targets.wheel]
-# Pure-Python tools: no runtime data files are read from the package (no open()
-# of package paths, importlib.resources or pkgutil.get_data in any subpackage).
-# If a future subpackage ships data files under src/flowwrench/, this setting
-# includes them automatically (hatch ships every non-ignored file in the package).
+# Hatch ships every non-ignored file under src/flowwrench/, including the package
+# data read via importlib.resources: n8n2ap/schema/*.json,
+# openapi2piece/templates/* and windmill_dryrun/js/evaluate.js.
 packages = ["src/flowwrench"]
 
 [tool.hatch.build.targets.sdist]
@@ -92,6 +91,7 @@ include = [
     "/src",
     "/tests",
     "/docs",
+    "/examples",
     "/README.md",
     "/LICENSE",
     "/NOTICE",

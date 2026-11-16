@@ -1,0 +1,9 @@
+{
+  "name": "Synthetic credential placeholder",
+  "nodes": [
+    {"id":"hook","name":"Webhook","type":"n8n-nodes-base.webhook","typeVersion":2,"parameters":{"httpMethod":"POST","path":"synthetic-basic"}},
+    {"id":"fetch","name":"Fetch","type":"n8n-nodes-base.httpRequest","typeVersion":4.2,"parameters":{"url":"https://api.example.test/account","authentication":"genericCredentialType","genericAuthType":"httpBasicAuth"},"credentials":{"httpBasicAuth":{"id":"SYNTHETIC_SOURCE_CREDENTIAL_ID","name":"Example CRM"}}}
+  ],
+  "connections":{"Webhook":{"main":[[{"node":"Fetch","type":"main","index":0}]]}},
+  "settings":{}
+}

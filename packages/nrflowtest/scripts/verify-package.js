@@ -31,7 +31,7 @@ async function verifyPackage() {
     command('tar', ['-xzf', path.join(scratch, packed.filename), '-C', prefix], scratch);
     const installed = path.join(prefix, 'package');
     command('npm', ['ci', '--offline', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], installed);
-    for (const file of ['LICENSE', 'NOTICE', 'THIRD_PARTY.md', 'STATUS.json', 'npm-shrinkwrap.json', 'research/evidence-index.md', 'research/dependency-audit.json']) assert.ok(fs.existsSync(path.join(installed, file)), `missing packaged ${file}`);
+    for (const file of ['LICENSE', 'NOTICE', 'THIRD_PARTY.md', 'npm-shrinkwrap.json']) assert.ok(fs.existsSync(path.join(installed, file)), `missing packaged ${file}`);
     const bare = path.join(scratch, 'bare'); fs.mkdirSync(bare);
     const executable = path.join(installed, 'bin/nrflowtest.js');
     assert.equal(command(executable, ['--version'], bare).trim(), '0.1.0');
@@ -138,7 +138,7 @@ async function verifyPackage() {
     const registryRequire = createRequire(installedRequire.resolve('@node-red/registry/package.json'));
     assert.equal(registryRequire('npm/package.json').version, '11.21.2');
     assert.deepEqual(fs.readdirSync(bare).sort(), ['deadline-junit.xml', 'sequence-junit.xml']);
-    process.stdout.write('Package verification: 3 orders, 1 later deadline case, 1 multi-port sequence, 1 declared caught-error and 1 later worker-exit case passed; 2 intentional deadline failures, 1 intentional sequence failure, 5 intentional error cases and 3 intentional worker-exit failures via installed executable; five structured count/field/port/missing-value records plus error-count and unexpected-error records retain source/instance attribution and unchanged spec/parsed JUnit text; structured terminal reason/phase/budget/received-signal/actual-child-status verified; resource-limit lower bounds, exact caps, UTF-8 bytes and setup/cleanup errors verified; exits 0/1/2 and SIGINT/SIGTERM 130/143 verified; active workers reaped, runtime directories removed; version, licenses, provenance and patch pins verified.\n');
+    process.stdout.write('Package verification: 3 orders, 1 later deadline case, 1 multi-port sequence, 1 declared caught-error and 1 later worker-exit case passed; 2 intentional deadline failures, 1 intentional sequence failure, 5 intentional error cases and 3 intentional worker-exit failures via installed executable; five structured count/field/port/missing-value records plus error-count and unexpected-error records retain source/instance attribution and unchanged spec/parsed JUnit text; structured terminal reason/phase/budget/received-signal/actual-child-status verified; resource-limit lower bounds, exact caps, UTF-8 bytes and setup/cleanup errors verified; exits 0/1/2 and SIGINT/SIGTERM 130/143 verified; active workers reaped, runtime directories removed; version, licenses and patch pins verified.\n');
   } finally {
     fs.rmSync(scratch, { recursive: true, force: true });
   }

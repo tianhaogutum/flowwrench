@@ -1,0 +1,12 @@
+name: only the second recipient mismatches
+flow: ../flow.yaml
+mocks: ../mocks.yaml
+input: {items: [alice, alice]}
+expect:
+  status: error
+  error:
+    name: MockArgsMismatch
+    step_id: send
+    call: 2
+    expected_args: {recipient: bob}
+    actual_args: {recipient: alice}

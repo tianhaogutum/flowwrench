@@ -1,0 +1,17 @@
+name: paid order maps two inventory reservations
+flow: ../flow.yaml
+input: ../input.json
+mocks: ../mocks.yaml
+expect:
+  path: [fetch_order, route, items, reserve, reserve, notify, audit]
+  args:
+    fetch_order: [{order_id: demo-42}]
+    reserve:
+      - {sku: ABC, quantity: 2, index: 0}
+      - {sku: XYZ, quantity: 1, index: 1}
+    notify: [{order_id: demo-42, reserved: 2, channel: email}]
+  results:
+    items:
+      - {sku: ABC, quantity: 2, index: 0}
+      - {sku: XYZ, quantity: 1, index: 1}
+  result: {outcome: {sent: true}}

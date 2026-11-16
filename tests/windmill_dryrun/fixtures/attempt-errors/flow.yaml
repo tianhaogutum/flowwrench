@@ -1,0 +1,11 @@
+# Synthetic offline fixture: the script path is never executed.
+summary: Recover from a temporary retry error
+value:
+  modules:
+    - id: send
+      retry:
+        constant: {attempts: 1, seconds: 0}
+      value:
+        type: script
+        path: /never-execute
+        input_transforms: {}

@@ -1,0 +1,16 @@
+summary: Parallel branches (outside the windmill-dryrun subset)
+value:
+  modules:
+    - id: fan_out
+      value:
+        type: branchall
+        parallel: true
+        branches:
+          - summary: one
+            skip_failure: false
+            modules:
+              - id: step_one
+                value:
+                  type: script
+                  path: f/fixture/one
+                  input_transforms: {}

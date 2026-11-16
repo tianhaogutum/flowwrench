@@ -1,0 +1,6 @@
+path: f/fixture/nightly
+script_path: f/fixture/only
+schedule: "0 0 0 * * *"
+timezone: UTC
+enabled: true
+is_flow: true

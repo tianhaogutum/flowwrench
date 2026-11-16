@@ -1,0 +1,21 @@
+name: exact ordered errors from both swapped calls
+flow: ../flow.yaml
+input: ../input-swapped.json
+mocks: ../mocks.yaml
+options: {requireAllMocksUsed: true}
+expect:
+  status: error
+  error: {name: MockArgsMismatch, call: 1}
+  mock_errors:
+    - name: MockArgsMismatch
+      message: 'Mock arguments mismatch for ''send'' at call 1: expected {"recipient":"alice"}, got {"recipient":"bob"}'
+      step_id: send
+      call: 1
+      expected_args: {recipient: alice}
+      actual_args: {recipient: bob}
+    - name: MockArgsMismatch
+      message: 'Mock arguments mismatch for ''send'' at call 2: expected {"recipient":"bob"}, got {"recipient":"alice"}'
+      step_id: send
+      call: 2
+      expected_args: {recipient: bob}
+      actual_args: {recipient: alice}

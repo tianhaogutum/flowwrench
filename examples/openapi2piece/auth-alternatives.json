@@ -1,0 +1,41 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Synthetic authentication alternatives", "version": "1" },
+  "servers": [{ "url": "/v1" }],
+  "components": {
+    "securitySchemes": {
+      "HeaderKey": { "type": "apiKey", "in": "header", "name": "X-API-Key" },
+      "QueryKey": { "type": "apiKey", "in": "query", "name": "api_key" },
+      "Bearer": { "type": "http", "scheme": "bearer" },
+      "HeaderAlias": { "type": "apiKey", "in": "header", "name": "x-api-key" },
+      "Digest": { "type": "http", "scheme": "digest" }
+    }
+  },
+  "security": [{ "HeaderKey": [] }, { "QueryKey": [] }, { "Bearer": [] }],
+  "paths": {
+    "/items": {
+      "get": { "operationId": "items", "responses": { "200": { "description": "OK" } } }
+    },
+    "/key-only": {
+      "get": { "operationId": "keyonly", "security": [{ "HeaderKey": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/public": {
+      "get": { "operationId": "public", "security": [], "responses": { "200": { "description": "OK" } } }
+    },
+    "/unsupported-scheme": {
+      "get": { "operationId": "unsupported", "security": [{}, { "HeaderKey": [] }, { "Digest": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/compound-alternative": {
+      "get": { "operationId": "compound", "security": [{ "HeaderKey": [], "QueryKey": [] }, { "Bearer": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/anonymous-alternative": {
+      "get": { "operationId": "optional", "security": [{}, { "HeaderKey": [], "QueryKey": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/colliding-alternative": {
+      "get": { "operationId": "colliding", "security": [{}, { "HeaderKey": [], "HeaderAlias": [] }, { "Bearer": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/cookies": {
+      "get": { "operationId": "cookies", "parameters": [{ "in": "cookie", "name": "session", "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+name: Assert ordered primary and recovered-handler retry delays
+flow: ../flow.yaml
+mocks:
+  bad:
+    error: {name: Original, message: bad}
+  failure:
+    sequence:
+      - error: {message: handler retry}
+      - result: recovered handler
+expect:
+  error: {name: Original, step_id: bad}
+  failure_result: recovered handler
+  simulated_delay_seconds: 5
+  retry_delays:
+    - {module_id: bad, attempt: 1, retry_delay_seconds: 2}
+    - {module_id: failure, attempt: 1, retry_delay_seconds: 3}

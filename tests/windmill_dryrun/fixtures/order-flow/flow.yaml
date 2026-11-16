@@ -1,0 +1,56 @@
+summary: Offline order routing example (synthetic, no external services)
+value:
+  modules:
+    - id: fetch_order
+      value:
+        type: script
+        path: f/orders/fetch
+        input_transforms:
+          order_id: {type: javascript, expr: flow_input.order_id}
+    - id: route
+      value:
+        type: branchone
+        branches:
+          - expr: results.fetch_order.status === 'paid'
+            modules:
+              - id: items
+                value:
+                  type: forloopflow
+                  skip_failures: false
+                  iterator: {type: javascript, expr: results.fetch_order.items}
+                  modules:
+                    - id: reserve
+                      value:
+                        type: flow
+                        path: f/inventory/reserve
+                        input_transforms:
+                          sku: {type: javascript, expr: flow_input.iter.value.sku}
+                          quantity: {type: javascript, expr: flow_input.iter.value.quantity}
+                          index: {type: javascript, expr: flow_input.iter.index}
+              - id: notify
+                value:
+                  type: rawscript
+                  language: bash
+                  content: 'echo "THIS SCRIPT MUST NEVER EXECUTE"; exit 99'
+                  input_transforms:
+                    order_id: {type: javascript, expr: flow_input.order_id}
+                    reserved: {type: javascript, expr: results.items.length}
+                    channel: {type: static, value: email}
+          - expr: results.fetch_order.status === 'cancelled'
+            modules:
+              - id: cancel
+                value:
+                  type: script
+                  path: f/orders/cancel
+                  input_transforms:
+                    order_id: {type: javascript, expr: flow_input.order_id}
+        default:
+          - id: pending
+            value:
+              type: identity
+    - id: audit
+      value:
+        type: script
+        path: f/audit/order
+        input_transforms:
+          outcome: {type: javascript, expr: previous_result}

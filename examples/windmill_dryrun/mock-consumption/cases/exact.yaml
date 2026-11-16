@@ -1,0 +1,12 @@
+name: consume exactly two responses
+flow: ../flow.yaml
+input: ../input.json
+mocks: ../mocks.yaml
+options: {requireAllMocksUsed: true}
+expect:
+  status: ok
+  mock_usage:
+    send: {expected: 2, calls: 2, consumed: 2, remaining: 0, extra: 0}
+  result: [{sent: alice}, {sent: bob}]
+  args:
+    send: [{recipient: alice}, {recipient: bob}]

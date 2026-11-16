@@ -24,22 +24,15 @@ use older ranges for these packages. The overrides remove the high-severity
 findings observed in the unpatched dependency tree under the documented
 package-root installation (`npm ci`). npm ignores overrides declared by a
 dependency, so installing this CLI as another project's dependency does not
-guarantee those patches; see the recorded
-[dependency audit](research/dependency-audit.json) for remaining moderate
-findings in the bundled npm dependency chain. An audit is not a security proof.
+guarantee those patches; run `npm audit` after `npm ci` to see the remaining
+moderate findings in the bundled npm dependency chain. An audit is not a security proof.
 
 The helper's runtime internals (`_NodePrototype`) and pinned Node-RED subflow
 cloning/wiring behavior were inspected in the locally installed Apache-2.0
 packages. nrflowtest supplies its own instrumentation and declarative assertion
 engine. The helper's server API is never called.
 
-## Research provenance
-
-The supplied [RESEARCH.md](RESEARCH.md), [specs.json](specs.json), and
-[research/evidence-index.md](research/evidence-index.md) remain in the repository.
-They cover the wider OSS100 research batch and are not implementation claims or
-license grants for those other tools. Existing ignored `research/raw/` artifacts
-are not required at runtime and are not packaged.
+## Motivation
 
 The nrflowtest brief cited:
 
@@ -47,6 +40,3 @@ The nrflowtest brief cited:
   about errors disappearing during flow testing.
 - [node-red-flow-tester](https://github.com/node-red/node-red-flow-tester),
   the separate upstream editor plugin. nrflowtest does not use its source.
-
-This implementation continues that supplied research; it does not claim to have
-repeated or independently verified the entire batch's market research.

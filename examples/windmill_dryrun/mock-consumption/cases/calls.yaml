@@ -1,0 +1,8 @@
+name: ordered lookups for two recipients
+flow: ../flow.yaml
+input: ../input.json
+mocks: ../mocks.yaml
+expect:
+  mock_calls:
+    - {module_id: send, source: sequence, call: 1}
+    - {module_id: send, source: sequence, call: 2}

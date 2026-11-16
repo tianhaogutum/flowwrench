@@ -1,0 +1,17 @@
+# Synthetic offline fixture: handler retries exhaust without replacing the primary error.
+summary: Separate primary and failure-handler errors
+value:
+  modules:
+    - id: bad
+      value:
+        type: script
+        path: /never-execute
+        input_transforms: {}
+  failure_module:
+    id: failure
+    retry:
+      constant: {attempts: 1, seconds: 0}
+    value:
+      type: script
+      path: /never-execute
+      input_transforms: {}

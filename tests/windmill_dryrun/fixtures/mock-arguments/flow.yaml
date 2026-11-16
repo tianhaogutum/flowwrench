@@ -1,0 +1,16 @@
+summary: Synthetic ordered recipient arguments with recovery
+value:
+  modules:
+    - id: each
+      value:
+        type: forloopflow
+        iterator: {type: javascript, expr: flow_input.items}
+        skip_failures: false
+        modules:
+          - id: send
+            continue_on_error: true
+            value:
+              type: script
+              path: f/demo/send
+              input_transforms:
+                recipient: {type: javascript, expr: flow_input.iter.value}

@@ -1,0 +1,20 @@
+name: Assert ordered choices hidden by equal results
+flow: ../flow.yaml
+expect:
+  result: [{}, {}]
+  results: {each: [{}, {}], choose: {}}
+  args: {each: [], choose: []}
+  path: [each, choose, choose]
+  stopped: false
+  mock_errors: []
+  attempt_errors: []
+  simulated_delay_seconds: 0
+  retry_delays: []
+  mock_calls: []
+  attempt_results:
+    - {module_id: each, attempt: 1, result: [{}, {}]}
+    - {module_id: choose, attempt: 1, result: {}}
+    - {module_id: choose, attempt: 1, result: {}}
+  branch_choices:
+    - {module_id: choose, attempt: 1, branch: '0'}
+    - {module_id: choose, attempt: 1, branch: default}

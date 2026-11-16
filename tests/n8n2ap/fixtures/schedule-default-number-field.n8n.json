@@ -1,0 +1,29 @@
+{
+  "id": "synthetic-schedule-39",
+  "name": "Numeric schedule field with daily defaults",
+  "nodes": [
+    {
+      "id": "Clock",
+      "name": "Clock",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "timezone": "UTC"
+  }
+}

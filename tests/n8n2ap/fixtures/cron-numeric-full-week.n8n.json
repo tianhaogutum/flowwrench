@@ -1,0 +1,30 @@
+{
+  "id": "synthetic-schedule-39",
+  "name": "Numeric full-week custom cron",
+  "nodes": [
+    {
+      "id": "Clock",
+      "name": "Clock",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "custom",
+              "cronExpression": "0 17 8 15 * 0-6"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "timezone": "UTC"
+  }
+}

@@ -1,0 +1,13 @@
+name: paid order with empty basket does not reserve inventory
+flow: ../flow.yaml
+input: {order_id: empty-1}
+mocks:
+  fetch_order: {result: {status: paid, items: []}}
+  notify: {result: {sent: true}}
+  audit: {echo_args: true}
+expect:
+  path: [fetch_order, route, items, notify, audit]
+  args:
+    reserve: []
+    notify: [{order_id: empty-1, reserved: 0, channel: email}]
+  results: {items: []}

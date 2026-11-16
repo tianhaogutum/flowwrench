@@ -1,0 +1,125 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "String wrapper intersections",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/string": {
+      "post": {
+        "operationId": "sendString",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "xyz"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "abc"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ab",
+                      "abc"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "xyz"
+                    ]
+                  }
+                ],
+                "enum": [
+                  "abc"
+                ],
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

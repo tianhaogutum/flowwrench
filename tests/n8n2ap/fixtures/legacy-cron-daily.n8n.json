@@ -1,0 +1,31 @@
+{
+  "id": "synthetic-schedule-39",
+  "name": "Legacy daily preset with unknown runtime seconds",
+  "nodes": [
+    {
+      "id": "Clock",
+      "name": "Clock",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyDay",
+              "hour": 8,
+              "minute": 17
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "timezone": "UTC"
+  }
+}

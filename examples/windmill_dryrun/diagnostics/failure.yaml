@@ -1,0 +1,6 @@
+name: paid retry returns wrong result
+flow: flow.yaml
+input: input.json
+mocks: mocks.yaml
+expect:
+  result: 99

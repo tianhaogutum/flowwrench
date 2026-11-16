@@ -1,0 +1,29 @@
+{
+  "id": "synthetic-schedule-39",
+  "name": "Single-month schedule with identity defaults",
+  "nodes": [
+    {
+      "id": "Clock",
+      "name": "Clock",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "timezone": "UTC"
+  }
+}

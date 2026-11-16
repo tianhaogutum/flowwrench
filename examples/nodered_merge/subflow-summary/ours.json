@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sub",
+    "type": "subflow",
+    "name": "Reusable",
+    "x": 150,
+    "in": [
+      {
+        "x": 50,
+        "y": 20,
+        "wires": [
+          {
+            "id": "b"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "x": 200,
+        "y": 20,
+        "wires": []
+      },
+      {
+        "x": 200,
+        "y": 40,
+        "wires": [
+          {
+            "id": "sub",
+            "port": 0
+          }
+        ]
+      }
+    ],
+    "status": {
+      "x": 200,
+      "y": 80,
+      "wires": [
+        {
+          "id": "a",
+          "port": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "a",
+    "type": "function",
+    "z": "sub",
+    "name": "Alpha",
+    "x": 80,
+    "y": 20,
+    "outputs": 2,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "b",
+    "type": "function",
+    "z": "sub",
+    "name": "Beta",
+    "x": 80,
+    "y": 80,
+    "outputs": 2,
+    "wires": [
+      [],
+      []
+    ]
+  }
+]

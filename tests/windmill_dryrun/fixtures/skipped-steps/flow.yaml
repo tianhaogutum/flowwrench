@@ -1,0 +1,10 @@
+# Synthetic offline fixture: skip evaluation is invisible to executed coverage.
+summary: Explicit skip versus unreachable step
+value:
+  modules:
+    - id: skip
+      skip_if: {expr: 'true'}
+      value: {type: identity}
+    - id: finish
+      stop_after_if: {expr: 'true'}
+      value: {type: identity}

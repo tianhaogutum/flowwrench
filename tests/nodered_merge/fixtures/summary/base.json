@@ -1,0 +1,8 @@
+[
+  {"id":"tab","type":"tab","label":"Summary demo"},
+  {"id":"primary","type":"mqtt-broker","name":"Primary","broker":"localhost","port":"1883"},
+  {"id":"backup","type":"mqtt-broker","name":"Backup","broker":"localhost","port":"1884"},
+  {"id":"a","type":"mqtt in","z":"tab","name":"Readings","broker":"primary","x":100,"y":100,"wires":[["b"]]},
+  {"id":"b","type":"debug","z":"tab","name":"Console","x":300,"y":100,"wires":[]},
+  {"id":"c","type":"debug","z":"tab","name":"Archive","x":300,"y":200,"wires":[]}
+]

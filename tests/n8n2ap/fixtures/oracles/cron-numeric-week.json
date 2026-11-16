@@ -1,0 +1,3830 @@
+{
+  "sources": [
+    {
+      "project": "n8n",
+      "path": "pnpm-lock.yaml",
+      "sha256": "b310cbeab566d5f46dcfba31fd433568a2e376ef1cd99c7574f774c83a85353b"
+    },
+    {
+      "project": "n8n",
+      "path": "packages/core/src/execution-engine/scheduled-task-manager.ts",
+      "sha256": "055f1dcb574d3b22b9bcdd77990a03ae86239de304581b23f7e0fb143b5cae16"
+    },
+    {
+      "project": "n8n",
+      "path": "packages/nodes-base/nodes/Schedule/GenericFunctions.ts",
+      "sha256": "96aba393963cdaefeaf64b3c8561d1aab47922a620ba7ee128a0b8ad2eecc85f"
+    },
+    {
+      "project": "n8n",
+      "path": "packages/workflow/src/cron.ts",
+      "sha256": "eea9063fe23af95584188c4d55ed066db13537d22ad5452da216885450c333f3"
+    },
+    {
+      "project": "activepieces",
+      "path": "packages/pieces/core/schedule/src/lib/triggers/cron-expression.trigger.ts",
+      "sha256": "d45b87f24654eef8e199eab4401b54b0e29d79c0397a7bf153984653341031d9"
+    },
+    {
+      "project": "activepieces",
+      "path": "packages/server/api/src/app/workers/job-queue/job-queue.ts",
+      "sha256": "6a224d71fc9df72a2c27ccb785c0e73e07c4db24dc1217d87c411fcd00489b14"
+    },
+    {
+      "project": "activepieces",
+      "path": "bun.lock",
+      "sha256": "73726d0206c168728bcb0a5a9258d621ffd144510fd9ada61d0c3bd2f02aaf23"
+    }
+  ],
+  "parsers": {
+    "source": "cron@4.4.0",
+    "target": "cron-parser@4.9.0",
+    "queue": "bullmq@5.61.0"
+  },
+  "method": "Real pinned parser field sets and next-date comparisons; no timers, job queues or workflow execution.",
+  "cases": [
+    {
+      "expression": "17 8 * * 0-6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 1-7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 1-7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0,1,2,3,4,5,6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0,1,2,3,4,5,6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 7,1,2,3,4,5,6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 7,1,2,3,4,5,6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-3,4-6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-3,4-6",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-5,6,0",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-5,6,0",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-6/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-6/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 1/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 1/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-7/2,1-6/2",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-7/2,1-6/2",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 01-06,00",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 01-06,00",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * *",
+      "canonical": "17 8 * * *",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * *",
+      "canonical": "17 8 * * *",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * */1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * */1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0/1",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0,1,2,3,4,5,6,7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0,1,2,3,4,5,6,7",
+      "canonical": "17 8 * * 0-7",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-04-15T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-15T07:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 1-5",
+      "canonical": "17 8 * * 1-5",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 1-5",
+      "canonical": "17 8 * * 1-5",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0,7",
+      "canonical": "17 8 * * 0,7",
+      "weekdays": [
+        0
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0,7",
+      "canonical": "17 8 * * 0,7",
+      "weekdays": [
+        0
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * */2",
+      "canonical": "17 8 * * */2",
+      "weekdays": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-02T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-02T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * */2",
+      "canonical": "17 8 * * */2",
+      "weekdays": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-02T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-02T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 1-5/2",
+      "canonical": "17 8 * * 1-5/2",
+      "weekdays": [
+        1,
+        3,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 1-5/2",
+      "canonical": "17 8 * * 1-5/2",
+      "weekdays": [
+        1,
+        3,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-5",
+      "canonical": "17 8 * * 0-5",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-5",
+      "canonical": "17 8 * * 0-5",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 1-6",
+      "canonical": "17 8 * * 1-6",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 1-6",
+      "canonical": "17 8 * * 1-6",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-21T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-25T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-01T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "17 8 * * 0-7/7",
+      "canonical": "17 8 * * 0-7/7",
+      "weekdays": [
+        0
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "expression": "0 17 8 * * 0-7/7",
+      "canonical": "17 8 * * 0-7/7",
+      "weekdays": [
+        0
+      ],
+      "scenarios": [
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 * *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T08:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:17:00.000Z"
+        },
+        {
+          "prefix": "17 8 15 *",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-10-20T06:17:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "UTC",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T08:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-03-24T00:00:00Z",
+          "nextTick": "2024-03-24T07:00:00.000Z"
+        },
+        {
+          "prefix": "0,30 8-17 * */2",
+          "tz": "Europe/Berlin",
+          "start": "2024-10-20T00:00:00Z",
+          "nextTick": "2024-11-03T07:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "comparisons": 6336
+}

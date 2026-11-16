@@ -1,0 +1,32 @@
+{
+  "rev": "r2",
+  "flows": [
+    {
+      "id": "flow",
+      "type": "tab",
+      "label": "Example"
+    },
+    {
+      "id": "a",
+      "type": "inject",
+      "z": "flow",
+      "name": "Alpha",
+      "x": 100,
+      "y": 80,
+      "wires": [
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "b",
+      "type": "debug",
+      "z": "flow",
+      "name": "Beta",
+      "x": 360,
+      "y": 80,
+      "wires": []
+    }
+  ]
+}

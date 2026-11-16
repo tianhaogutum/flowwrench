@@ -1,0 +1,2 @@
+CRON_TZ=Europe/Berlin
+30 2 * * * /bin/true

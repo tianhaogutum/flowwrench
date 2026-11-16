@@ -931,7 +931,7 @@ third-party node installation, binary message assertions, cross-case state,
 performance tests, or a hostile-code sandbox. It depends on pinned helper/runtime
 internals for instrumentation and subflow wiring; upgrading Node-RED requires
 rerunning the integration tests. Node-RED's bundled npm dependency chain still
-has moderate audit advisories (see `research/dependency-audit.json`); patch
+has moderate audit advisories (run `npm audit` after `npm ci`); patch
 overrides remove the observed high-severity issues. nrflowtest never invokes
 that npm installation service or exposes the editor/HTTP server.
 
@@ -946,9 +946,7 @@ absence/count/timing behavior, exact retained-message equality, schema/path safe
 ordered multi-port sequences, exact JSON Pointer values and escaping,
 structured mismatch attribution, missing/null distinctions and untruncated values,
 and independent parsing of JUnit XML. Tests use synthetic local inputs only.
-`STATUS.json` records the executed acceptance commands and results.
 
 This is an independent Apache-2.0 project, not an official Node-RED plugin.
 Node-RED and node-red-node-test-helper are Apache-2.0 runtime dependencies.
 See [LICENSE](LICENSE), [NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md).
-The supplied research documents remain unchanged for traceability.

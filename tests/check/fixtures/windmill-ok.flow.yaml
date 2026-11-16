@@ -1,0 +1,9 @@
+summary: Valid fixture flow
+value:
+  modules:
+    - id: only
+      value:
+        type: script
+        path: f/fixture/only
+        input_transforms:
+          x: {type: static, value: 1}

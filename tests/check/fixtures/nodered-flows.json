@@ -1,0 +1,9 @@
+[
+  {"id": "fixture-tab", "type": "tab", "label": "Fixture"},
+  {"id": "fixture-inject", "type": "inject", "z": "fixture-tab", "name": "Tick", "repeat": "60", "crontab": "",
+   "once": false, "x": 100, "y": 40, "wires": [["fixture-fn"]]},
+  {"id": "fixture-fn", "type": "function", "z": "fixture-tab", "name": "Transform", "func": "return msg;",
+   "outputs": 1, "x": 300, "y": 40, "wires": [["fixture-missing"]]},
+  {"id": "fixture-mqtt", "type": "mqtt out", "z": "fixture-tab", "name": "Send", "topic": "t",
+   "broker": "fixture-broker", "x": 500, "y": 40, "wires": []}
+]

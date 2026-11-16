@@ -1,0 +1,10 @@
+{
+  "name":"Manual migration review",
+  "nodes":[
+    {"id":"start","name":"Manual","type":"n8n-nodes-base.manualTrigger","typeVersion":1,"parameters":{}},
+    {"id":"code","name":"Custom code","type":"n8n-nodes-base.code","typeVersion":2,"parameters":{"jsCode":"throw new Error('SYNTHETIC_CODE_MUST_NOT_RUN_OR_BE_EXPORTED');"}},
+    {"id":"vendor","name":"CRM","type":"@example/n8n-nodes-crm.update","typeVersion":1,"parameters":{"apiKey":"SYNTHETIC_SECRET_DO_NOT_EXPORT"},"credentials":{"exampleApi":{"id":"SYNTHETIC_CREDENTIAL_ID_DO_NOT_EXPORT","name":"Example CRM connection"}}}
+  ],
+  "connections":{"Manual":{"main":[[{"node":"Custom code","type":"main","index":0}]]},"Custom code":{"main":[[{"node":"CRM","type":"main","index":0}]]}},
+  "settings":{},"pinData":{"CRM":[{"json":{"password":"SYNTHETIC_PIN_DATA_DO_NOT_EXPORT"}}]}
+}

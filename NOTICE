@@ -3,7 +3,8 @@ Copyright 2026 tianhaogutum and flowwrench contributors
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 It merges tools previously developed as separate projects (n8n-exec-diet,
-n8n-refcheck, ap-flow-promote, huginn-scenario-kit, cronherd and nrflowtest).
+n8n-refcheck, ap-flow-promote, huginn-scenario-kit, cronherd, nrflowtest, n8n2ap,
+nrflow-merge, openapi2piece and openflow-dryrun).
 flowwrench is an independent interoperability project and is not affiliated
 with or endorsed by n8n GmbH, the OpenJS Foundation or Node-RED, Activepieces
 Inc., Windmill Labs or the Huginn project. Product names only identify
@@ -24,6 +25,52 @@ Reads the Huginn scenario export format. Huginn is Copyright (c) 2013 Andrew
 Cantino (Iteration Labs, LLC), MIT-licensed. No Huginn implementation code is
 included. Uses PyYAML (MIT; Copyright (c) 2017-2021 Ingy döt Net,
 (c) 2006-2016 Kirill Simonov) as a separately installed dependency.
+
+-------------------------------------------------------------------------------
+flowwrench n8n2ap (Python port of the Node.js tool n8n2ap, MIT)
+
+Reads the n8n workflow export format and writes the Activepieces flow template
+format. n8n is source-available under the Sustainable Use License; no n8n code
+is included. Activepieces is Copyright (c) 2020-2024 Activepieces Inc.; its
+consulted non-enterprise contracts are MIT. The bundled output schema
+(src/flowwrench/n8n2ap/schema/activepieces-template.schema.json) was written for
+this project from those public contracts, so its shape, enum strings and
+property names follow that interface; no Activepieces implementation code is
+included. The upstream license notice is reproduced in THIRD_PARTY.md.
+
+-------------------------------------------------------------------------------
+flowwrench nodered-merge (Python port of the Node.js tool nrflow-merge, MIT)
+
+Reads the Node-RED flow format (Node-RED: Copyright OpenJS Foundation and other
+contributors, Apache License 2.0) and integrates with Git through its documented
+merge-driver and textconv interfaces. Neither Node-RED nor Git code is included;
+Git is a separately installed program.
+
+-------------------------------------------------------------------------------
+flowwrench openapi2piece (Python port of the Node.js tool openapi2piece, MIT)
+
+Reads OpenAPI 3.0/3.1 descriptions (OpenAPI Initiative, Apache License 2.0) and
+generates source code that targets the public Activepieces piece APIs
+(Copyright (c) 2020-2024 Activepieces Inc., MIT outside enterprise
+directories). The generated piece's own LICENSE and THIRD_PARTY.md come from the
+templates in src/flowwrench/openapi2piece/templates/. No Activepieces, OpenAPI
+or npm package source is included.
+
+-------------------------------------------------------------------------------
+flowwrench windmill-dryrun (Python port of the Node.js tool openflow-dryrun)
+
+The original notice follows (the OpenFlow reference file it mentions is not
+included in flowwrench):
+
+openflow-dryrun
+Copyright 2026 openflow-dryrun contributors
+
+Independent software; not affiliated with or endorsed by Windmill Labs.
+
+The research/upstream/openflow.openapi.yaml reference is from Windmill Labs,
+OpenFlow specification, release tag v1.868.0, under the Apache License 2.0.
+See THIRD_PARTY.md for its source and the pinned dependency attribution.
+No Windmill server, worker or CLI implementation is included.
 
 -------------------------------------------------------------------------------
 flowwrench nodered-test (Node.js companion nrflowtest, packages/nrflowtest/)

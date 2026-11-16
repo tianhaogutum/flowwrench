@@ -1,0 +1,4 @@
+work:
+  sequence:
+    - error: {name: Temporary, message: Try again}
+    - result: 7

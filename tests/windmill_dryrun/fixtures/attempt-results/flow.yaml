@@ -1,0 +1,20 @@
+# Synthetic offline fixture: script paths are never executed.
+summary: Preserve intermediate loop results before a masking step
+value:
+  modules:
+    - id: each
+      value:
+        type: forloopflow
+        iterator: {type: static, value: [a, b]}
+        skip_failures: false
+        modules:
+          - id: send
+            value:
+              type: script
+              path: /never-execute
+              input_transforms: {}
+          - id: mask
+            value:
+              type: script
+              path: /never-execute
+              input_transforms: {}

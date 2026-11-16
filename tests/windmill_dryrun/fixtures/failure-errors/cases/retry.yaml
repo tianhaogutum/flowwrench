@@ -1,0 +1,14 @@
+name: Assert primary error and handler retry exhaustion independently
+flow: ../flow.yaml
+mocks:
+  bad:
+    error: {name: Original, message: bad}
+  failure:
+    sequence:
+      - error: {message: handler retry}
+expect:
+  error: {name: Original, message: bad, step_id: bad}
+  failure_error:
+    name: MockExhausted
+    message: "Mock sequence exhausted for 'failure' at call 2"
+    step_id: failure

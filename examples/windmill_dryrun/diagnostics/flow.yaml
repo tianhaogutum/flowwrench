@@ -1,0 +1,18 @@
+summary: Synthetic offline diagnostic replay
+value:
+  modules:
+    - id: choose
+      value:
+        type: branchone
+        branches:
+          - expr: flow_input.route === 'paid'
+            modules:
+              - id: work
+                retry:
+                  constant: {attempts: 1, seconds: 0}
+                value:
+                  type: script
+                  path: f/synthetic/never-loaded
+                  input_transforms:
+                    route: {type: javascript, expr: flow_input.route}
+        default: []

@@ -1,0 +1,18 @@
+{
+  "name": "Clean workflow",
+  "nodes": [
+    {"id": "fixture-start", "name": "Start", "type": "n8n-nodes-base.manualTrigger", "typeVersion": 1,
+     "position": [0, 0], "parameters": {}},
+    {"id": "fixture-lookup", "name": "Lookup", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [200, 0],
+     "parameters": {"values": {"string": [{"name": "name", "value": "Ada"}]}, "options": {}}},
+    {"id": "fixture-format", "name": "Format", "type": "n8n-nodes-base.set", "typeVersion": 1, "position": [400, 0],
+     "parameters": {"values": {"string": [{"name": "who", "value": "={{ $('Lookup').item.json.name }}"}]},
+                    "options": {}}}
+  ],
+  "connections": {
+    "Start": {"main": [[{"node": "Lookup", "type": "main", "index": 0}]]},
+    "Lookup": {"main": [[{"node": "Format", "type": "main", "index": 0}]]}
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"}
+}

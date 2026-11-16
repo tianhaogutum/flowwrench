@@ -1,0 +1,10 @@
+name: unexpected third call exhausts the sequence
+flow: ../flow.yaml
+input: {items: [alice, bob, charlie]}
+mocks: ../mocks.yaml
+expect:
+  status: error
+  error:
+    name: MockExhausted
+    step_id: send
+    message: "Mock sequence exhausted for 'send' at call 3"

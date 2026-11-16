@@ -1,0 +1,668 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nullable numeric wrappers",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/send31": {
+      "post": {
+        "operationId": "send31",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  1,
+                  null
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/send30": {
+      "post": {
+        "operationId": "send30",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "number",
+                "enum": [
+                  0,
+                  1,
+                  null
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/integer31": {
+      "post": {
+        "operationId": "integer31",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "integer"
+                ],
+                "minimum": 0,
+                "maximum": 3,
+                "exclusiveMinimum": 0,
+                "exclusiveMaximum": 3,
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/integer30": {
+      "post": {
+        "operationId": "integer30",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true,
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/zeroallowed": {
+      "post": {
+        "operationId": "zeroallowed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  null
+                ],
+                "minimum": 0,
+                "maximum": 0,
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/fractional": {
+      "post": {
+        "operationId": "fractional",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "number"
+                ],
+                "enum": [
+                  0,
+                  0.5,
+                  1.5,
+                  2,
+                  null
+                ],
+                "exclusiveMinimum": 0,
+                "exclusiveMaximum": 2,
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/independent": {
+      "post": {
+        "operationId": "independent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 3,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ],
+                    "minimum": 1
+                  },
+                  {
+                    "type": "number",
+                    "enum": [
+                      2,
+                      3
+                    ],
+                    "maximum": 2
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/zero": {
+      "post": {
+        "operationId": "zero",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  1,
+                  null
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "nullable": true,
+                    "enum": [
+                      1
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  1,
+                  null
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "nullable": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/enumexcludes": {
+      "post": {
+        "operationId": "enumexcludes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  1
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/composed": {
+      "post": {
+        "operationId": "composed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "null",
+                  "number"
+                ],
+                "enum": [
+                  1,
+                  null
+                ],
+                "oneOf": [
+                  {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "enum": [
+                      0,
+                      1,
+                      null
+                    ],
+                    "minimum": 1,
+                    "oneOf": [
+                      {
+                        "type": "number",
+                        "nullable": true,
+                        "enum": [
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "enum": [
+                      0,
+                      1,
+                      null
+                    ],
+                    "minimum": 1,
+                    "oneOf": [
+                      {
+                        "type": "number",
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "enum": [
+                        0,
+                        1,
+                        null
+                      ],
+                      "minimum": 1,
+                      "oneOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "enum": [
+                        0,
+                        1,
+                        null
+                      ],
+                      "minimum": 1,
+                      "oneOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "type": [
+                      "null",
+                      "number"
+                    ],
+                    "enum": [
+                      1,
+                      null
+                    ],
+                    "oneOf": [
+                      {
+                        "type": [
+                          "number",
+                          "null"
+                        ],
+                        "enum": [
+                          0,
+                          1,
+                          null
+                        ],
+                        "minimum": 1,
+                        "oneOf": [
+                          {
+                            "type": "number",
+                            "nullable": true,
+                            "enum": [
+                              1
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "nullable": true,
+                "minLength": 1,
+                "oneOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/invalidTypes": {
+      "post": {
+        "operationId": "invalidTypes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "enum": [
+                  0,
+                  1,
+                  null
+                ],
+                "minimum": 1,
+                "oneOf": [
+                  {
+                    "type": [
+                      "number",
+                      "null",
+                      "null"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

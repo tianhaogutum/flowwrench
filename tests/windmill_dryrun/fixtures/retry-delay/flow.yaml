@@ -1,0 +1,19 @@
+# Synthetic offline fixture: both primary and handler retries add to the total.
+summary: Retry delays across the primary run and failure handler
+value:
+  modules:
+    - id: bad
+      retry:
+        constant: {attempts: 1, seconds: 2}
+      value:
+        type: script
+        path: /never-execute
+        input_transforms: {}
+  failure_module:
+    id: failure
+    retry:
+      constant: {attempts: 1, seconds: 3}
+    value:
+      type: script
+      path: /never-execute
+      input_transforms: {}

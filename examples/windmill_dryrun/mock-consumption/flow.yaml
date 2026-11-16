@@ -1,0 +1,15 @@
+summary: Synthetic send sequence accounting
+value:
+  modules:
+    - id: each
+      value:
+        type: forloopflow
+        iterator: {type: javascript, expr: flow_input.items}
+        skip_failures: false
+        modules:
+          - id: send
+            value:
+              type: script
+              path: f/demo/send
+              input_transforms:
+                recipient: {type: javascript, expr: flow_input.iter.value}

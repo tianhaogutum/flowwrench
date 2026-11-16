@@ -1,0 +1,18 @@
+name: Assert skip evaluated before an identical final stop
+flow: ../flow.yaml
+expect:
+  result: {}
+  results: {finish: {}}
+  args: {skip: [], finish: []}
+  path: [finish]
+  stopped: true
+  mock_errors: []
+  mock_calls: []
+  attempt_errors: []
+  retry_delays: []
+  simulated_delay_seconds: 0
+  attempt_results:
+    - {module_id: finish, attempt: 1, result: {}}
+  branch_choices: []
+  skipped_steps:
+    - {module_id: skip, attempt: 1, path: [skip]}

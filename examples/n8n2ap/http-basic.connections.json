@@ -1,0 +1,6 @@
+{
+  "formatVersion": 1,
+  "bindings": [
+    {"source":{"node":"Fetch","type":"httpBasicAuth","name":"Example CRM"},"placeholder":"crm_basic"}
+  ]
+}

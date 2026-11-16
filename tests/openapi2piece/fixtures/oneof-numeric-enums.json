@@ -1,0 +1,368 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Numeric enum wrapper intersections",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/v2"
+    }
+  ],
+  "paths": {
+    "/number": {
+      "post": {
+        "operationId": "sendNumber",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "number",
+                "enum": [
+                  1,
+                  2,
+                  4
+                ],
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "enum": [
+                      2,
+                      3
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/overlap": {
+      "post": {
+        "operationId": "overlap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "number",
+                "enum": [
+                  1,
+                  2,
+                  4
+                ],
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      1
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "enum": [
+                      1
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/integer": {
+      "post": {
+        "operationId": "sendInteger",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "enum": [
+                  1,
+                  2,
+                  4
+                ],
+                "minimum": 1,
+                "maximum": 2,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1,
+                      1.5,
+                      2,
+                      4
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/fractional": {
+      "post": {
+        "operationId": "fractional",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "number",
+                "enum": [
+                  0,
+                  0.5,
+                  1.5,
+                  2.5
+                ],
+                "minimum": 0,
+                "maximum": 2,
+                "exclusiveMinimum": 0,
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      0.5,
+                      1.5,
+                      2.5
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "enum": [
+                      2
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nested": {
+      "post": {
+        "operationId": "nested",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value",
+                  "values",
+                  "lookup",
+                  "composed"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "enum": [
+                      1,
+                      2,
+                      4
+                    ],
+                    "oneOf": [
+                      {
+                        "type": "number",
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      },
+                      {
+                        "type": "number",
+                        "enum": [
+                          2,
+                          3
+                        ]
+                      }
+                    ]
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "enum": [
+                        1,
+                        2,
+                        4
+                      ],
+                      "oneOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "lookup": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "number",
+                      "enum": [
+                        1,
+                        2,
+                        4
+                      ],
+                      "oneOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            0,
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2,
+                            3
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "composed": {
+                    "type": "number",
+                    "enum": [
+                      2,
+                      4,
+                      6
+                    ],
+                    "oneOf": [
+                      {
+                        "type": "number",
+                        "enum": [
+                          1,
+                          2,
+                          4
+                        ],
+                        "oneOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              0,
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              2,
+                              3
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "number",
+                        "enum": [
+                          6
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/unsupported": {
+      "post": {
+        "operationId": "unsupported",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "number",
+                "enum": [
+                  1,
+                  2,
+                  4
+                ],
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "enum": [
+                      2,
+                      3
+                    ]
+                  }
+                ],
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

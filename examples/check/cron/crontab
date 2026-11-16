@@ -1,0 +1,4 @@
+# Synthetic host crontab: commands are never read or executed by flowwrench.
+0 0 * * * /usr/local/bin/backup-db
+CRON_TZ=Europe/Berlin
+30 2 * * * /usr/local/bin/send-daily-report
