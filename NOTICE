@@ -1,5 +1,5 @@
 flowwrench
-Copyright 2026 tianhaogutum and flowwrench contributors
+Copyright 2026 tianhaogutum
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 It merges tools previously developed as separate projects (n8n-exec-diet,
@@ -64,7 +64,7 @@ The original notice follows (the OpenFlow reference file it mentions is not
 included in flowwrench):
 
 openflow-dryrun
-Copyright 2026 openflow-dryrun contributors
+Copyright 2026 tianhaogutum
 
 Independent software; not affiliated with or endorsed by Windmill Labs.
 
@@ -79,7 +79,7 @@ flowwrench nodered-test (Node.js companion nrflowtest, packages/nrflowtest/)
 The original notice follows:
 
 nrflowtest
-Copyright 2026 nrflowtest contributors.
+Copyright 2026 tianhaogutum.
 
 This independent project uses Node-RED and node-red-node-test-helper via npm.
 Node-RED: Copyright OpenJS Foundation and other contributors,

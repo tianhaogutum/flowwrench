@@ -1,7 +1,7 @@
 // windmill-dryrun expression sandbox (package data of flowwrench.windmill_dryrun).
 //
 // Adapted from the child program embedded in openflow-dryrun lib/expression.js
-// (Copyright 2026 openflow-dryrun contributors, Apache License 2.0). The
+// (Copyright 2026 tianhaogutum, Apache License 2.0). The
 // evaluation logic is unchanged; only this header was added.
 //
 // Python never runs this file by path: it reads it and passes its source to
