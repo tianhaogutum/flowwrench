@@ -10,12 +10,12 @@ from flowwrench import cli
 
 # Commands whose Python subpackage ships in this repository.
 TOOLS = ["check", "n8n2ap", "n8n-diet", "n8n-refs", "nodered-merge", "openapi2piece", "ap-promote",
-         "windmill-dryrun", "huginn", "schedules"]
+         "windmill-dryrun", "huginn", "ha-diff", "schedules"]
 # Registered commands that are not a Python module (the Node.js companion).
 REGISTERED = ["nodered-test"]
 # Tools built on argparse: `--help` prints a "usage: flowwrench <tool>" line and every
 # subcommand accepts its own `--help`.
-ARGPARSE_TOOLS = ["n8n-diet", "n8n-refs", "ap-promote", "huginn", "schedules"]
+ARGPARSE_TOOLS = ["n8n-diet", "n8n-refs", "ap-promote", "huginn", "ha-diff", "schedules"]
 # Ports of the Node tools keep the original hand-written help text: one screen that lists
 # every subcommand, without a per-subcommand `--help`.
 PORTS = ["n8n2ap", "nodered-merge", "openapi2piece", "windmill-dryrun"]
@@ -69,6 +69,7 @@ def test_command_table_shape():
         "Activepieces": ["openapi2piece", "ap-promote"],
         "Windmill": ["windmill-dryrun"],
         "Huginn": ["huginn"],
+        "Home Assistant": ["ha-diff"],
         "Schedules": ["schedules"],
     }
     assert {c.name: c.module for c in cli.COMMANDS} == {
@@ -82,7 +83,12 @@ def test_command_table_shape():
         "ap-promote": "flowwrench.ap_promote.cli",
         "windmill-dryrun": "flowwrench.windmill_dryrun.cli",
         "huginn": "flowwrench.huginn.cli",
+        "ha-diff": "flowwrench.ha_diff.cli",
         "schedules": "flowwrench.schedules.cli",
+    }
+    # Only ha-diff needs an optional extra (DeepDiff and jsonpointer).
+    assert {c.name: (c.extra, c.requires) for c in cli.COMMANDS if c.extra or c.requires} == {
+        "ha-diff": ("ha", ("deepdiff", "jsonpointer")),
     }
     assert all(c.group in cli.GROUPS and c.summary for c in cli.COMMANDS)
     assert set(cli.BY_NAME) == {c.name for c in cli.COMMANDS}
@@ -142,7 +148,7 @@ def test_subcommand_help_uses_new_program_name(command, sub, capsys):
 @pytest.mark.parametrize("tool,package", [
     ("n8n-diet", "flowwrench.n8n_diet"), ("n8n-refs", "flowwrench.n8n_refs"),
     ("ap-promote", "flowwrench.ap_promote"), ("huginn", "flowwrench.huginn"),
-    ("schedules", "flowwrench.schedules"),
+    ("schedules", "flowwrench.schedules"), ("ha-diff", "flowwrench.ha_diff"),
 ])
 def test_subpackage_main_routes_through_dispatcher(tool, package):
     result = run("--help", module=("-m", package))
@@ -188,6 +194,7 @@ def test_unknown_command_suggests_close_match(capsys):
     ("n8n-exec-diet", "n8n-diet"), ("n8n-refcheck", "n8n-refs"), ("ap-flow-promote", "ap-promote"),
     ("huginn-scenario-kit", "huginn"), ("cronherd", "schedules"), ("nrflowtest", "nodered-test"),
     ("nrflow-merge", "nodered-merge"), ("openflow-dryrun", "windmill-dryrun"),
+    ("ha-trace-diff", "ha-diff"),
 ])
 def test_unknown_legacy_name_points_to_new_command(legacy, new, capsys):
     assert cli.main([legacy]) == 2
@@ -214,6 +221,19 @@ def test_missing_module_reports_not_available(monkeypatch, capsys):
     assert cli.main(["ghost", "--help"]) == 2
     err = capsys.readouterr().err
     assert err.startswith("flowwrench: command 'ghost' is not available") and "Traceback" not in err
+
+
+def test_missing_extra_prints_install_hint(monkeypatch, capsys):
+    command = cli.BY_NAME["ha-diff"]
+    real = cli._present
+    monkeypatch.setattr(cli, "_present", lambda name: False if name in command.requires else real(name))
+    assert "(needs flowwrench[ha])" in cli.overview()
+    code, out, err = _main(["ha-diff", "left.json", "right.json"], capsys)
+    assert code == 2 and out == ""
+    assert "pip install 'flowwrench[ha]'" in err and "Traceback" not in err
+    code, out, err = _main(["ha-diff", "--help"], capsys)
+    assert code == 0 and out.startswith("usage: flowwrench ha-diff ")
+    assert "pip install 'flowwrench[ha]'" in out
 
 
 @pytest.mark.parametrize("argv", [["nodered-test"], ["nodered-test", "run", "--flows", "x.json"],

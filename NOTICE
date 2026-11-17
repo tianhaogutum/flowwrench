@@ -4,10 +4,11 @@ Copyright 2026 tianhaogutum and flowwrench contributors
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 It merges tools previously developed as separate projects (n8n-exec-diet,
 n8n-refcheck, ap-flow-promote, huginn-scenario-kit, cronherd, nrflowtest, n8n2ap,
-nrflow-merge, openapi2piece and openflow-dryrun).
+nrflow-merge, openapi2piece, openflow-dryrun and ha-trace-diff).
 flowwrench is an independent interoperability project and is not affiliated
 with or endorsed by n8n GmbH, the OpenJS Foundation or Node-RED, Activepieces
-Inc., Windmill Labs or the Huginn project. Product names only identify
+Inc., Windmill Labs, the Huginn project, or Home Assistant / the Open Home
+Foundation. Product names only identify
 interoperable file formats. See THIRD_PARTY.md for per-command attribution.
 
 -------------------------------------------------------------------------------
@@ -89,3 +90,15 @@ http://js.foundation — Apache License 2.0.
 No upstream source files have been copied or modified in this repository.
 Node-RED is a trademark of the OpenJS Foundation. This project is not an
 OpenJS Foundation or Node-RED project and is not endorsed by them.
+
+-------------------------------------------------------------------------------
+flowwrench ha-diff (formerly ha-trace-diff, MIT)
+
+Originally released under the MIT license; its notice is kept in
+licenses/ha-trace-diff-MIT.txt. Reads the Home Assistant automation/script trace
+download format; no Home Assistant code is included. Uses DeepDiff (MIT),
+orderly-set (MIT) and python-json-pointer (BSD-3-Clause) as separately installed
+dependencies (the `ha` extra); their license texts are in licenses/. Test
+fixtures from Home Assistant Core (Apache-2.0) and Home Assistant Automation
+Testkit (GPL-3.0) are test/example data only and keep their own licenses, which
+accompany them in tests/ha_diff/fixtures/ and examples/ha-diff/.

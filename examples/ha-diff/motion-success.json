@@ -1,0 +1,109 @@
+{
+  "trace": {
+    "domain": "automation",
+    "item_id": "demo_motion",
+    "run_id": "synthetic-success",
+    "state": "stopped",
+    "script_execution": "finished",
+    "last_step": "action/0",
+    "timestamp": {
+      "start": "2026-11-11T18:00:00+00:00",
+      "finish": "2026-11-11T18:00:00.300000+00:00"
+    },
+    "trigger": "state of binary_sensor.hall_motion",
+    "config": {
+      "id": "demo_motion",
+      "alias": "Hallway motion light",
+      "triggers": [
+        {
+          "trigger": "state",
+          "entity_id": "binary_sensor.hall_motion",
+          "to": "on"
+        }
+      ],
+      "variables": {
+        "lux": "{{ states('sensor.hall_lux') | float }}"
+      },
+      "conditions": [
+        {
+          "condition": "template",
+          "value_template": "{{ lux < 50 }}"
+        }
+      ],
+      "actions": [
+        {
+          "action": "light.turn_on",
+          "target": {
+            "entity_id": "light.hall"
+          }
+        }
+      ],
+      "mode": "single"
+    },
+    "blueprint_inputs": null,
+    "context": {
+      "id": "left-context",
+      "parent_id": null,
+      "user_id": null
+    },
+    "trace": {
+      "trigger/0": [
+        {
+          "path": "trigger/0",
+          "timestamp": "2026-11-11T18:00:00.010000+00:00",
+          "changed_variables": {
+            "lux": 12,
+            "trigger": {
+              "id": "0",
+              "idx": "0",
+              "platform": "state",
+              "entity_id": "binary_sensor.hall_motion",
+              "from_state": {
+                "entity_id": "binary_sensor.hall_motion",
+                "state": "off",
+                "attributes": {}
+              },
+              "to_state": {
+                "entity_id": "binary_sensor.hall_motion",
+                "state": "on",
+                "attributes": {}
+              }
+            }
+          }
+        }
+      ],
+      "condition/0": [
+        {
+          "path": "condition/0",
+          "timestamp": "2026-11-11T18:00:00.020000+00:00",
+          "result": {
+            "result": true,
+            "entities": [
+              "sensor.hall_lux"
+            ]
+          }
+        }
+      ],
+      "action/0": [
+        {
+          "path": "action/0",
+          "timestamp": "2026-11-11T18:00:00.030000+00:00",
+          "result": {
+            "params": {
+              "domain": "light",
+              "service": "turn_on",
+              "service_data": {},
+              "target": {
+                "entity_id": [
+                  "light.hall"
+                ]
+              }
+            },
+            "running_script": false
+          }
+        }
+      ]
+    }
+  },
+  "logbookEntries": []
+}

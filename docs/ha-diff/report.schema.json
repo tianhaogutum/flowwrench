@@ -1,0 +1,569 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HA Trace Diff report v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "coverage",
+    "identity",
+    "inputs",
+    "policy",
+    "summary",
+    "first_divergence",
+    "first_control_divergence",
+    "first_divergence_candidates",
+    "first_control_divergence_candidates",
+    "configuration_changes",
+    "run_changes",
+    "steps",
+    "warnings",
+    "interpretation"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ha-trace-diff/v1"
+    },
+    "status": {
+      "enum": [
+        "different",
+        "no_recorded_difference",
+        "inconclusive"
+      ]
+    },
+    "coverage": {
+      "enum": [
+        "recorded",
+        "partial"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "domain",
+        "item_id"
+      ],
+      "properties": {
+        "domain": {
+          "enum": [
+            "automation",
+            "script"
+          ]
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "left",
+        "right"
+      ],
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/input"
+        },
+        "right": {
+          "$ref": "#/$defs/input"
+        }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "alignment",
+        "profile",
+        "ignored_step_fields",
+        "maximum_retained_changes"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "semantic",
+            "exact"
+          ]
+        },
+        "ignored_step_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maximum_retained_changes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "aligned_rows",
+        "different_rows",
+        "field_changes",
+        "configuration_changes",
+        "run_changes",
+        "uncompared_rows"
+      ],
+      "properties": {
+        "aligned_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "different_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "field_changes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "configuration_changes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "run_changes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uncompared_rows": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "first_divergence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "first_control_divergence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "first_divergence_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "first_control_divergence_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "configuration_changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/change"
+      }
+    },
+    "run_changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/change"
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "interpretation": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": [
+        "source",
+        "pointer",
+        "present"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "value": {},
+        "compared_value": {}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "present": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pointer": {
+                "type": "string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "pointer": {
+                "type": "null"
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "value"
+                  ]
+                },
+                {
+                  "required": [
+                    "compared_value"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "valueReference": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/reference"
+        },
+        {
+          "if": {
+            "properties": {
+              "present": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ]
+          }
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "required": [
+        "status",
+        "reason",
+        "reference",
+        "label",
+        "label_reference",
+        "unresolved_path"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "exact",
+            "partial",
+            "unavailable",
+            "manual_trigger"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "label_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/valueReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unresolved_path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "change": {
+      "type": "object",
+      "required": [
+        "kind",
+        "category",
+        "field",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "trigger",
+            "variable",
+            "condition",
+            "branch",
+            "error",
+            "result",
+            "execution",
+            "configuration",
+            "run"
+          ]
+        },
+        "field": {
+          "type": "string"
+        },
+        "left": {
+          "$ref": "#/$defs/valueReference"
+        },
+        "right": {
+          "$ref": "#/$defs/valueReference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "required": [
+        "id",
+        "path",
+        "occurrence",
+        "left_occurrence",
+        "right_occurrence",
+        "alignment",
+        "left",
+        "right",
+        "changes",
+        "comparison_complete",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "occurrence": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "left_occurrence": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "right_occurrence": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "alignment": {
+          "type": "object",
+          "required": [
+            "strategy",
+            "confidence",
+            "repeat_index"
+          ],
+          "properties": {
+            "strategy": {
+              "enum": [
+                "occurrence",
+                "recorded_repeat_index"
+              ]
+            },
+            "confidence": {
+              "enum": [
+                "recorded",
+                "ordinal_only"
+              ]
+            },
+            "repeat_index": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "left": {
+          "$ref": "#/$defs/reference"
+        },
+        "right": {
+          "$ref": "#/$defs/reference"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/change"
+          }
+        },
+        "comparison_complete": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "different",
+            "same_recorded_fields",
+            "not_fully_compared",
+            "not_compared_limit"
+          ]
+        },
+        "configuration": {
+          "type": "object",
+          "required": [
+            "left",
+            "right"
+          ],
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/configuration"
+            },
+            "right": {
+              "$ref": "#/$defs/configuration"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "required": [
+        "source",
+        "format",
+        "run_id",
+        "payload_pointer",
+        "recorded_steps",
+        "sha256"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "trace/get",
+            "download",
+            "websocket",
+            "saved-record"
+          ]
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_pointer": {
+          "type": "string"
+        },
+        "recorded_steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "no_recorded_difference"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "coverage": {
+            "const": "recorded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "first_divergence": {
+            "type": "string"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "coverage": {
+            "const": "recorded"
+          }
+        }
+      }
+    }
+  ]
+}

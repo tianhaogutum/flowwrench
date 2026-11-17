@@ -9,7 +9,7 @@ execution payloads or copied issue attachments.
 
 flowwrench is an independent interoperability project. It is not affiliated with
 or endorsed by n8n GmbH, the OpenJS Foundation or Node-RED, Activepieces Inc.,
-Windmill Labs or the Huginn project. Product names only identify interoperable
+Windmill Labs, the Huginn project, or Home Assistant / the Open Home Foundation. Product names only identify interoperable
 file formats. This file is attribution; it does not relicense any dependency or
 upstream material.
 
@@ -27,7 +27,11 @@ the `flowwrench` package and these project notices.
 | --- | --- | --- | --- |
 | [PyYAML](https://github.com/yaml/pyyaml) | MIT, Copyright (c) 2017-2021 Ingy döt Net; (c) 2006-2016 Kirill Simonov | `huginn` (YAML kits, manifests and variable files); `windmill-dryrun` and `openapi2piece` (YAML tokenizer/parser under their own YAML 1.2 core-schema resolution) | runtime |
 | [pytest](https://github.com/pytest-dev/pytest) | MIT, pytest developers | test runner | test |
-| [jsonschema](https://github.com/python-jsonschema/jsonschema) | MIT, Julian Berman | independent validation of the `n8n2ap` output schema in tests (optional) | test |
+| [DeepDiff](https://github.com/seperman/deepdiff) | MIT, Sep Dehpour (Seperman) and contributors ([text](licenses/deepdiff-MIT.txt)) | `ha-diff` (all nested JSON comparisons, type/add/remove differences and tree paths) | optional `ha` extra; also `test` |
+| [orderly-set](https://github.com/seperman/orderly-set) | MIT, Elia Robyn Lake, Idan Miara, Sep Dehpour ([text](licenses/orderly-set-MIT.txt)) | DeepDiff's ordered-set dependency | optional, installed with DeepDiff |
+| [python-json-pointer](https://github.com/stefankoegl/python-json-pointer) (`jsonpointer`) | BSD-3-Clause, Stefan Kögl ([text](licenses/jsonpointer-BSD-3-Clause.txt)) | `ha-diff` (RFC 6901 encoding and resolution of original-field references) | optional `ha` extra; also `test` |
+| [jsonschema](https://github.com/python-jsonschema/jsonschema) | MIT, Julian Berman | independent validation of the `n8n2ap` output schema and the `ha-diff` report contract in tests | test |
+| [Hypothesis](https://github.com/HypothesisWorks/hypothesis) | MPL-2.0, David R. MacIver and contributors | `ha-diff` generated evidence invariants in tests | test |
 | [Hatchling](https://github.com/pypa/hatch) | MIT, Ofek Lev and contributors | build backend | build |
 | [hatch-fancy-pypi-readme](https://github.com/hynek/hatch-fancy-pypi-readme) | MIT, Hynek Schlawack | PyPI README link rewriting | build |
 
@@ -388,3 +392,53 @@ separate upstream editor plugin; nrflowtest does not use its source.
 
 Node-RED is a trademark of the OpenJS Foundation. This project is not an OpenJS
 Foundation or Node-RED project and is not endorsed by them.
+
+## `flowwrench ha-diff` (formerly ha-trace-diff)
+
+A thin offline Home Assistant adapter around DeepDiff and python-json-pointer,
+previously a standalone project by the same authors. **License difference:** the
+original tool was released under the MIT license, not Apache-2.0. Its notice is kept
+verbatim apart from the copyright holder line, which names the original project
+(`ha-trace-diff contributors`), in
+[licenses/ha-trace-diff-MIT.txt](licenses/ha-trace-diff-MIT.txt) and applies to the
+code in `src/flowwrench/ha_diff/`, its tests and docs; flowwrench distributes it as
+part of an Apache-2.0 project. The adapter does not bundle or reproduce Home
+Assistant's execution engine or a custom nested-diff engine.
+
+| Component | Validated version | Role | License |
+| --- | --- | --- | --- |
+| [DeepDiff](https://pypi.org/project/deepdiff/8.6.2/) | 8.6.1, 8.6.2 | All nested JSON comparisons, type/add/remove differences and tree paths | MIT |
+| [python-json-pointer](https://github.com/stefankoegl/python-json-pointer) | 3.0.0, 3.12 | RFC 6901 encoding and resolution of original-field references | BSD-3-Clause |
+| [orderly-set](https://pypi.org/project/orderly-set/5.5.0/) | 5.5.0 | DeepDiff's ordered-set dependency | MIT |
+| [Hypothesis](https://hypothesis.readthedocs.io/) | 6.170.15 | Test-only generated evidence invariants | MPL-2.0 |
+| [jsonschema](https://python-jsonschema.readthedocs.io/) | 4.26.0 | Test-only validation of the public report contract | MIT |
+
+The `ha` extra pins DeepDiff to the pure-Python 8.6 line (`>=8.6.1,<9`): DeepDiff 9.1.0
+was surveyed first, but its cachebox 5.x dependency had no binary wheel for every
+supported interpreter, and 8.6 provides every API used here. No native compilation
+is needed.
+
+Fixtures and examples:
+
+- `tests/ha_diff/fixtures/upstream/automation_saved_traces.json` and
+  `script_saved_traces.json` are unmodified Home Assistant Core 2026.11.1 test
+  fixtures, **Apache-2.0**, copyright the Home Assistant authors
+  ([license text](tests/ha_diff/fixtures/HOME-ASSISTANT-LICENSE.txt)).
+- `tests/ha_diff/fixtures/upstream/testkit_trace_sample.json`,
+  `examples/ha-diff/theme-error.json` (unchanged copy) and
+  `examples/ha-diff/theme-success.json` (a labelled counterfactual derived from it)
+  come from Home Assistant Automation Testkit, **GPL-3.0**, copyright the upstream
+  authors ([license text](tests/ha_diff/fixtures/TESTKIT-LICENSE.txt), also in
+  `examples/ha-diff/`). They are test/example data only; no Testkit implementation code
+  is incorporated, and they are not part of the wheel.
+- `examples/ha-diff/motion-*.json` are original synthetic data.
+- Provenance and SHA-256 sums: [tests/ha_diff/fixtures/PROVENANCE.md](tests/ha_diff/fixtures/PROVENANCE.md),
+  [examples/ha-diff/PROVENANCE.md](examples/ha-diff/PROVENANCE.md).
+
+Configuration-path rules were checked against the Home Assistant frontend source
+(Apache-2.0), and repeat semantics against Home Assistant Core source (Apache-2.0); see
+[docs/ha-diff/CONFIGURATION.md](docs/ha-diff/CONFIGURATION.md) and
+[docs/ha-diff/ALIGNMENT.md](docs/ha-diff/ALIGNMENT.md). Those implementation files are
+not bundled. Tools surveyed before the original was built (HA Trace Viewer, HA
+Automation Analyzer, Automation Testkit, CCA Trace Compare, HA Tools) are listed in
+[docs/ha-diff/PRIOR-ART.md](docs/ha-diff/PRIOR-ART.md); none of their code is used.

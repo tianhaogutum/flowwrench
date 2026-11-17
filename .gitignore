@@ -37,3 +37,8 @@ vars.local.yaml
 .idea/
 .vscode/
 .DS_Store
+
+# ha-diff: Hypothesis example database and reports written by the docs' examples
+.hypothesis/
+/comparison.html
+/comparison.json

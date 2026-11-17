@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong>在工作流上线之前，找出导出文件里失效的引用、有风险的定时任务和迁移不过去的节点。</strong><br>
-  一个离线 CLI，覆盖 n8n、Node-RED、Activepieces、Windmill、Huginn 和 cron。
+  一个离线 CLI，覆盖 n8n、Node-RED、Activepieces、Windmill、Huginn 和 cron，并可比较 Home Assistant 执行轨迹。
 </p>
 
 <p align="center">
@@ -108,26 +108,28 @@ uvx --from ../.. flowwrench check --from 2026-11-16
 | | `openapi2piece` | 从 OpenAPI 3.0/3.1 文件生成可编辑的 Activepieces 组件 | [docs](docs/openapi2piece.md) |
 | Windmill | `windmill-dryrun` | 基于 mock 离线试运行 OpenFlow 的映射和控制流 | [docs](docs/windmill-dryrun.md) |
 | Huginn | `huginn` | 以便于 Git 管理的 YAML 拆分、渲染、比较、检查和合并场景 | [docs](docs/huginn.md) |
+| Home Assistant | `ha-diff` | 比较两份下载的自动化/脚本执行轨迹（trace）：变量、条件、分支、错误，并给出指向两份原始文件的指针（`pip install 'flowwrench[ha]'`） | [docs](docs/ha-diff.md) |
 | 定时任务 | `schedules` | 汇总各平台和 cron 的定时任务；集中启动、夏令时风险、错峰方案 | [docs](docs/schedules.md) |
 
 ```sh
 flowwrench n8n-refs rename workflow.json --from "Enrich" --to "Enrich customer" --dry-run
 flowwrench schedules suggest exports/ --max-shift 10m        # 只读的错峰方案
 flowwrench nodered-merge install                             # 规划 flows.json 的 Git 合并驱动
+flowwrench ha-diff good-run.json failed-run.json --check     # 两份 HA 轨迹之间第一个有记录的分歧
 ```
 
 `flowwrench <命令> --help` 会列出所有子命令和选项。
 
 ## 可信度与局限
 
-- **离线，无遥测。** flowwrench 不发起任何网络连接，也不会访问你的 n8n、Node-RED、Activepieces、Windmill 或 Huginn 实例。
+- **离线，无遥测。** flowwrench 不发起任何网络连接，也不会访问你的 n8n、Node-RED、Activepieces、Windmill、Huginn 或 Home Assistant 实例。
 - **默认只读。** `check` 和各类分析子命令从不修改输入。会写文件的命令都需要显式的输出路径或参数，大多数支持 `--dry-run`。
 - **不执行任何东西。** 工作流步骤、脚本和 cron 命令都不会被运行。例外是显式的：`windmill-dryrun` 在沙箱化的 Node.js 子进程中求值 JavaScript 表达式，`nodered-test` 在你自行安装的 Node-RED 运行时上跑流程。
 - **报告里没有密钥。** 结果只给出节点和字段名，不包含参数值或凭据。
 - **看的是导出文件，不是实例。** `check` 无法知道目标环境装了哪些节点、有哪些凭据；导出中缺失的时区会按假设处理（`--default-timezone`，默认 UTC）并在报告中注明。
 - **有测试。** 1,400 多个 Python 测试函数（`grep -r "def test_" tests | wc -l`）；CI 覆盖 Linux 上的 Python 3.11 到 3.14，以及 macOS。Apache-2.0 许可。
 
-flowwrench 是独立项目，与 n8n、Node-RED / OpenJS 基金会、Activepieces、Windmill 或 Huginn 均无关联。见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+flowwrench 是独立项目，与 n8n、Node-RED / OpenJS 基金会、Activepieces、Windmill、Huginn 或 Home Assistant / Open Home Foundation 均无关联。见 [THIRD_PARTY.md](THIRD_PARTY.md)。
 
 ---
 

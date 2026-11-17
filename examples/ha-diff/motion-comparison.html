@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Home Assistant trace comparison</title>
+<style>
+:root { color-scheme: light dark; --bg:#f3f5f8; --card:#fff; --fg:#172132; --muted:#516079; --line:#d8dfe8; --accent:#126c9b; --first:#e9f6ff; --warning:#fff0ca; }
+@media (prefers-color-scheme:dark) { :root { --bg:#10151e; --card:#192230; --fg:#e3eaf4; --muted:#aebbd0; --line:#37455a; --accent:#7ecbff; --first:#19364d; --warning:#44371c; } }
+* { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 system-ui,sans-serif; }
+main { max-width:1240px; margin:auto; padding:32px 20px 70px; } h1 { margin:4px 0 12px; font-size:30px; line-height:1.2; } h2 { font-size:19px; margin:0 0 10px; }
+header,section,aside { margin:0 0 20px; padding:24px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
+.eyebrow,.muted,small { color:var(--muted); } .eyebrow { letter-spacing:.08em; text-transform:uppercase; font-size:12px; }
+.stats { display:flex; gap:12px; flex-wrap:wrap; margin:16px 0; } .stats div { padding:10px 14px; border:1px solid var(--line); border-radius:8px; } .stats b { display:block; font-size:22px; }
+.first { background:var(--first); border:2px solid var(--accent); scroll-margin-top:20px; } a { color:var(--accent); overflow-wrap:anywhere; }
+.tag { display:block; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:6px; } .first-label { display:inline; margin-left:10px; }
+.scroll { overflow-x:auto; } table { width:100%; border-collapse:collapse; table-layout:fixed; min-width:620px; } th,td { text-align:left; vertical-align:top; border-top:1px solid var(--line); padding:14px 12px; } th:first-child { width:28%; } td { width:36%; }
+code,pre { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12px; overflow-wrap:anywhere; } pre { white-space:pre-wrap; margin:0 0 10px; max-height:24em; overflow:auto; } small,.reference { display:block; } .reference { margin-top:10px; color:var(--muted); }
+.missing { color:var(--muted); font-style:italic; } .partial { padding:12px; border-radius:6px; background:var(--warning); } summary { cursor:pointer; } details { margin:10px 0; } ul { padding-left:22px; }
+@media(max-width:640px) { main { padding:16px 10px; } header,section,aside { padding:16px; } h1 { font-size:25px; } }
+@media print { body { background:white; color:black; } main { max-width:none; padding:0; } section,header,aside { break-inside:avoid; } .scroll { overflow:visible; } pre { max-height:none; } }
+</style></head><body><main>
+<header><div class="eyebrow">Home Assistant · offline evidence comparison</div>
+<h1>Different</h1>
+<p>automation · <code>demo_motion</code></p>
+<div class="stats"><div><b>3</b> differing steps</div><div><b>3</b> recorded field changes</div><div><b>3</b> aligned rows</div></div>
+<p><strong>Earliest differing recorded step:</strong> <a href="#step-0">trigger/0#0</a></p>
+<p><strong>First condition / branch / error / path difference:</strong> <a href="#step-1">condition/0#0</a></p>
+<p class="muted">Differences are recorded evidence, not proof of a root cause. A missing step is not recorded on that side; this alone does not prove why it was skipped.</p><details><summary>Input files and comparison policy</summary><ul><li><strong>Left</strong>: <code>examples/ha-diff/motion-success.json</code> · 3 recorded steps · <code>synthetic-success</code></li><li><strong>Right</strong>: <code>examples/ha-diff/motion-blocked.json</code> · 2 recorded steps · <code>synthetic-blocked</code></li></ul><pre>{
+  &quot;alignment&quot;: &quot;exact path; unique directly recorded repeat.index when available, otherwise zero-based occurrence ordinal&quot;,
+  &quot;use_recorded_repeat_indices&quot;: true,
+  &quot;profile&quot;: &quot;semantic&quot;,
+  &quot;ignored_step_fields&quot;: [
+    &quot;/path&quot;,
+    &quot;/timestamp&quot;,
+    &quot;/changed_variables/context/id&quot;,
+    &quot;/changed_variables/context/parent_id&quot;,
+    &quot;/changed_variables/this/context/id&quot;,
+    &quot;/changed_variables/this/context/parent_id&quot;,
+    &quot;/changed_variables/trigger/event/context/id&quot;,
+    &quot;/changed_variables/trigger/event/context/parent_id&quot;,
+    &quot;/changed_variables/trigger/from_state/context/id&quot;,
+    &quot;/changed_variables/trigger/from_state/context/parent_id&quot;,
+    &quot;/changed_variables/trigger/to_state/context/id&quot;,
+    &quot;/changed_variables/trigger/to_state/context/parent_id&quot;,
+    &quot;/changed_variables/wait/trigger/event/context/id&quot;,
+    &quot;/changed_variables/wait/trigger/event/context/parent_id&quot;,
+    &quot;/changed_variables/wait/trigger/from_state/context/id&quot;,
+    &quot;/changed_variables/wait/trigger/from_state/context/parent_id&quot;,
+    &quot;/changed_variables/wait/trigger/to_state/context/id&quot;,
+    &quot;/changed_variables/wait/trigger/to_state/context/parent_id&quot;,
+    &quot;/result/wait/trigger/event/context/id&quot;,
+    &quot;/result/wait/trigger/event/context/parent_id&quot;,
+    &quot;/result/wait/trigger/from_state/context/id&quot;,
+    &quot;/result/wait/trigger/from_state/context/parent_id&quot;,
+    &quot;/result/wait/trigger/to_state/context/id&quot;,
+    &quot;/result/wait/trigger/to_state/context/parent_id&quot;,
+    &quot;/child_id/run_id&quot;
+  ],
+  &quot;chronology&quot;: &quot;recorded step start timestamps; no causal ordering across runs&quot;,
+  &quot;variable_scope&quot;: &quot;recorded changed_variables only; no engine/state reconstruction&quot;,
+  &quot;maximum_retained_changes&quot;: 5000,
+  &quot;compared_run_fields&quot;: [
+    &quot;state&quot;,
+    &quot;script_execution&quot;,
+    &quot;error&quot;,
+    &quot;not_triggered&quot;,
+    &quot;last_step&quot;,
+    &quot;trigger&quot;,
+    &quot;context&quot;
+  ],
+  &quot;ignored_run_fields&quot;: [
+    &quot;/context/id&quot;,
+    &quot;/context/parent_id&quot;
+  ]
+}</pre></details></header>
+<aside><h2>Evidence limits</h2><p>No additional input warnings.</p><p class="muted">Order uses recorded step start times. Variable deltas are compared without reconstructing Home Assistant's execution engine. Reports can contain private input values.</p></aside>
+<section><h2>Run outcome changes</h2><div class="scroll"><table><thead><tr><th scope="col">Recorded field</th><th scope="col">Left · baseline</th><th scope="col">Right · comparison</th></tr></thead><tbody><tr><th scope="row"><span class="tag">run</span><code>/last_step</code><small>values_changed</small></th><td><pre>&quot;action/0&quot;</pre><code class="reference">examples/ha-diff/motion-success.json#/trace/last_step</code></td><td><pre>&quot;condition/0&quot;</pre><code class="reference">examples/ha-diff/motion-blocked.json#/trace/last_step</code></td></tr><tr><th scope="row"><span class="tag">run</span><code>/script_execution</code><small>values_changed</small></th><td><pre>&quot;finished&quot;</pre><code class="reference">examples/ha-diff/motion-success.json#/trace/script_execution</code></td><td><pre>&quot;failed_conditions&quot;</pre><code class="reference">examples/ha-diff/motion-blocked.json#/trace/script_execution</code></td></tr></tbody></table></div></section><section id="step-0" class="step first"><h2><code>trigger/0#0</code> <span class="tag first-label">First recorded divergence</span></h2><p class="muted">different</p><details><summary>Step configuration references</summary><ul><li><strong>Left</strong>: state · exact · <code>examples/ha-diff/motion-success.json#/trace/config/triggers/0</code></li><li><strong>Right</strong>: state · exact · <code>examples/ha-diff/motion-blocked.json#/trace/config/triggers/0</code></li></ul></details><div class="scroll"><table><thead><tr><th scope="col">Recorded field</th><th scope="col">Left · baseline</th><th scope="col">Right · comparison</th></tr></thead><tbody><tr><th scope="row"><span class="tag">variable</span><code>/changed_variables/lux</code><small>values_changed</small></th><td><pre>12</pre><code class="reference">examples/ha-diff/motion-success.json#/trace/trace/trigger~10/0/changed_variables/lux</code></td><td><pre>125</pre><code class="reference">examples/ha-diff/motion-blocked.json#/trace/trace/trigger~10/0/changed_variables/lux</code></td></tr></tbody></table></div></section><section id="step-1" class="step "><h2><code>condition/0#0</code></h2><p class="muted">different</p><details><summary>Step configuration references</summary><ul><li><strong>Left</strong>: template · exact · <code>examples/ha-diff/motion-success.json#/trace/config/conditions/0</code></li><li><strong>Right</strong>: template · exact · <code>examples/ha-diff/motion-blocked.json#/trace/config/conditions/0</code></li></ul></details><div class="scroll"><table><thead><tr><th scope="col">Recorded field</th><th scope="col">Left · baseline</th><th scope="col">Right · comparison</th></tr></thead><tbody><tr><th scope="row"><span class="tag">condition</span><code>/result/result</code><small>values_changed</small></th><td><pre>true</pre><code class="reference">examples/ha-diff/motion-success.json#/trace/trace/condition~10/0/result/result</code></td><td><pre>false</pre><code class="reference">examples/ha-diff/motion-blocked.json#/trace/trace/condition~10/0/result/result</code></td></tr></tbody></table></div></section><section id="step-2" class="step "><h2><code>action/0#0</code></h2><p class="muted">different</p><details><summary>Step configuration references</summary><ul><li><strong>Left</strong>: light.turn_on · exact · <code>examples/ha-diff/motion-success.json#/trace/config/actions/0</code></li><li><strong>Right</strong>: light.turn_on · exact · <code>examples/ha-diff/motion-blocked.json#/trace/config/actions/0</code></li></ul></details><div class="scroll"><table><thead><tr><th scope="col">Recorded field</th><th scope="col">Left · baseline</th><th scope="col">Right · comparison</th></tr></thead><tbody><tr><th scope="row"><span class="tag">execution</span><code>(step)</code><small>step_not_recorded_right</small></th><td><pre>{
+  &quot;path&quot;: &quot;action/0&quot;,
+  &quot;timestamp&quot;: &quot;2026-11-11T18:00:00.030000+00:00&quot;,
+  &quot;result&quot;: {
+    &quot;params&quot;: {
+      &quot;domain&quot;: &quot;light&quot;,
+      &quot;service&quot;: &quot;turn_on&quot;,
+      &quot;service_data&quot;: {},
+      &quot;target&quot;: {
+        &quot;entity_id&quot;: [
+          &quot;l…</pre><details><summary>Full compared value</summary><pre>{
+  &quot;path&quot;: &quot;action/0&quot;,
+  &quot;timestamp&quot;: &quot;2026-11-11T18:00:00.030000+00:00&quot;,
+  &quot;result&quot;: {
+    &quot;params&quot;: {
+      &quot;domain&quot;: &quot;light&quot;,
+      &quot;service&quot;: &quot;turn_on&quot;,
+      &quot;service_data&quot;: {},
+      &quot;target&quot;: {
+        &quot;entity_id&quot;: [
+          &quot;light.hall&quot;
+        ]
+      }
+    },
+    &quot;running_script&quot;: false
+  }
+}</pre></details><code class="reference">examples/ha-diff/motion-success.json#/trace/trace/action~10/0</code></td><td><span class="missing">Not recorded</span></td></tr></tbody></table></div></section><footer class="muted">Generated locally by flowwrench ha-diff · ha-trace-diff/v1</footer>
+</main></body></html>

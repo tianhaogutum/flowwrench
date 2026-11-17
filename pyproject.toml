@@ -5,16 +5,16 @@ build-backend = "hatchling.build"
 [project]
 name = "flowwrench"
 version = "0.1.0"
-description = "Catch broken references, risky schedules and failed migrations in n8n, Node-RED, Activepieces, Windmill and Huginn workflows before they hit production. One offline CLI."
+description = "Catch broken references, risky schedules and failed migrations in n8n, Node-RED, Activepieces, Windmill and Huginn workflows before they hit production, and compare Home Assistant automation traces. One offline CLI."
 # README.md with repository-relative links rewritten for PyPI (see tool.hatch.metadata.hooks below).
 dynamic = ["readme"]
 requires-python = ">=3.11"
 license = "Apache-2.0"
-license-files = ["LICENSE", "NOTICE", "THIRD_PARTY.md"]
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY.md", "licenses/*"]
 authors = [{ name = "tianhaogutum" }]
 keywords = [
     "workflow-automation", "n8n", "node-red", "activepieces", "windmill", "huginn",
-    "cron", "schedules", "sarif", "migration", "devtools", "cli",
+    "home-assistant", "cron", "schedules", "sarif", "migration", "devtools", "cli",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -39,7 +39,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest>=8.4", "jsonschema>=4.23"]
+# ha-diff: Home Assistant trace comparison (DeepDiff for nested diffs, RFC 6901 pointers).
+ha = ["deepdiff>=8.6.1,<9", "jsonpointer>=3,<4"]
+# Test runner plus everything the tests import beyond the core dependencies.
+test = [
+    "pytest>=8.4",
+    "jsonschema>=4.23",
+    "hypothesis>=6",
+    "deepdiff>=8.6.1,<9",
+    "jsonpointer>=3,<4",
+]
 
 [project.urls]
 Homepage = "https://github.com/tianhaogutum/flowwrench"
@@ -96,6 +105,7 @@ include = [
     "/LICENSE",
     "/NOTICE",
     "/THIRD_PARTY.md",
+    "/licenses",
     "/pyproject.toml",
 ]
 exclude = ["__pycache__", "*.pyc", ".cache", "node_modules"]

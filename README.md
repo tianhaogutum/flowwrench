@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong>Catch broken references, risky schedules and failed migrations in your workflow exports before they hit production.</strong><br>
-  One offline CLI for n8n, Node-RED, Activepieces, Windmill, Huginn and cron.
+  One offline CLI for n8n, Node-RED, Activepieces, Windmill, Huginn and cron, plus Home Assistant trace comparison.
 </p>
 
 <p align="center">
@@ -108,26 +108,28 @@ Output is a compact report grouped by file (`--format text`), a stable JSON docu
 | | `openapi2piece` | Generate an editable Activepieces piece from an OpenAPI 3.0/3.1 file | [docs](docs/openapi2piece.md) |
 | Windmill | `windmill-dryrun` | Dry-run OpenFlow mappings and control flow offline against mocks | [docs](docs/windmill-dryrun.md) |
 | Huginn | `huginn` | Split, render, diff, lint and combine scenarios as git-friendly YAML | [docs](docs/huginn.md) |
+| Home Assistant | `ha-diff` | Compare two downloaded automation/script traces: variables, conditions, branches, errors, with pointers into both files (`pip install 'flowwrench[ha]'`) | [docs](docs/ha-diff.md) |
 | Schedules | `schedules` | Inventory schedules across platforms and cron; herds, DST hazards, jitter plans | [docs](docs/schedules.md) |
 
 ```sh
 flowwrench n8n-refs rename workflow.json --from "Enrich" --to "Enrich customer" --dry-run
 flowwrench schedules suggest exports/ --max-shift 10m        # read-only jitter plan
 flowwrench nodered-merge install                             # plan a Git merge driver for flows.json
+flowwrench ha-diff good-run.json failed-run.json --check     # first recorded divergence between two HA traces
 ```
 
 `flowwrench <command> --help` lists every subcommand and option.
 
 ## Trust and limits
 
-- **Offline, no telemetry.** flowwrench opens no network connections and never contacts your n8n, Node-RED, Activepieces, Windmill or Huginn instance.
+- **Offline, no telemetry.** flowwrench opens no network connections and never contacts your n8n, Node-RED, Activepieces, Windmill, Huginn or Home Assistant instance.
 - **Read-only by default.** `check` and the analysis subcommands never modify inputs. Commands that write need an explicit output path or flag, and most have `--dry-run`.
 - **Nothing is executed.** Workflow steps, scripts and cron commands are never run. The exceptions are explicit: `windmill-dryrun` evaluates JavaScript expressions in a sandboxed Node.js child process, and `nodered-test` runs flows on a real Node-RED runtime you install.
 - **No secrets in reports.** Findings name nodes and fields, not parameter values or credentials.
 - **Exports, not instances.** `check` cannot see which nodes are installed or which credentials exist in the target; timezones missing from an export are assumed (`--default-timezone`, default UTC) and reported.
 - **Tested.** 1,400+ Python test functions (`grep -r "def test_" tests | wc -l`); CI on Python 3.11 to 3.14 on Linux, plus macOS. Apache-2.0.
 
-flowwrench is independent and not affiliated with n8n, Node-RED / OpenJS Foundation, Activepieces, Windmill or Huginn. See [THIRD_PARTY.md](THIRD_PARTY.md).
+flowwrench is independent and not affiliated with n8n, Node-RED / OpenJS Foundation, Activepieces, Windmill, Huginn or Home Assistant / Open Home Foundation. See [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ---
 

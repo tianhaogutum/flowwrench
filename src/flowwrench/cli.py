@@ -4,6 +4,8 @@ Each tool lives in its own subpackage exposing ``cli.main(argv) -> int``. Tools
 are imported lazily, so ``flowwrench --help`` stays fast and a broken or missing
 tool only affects its own command. ``nodered-test`` is not a Python module: it
 needs the Node-RED runtime and ships as a Node.js companion in packages/nrflowtest/.
+A command whose dependencies live in an optional extra (``ha-diff``) prints a one-line
+install hint instead of a traceback when they are missing.
 """
 from __future__ import annotations
 
@@ -28,9 +30,12 @@ class Command:
     group: str
     # Repository directory of a non-Python companion (only when ``module`` is None).
     companion: str | None = None
+    # Optional extra (``pip install 'flowwrench[extra]'``) and the importable modules it provides.
+    extra: str | None = None
+    requires: tuple[str, ...] = ()
 
 
-GROUPS = ("Check", "n8n", "Node-RED", "Activepieces", "Windmill", "Huginn", "Schedules")
+GROUPS = ("Check", "n8n", "Node-RED", "Activepieces", "Windmill", "Huginn", "Home Assistant", "Schedules")
 
 COMMANDS: tuple[Command, ...] = (
     Command("check", "flowwrench.check.cli",
@@ -55,6 +60,9 @@ COMMANDS: tuple[Command, ...] = (
             "Dry-run Windmill OpenFlow mappings and control flow offline against mocks", "Windmill"),
     Command("huginn", "flowwrench.huginn.cli",
             "Split, render, diff, lint and combine Huginn scenarios as git-friendly YAML", "Huginn"),
+    Command("ha-diff", "flowwrench.ha_diff.cli",
+            "Compare two downloaded Home Assistant automation/script traces: variables, conditions, errors",
+            "Home Assistant", extra="ha", requires=("deepdiff", "jsonpointer")),
     Command("schedules", "flowwrench.schedules.cli",
             "Inventory schedules across n8n, Activepieces, Huginn and cron; find herds and DST hazards",
             "Schedules"),
@@ -66,6 +74,7 @@ LEGACY = {
     "n8n-exec-diet": "n8n-diet", "n8n-refcheck": "n8n-refs", "ap-flow-promote": "ap-promote",
     "huginn-scenario-kit": "huginn", "cronherd": "schedules", "nrflowtest": "nodered-test",
     "nrflow-merge": "nodered-merge", "openflow-dryrun": "windmill-dryrun",
+    "ha-trace-diff": "ha-diff",
 }
 
 
@@ -80,6 +89,15 @@ def _installed(command: Command) -> bool:
     if command.module is None:
         return True
     return _present(command.module.rpartition(".")[0])
+
+
+def _missing_requirements(command: Command) -> bool:
+    return any(not _present(name) for name in command.requires)
+
+
+def _install_hint(command: Command) -> str:
+    return (f"{PROG} {command.name}: missing optional dependencies; "
+            f"install them with: pip install '{PROG}[{command.extra}]'")
 
 
 def companion_message(command: Command) -> str:
@@ -107,7 +125,7 @@ def overview() -> str:
     width = max(len(command.name) for command in COMMANDS) + 2
     lines = [
         f"{PROG} {__version__} - offline checks and fixes for n8n, Node-RED, Activepieces, "
-        "Windmill and Huginn workflows",
+        "Windmill and Huginn workflows and Home Assistant automations",
         "",
         f"usage: {PROG} <command> [args...]",
         f"       {PROG} <command> --help",
@@ -117,7 +135,11 @@ def overview() -> str:
         for command in COMMANDS:
             if command.group != group:
                 continue
-            note = "" if _installed(command) else "  (coming soon)"
+            note = ""
+            if not _installed(command):
+                note = "  (coming soon)"
+            elif command.extra and _missing_requirements(command):
+                note = f"  (needs {PROG}[{command.extra}])"
             lines.append(f"  {command.name.ljust(width)}{command.summary}{note}")
     lines += [
         "",
@@ -151,7 +173,21 @@ def run(command: Command, argv: list[str]) -> int:
         sys.stderr.write(f"{PROG}: command {command.name!r} is not available in "
                          f"{PROG} {__version__} yet; see {REPO_URL}\n")
         return 2
-    module = importlib.import_module(command.module)
+    if command.extra and _missing_requirements(command):
+        if any(arg in ("-h", "--help") for arg in argv):
+            sys.stdout.write(f"usage: {PROG} {command.name} [args...]\n\n{command.summary}.\n\n"
+                             + _install_hint(command) + "\n")
+            return 0
+        sys.stderr.write(_install_hint(command) + "\n")
+        return 2
+    try:
+        module = importlib.import_module(command.module)
+    except ModuleNotFoundError as exc:
+        missing = exc.name or ""
+        if command.extra and any(req == missing or req.startswith(missing + ".") for req in command.requires):
+            sys.stderr.write(_install_hint(command) + "\n")
+            return 2
+        raise
     result = module.main(argv)
     return 0 if result is None else result
 
